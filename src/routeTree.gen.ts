@@ -9,14 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VietnameseFoodRouteImport } from './routes/vietnamese-food'
+import { Route as SweetDessertsRouteImport } from './routes/sweet-desserts'
 import { Route as MenuRouteImport } from './routes/menu'
+import { Route as IcedCoffeeRouteImport } from './routes/iced-coffee'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VietnameseFoodRoute = VietnameseFoodRouteImport.update({
+  id: '/vietnamese-food',
+  path: '/vietnamese-food',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SweetDessertsRoute = SweetDessertsRouteImport.update({
+  id: '/sweet-desserts',
+  path: '/sweet-desserts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
   path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IcedCoffeeRoute = IcedCoffeeRouteImport.update({
+  id: '/iced-coffee',
+  path: '/iced-coffee',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -39,43 +57,98 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/iced-coffee': typeof IcedCoffeeRoute
   '/menu': typeof MenuRoute
+  '/sweet-desserts': typeof SweetDessertsRoute
+  '/vietnamese-food': typeof VietnameseFoodRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/iced-coffee': typeof IcedCoffeeRoute
   '/menu': typeof MenuRoute
+  '/sweet-desserts': typeof SweetDessertsRoute
+  '/vietnamese-food': typeof VietnameseFoodRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/iced-coffee': typeof IcedCoffeeRoute
   '/menu': typeof MenuRoute
+  '/sweet-desserts': typeof SweetDessertsRoute
+  '/vietnamese-food': typeof VietnameseFoodRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/menu'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/iced-coffee'
+    | '/menu'
+    | '/sweet-desserts'
+    | '/vietnamese-food'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/menu'
-  id: '__root__' | '/' | '/about' | '/contact' | '/menu'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/iced-coffee'
+    | '/menu'
+    | '/sweet-desserts'
+    | '/vietnamese-food'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/iced-coffee'
+    | '/menu'
+    | '/sweet-desserts'
+    | '/vietnamese-food'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  IcedCoffeeRoute: typeof IcedCoffeeRoute
   MenuRoute: typeof MenuRoute
+  SweetDessertsRoute: typeof SweetDessertsRoute
+  VietnameseFoodRoute: typeof VietnameseFoodRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vietnamese-food': {
+      id: '/vietnamese-food'
+      path: '/vietnamese-food'
+      fullPath: '/vietnamese-food'
+      preLoaderRoute: typeof VietnameseFoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sweet-desserts': {
+      id: '/sweet-desserts'
+      path: '/sweet-desserts'
+      fullPath: '/sweet-desserts'
+      preLoaderRoute: typeof SweetDessertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/menu': {
       id: '/menu'
       path: '/menu'
       fullPath: '/menu'
       preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/iced-coffee': {
+      id: '/iced-coffee'
+      path: '/iced-coffee'
+      fullPath: '/iced-coffee'
+      preLoaderRoute: typeof IcedCoffeeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -106,8 +179,21 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  IcedCoffeeRoute: IcedCoffeeRoute,
   MenuRoute: MenuRoute,
+  SweetDessertsRoute: SweetDessertsRoute,
+  VietnameseFoodRoute: VietnameseFoodRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

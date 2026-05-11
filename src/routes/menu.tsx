@@ -1,106 +1,92 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
+import cafeImg from "@/assets/category-cafe.jpg";
+import fingerImg from "@/assets/category-finger.jpg";
+import cheImg from "@/assets/category-che.jpg";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
-      { title: "Menu — Bambu Cafe & Desserts" },
-      { name: "description", content: "Browse Bambu's menu: traditional Vietnamese chè, iced coffee, smoothies and crispy finger food." },
-      { property: "og:title", content: "Menu — Bambu Cafe & Desserts" },
-      { property: "og:description", content: "Chè, cafe drinks and finger food made fresh daily." },
+      { title: "Menu Hub — Bambu Cafe & Desserts" },
+      {
+        name: "description",
+        content:
+          "Browse iced coffee, Vietnamese street snacks and sweet desserts — each course has its own page with photos and STT ảnh references.",
+      },
     ],
   }),
-  component: MenuPage,
+  component: MenuHubPage,
 });
 
-const sections = [
+const links = [
   {
-    name: "Chè — Vietnamese Desserts",
-    tagline: "Cool, colourful, made for sharing.",
-    items: [
-      { n: "Chè Ba Màu", d: "Three-colour layers of red bean, mung bean and pandan jelly with coconut cream.", p: "$7.50" },
-      { n: "Chè Thái", d: "Tropical fruits, jackfruit and jelly in chilled coconut milk.", p: "$8.50" },
-      { n: "Chè Đậu Đỏ", d: "Slow-cooked red beans, glutinous rice and coconut cream.", p: "$7.00" },
-      { n: "Chè Khúc Bạch", d: "Soft milk pudding cubes, lychee and almond syrup.", p: "$8.00" },
-      { n: "Chè Bưởi", d: "Pomelo rind, mung beans and pandan-scented coconut.", p: "$7.50" },
-      { n: "Chè Sương Sa Hạt Lựu", d: "Pomegranate-shaped tapioca, jelly and coconut milk.", p: "$7.50" },
-    ],
+    to: "/iced-coffee",
+    titleEn: "Iced Coffee",
+    titleVi: "Cà Phê Đá",
+    img: cafeImg,
   },
   {
-    name: "Cafe — Coffee & Drinks",
-    tagline: "Bold roasts, creamy classics.",
-    items: [
-      { n: "Cà Phê Sữa Đá", d: "Vietnamese iced coffee with condensed milk.", p: "$6.00" },
-      { n: "Cà Phê Đen Đá", d: "Strong iced black coffee, no milk.", p: "$5.50" },
-      { n: "Coconut Coffee", d: "Espresso blended with creamy coconut ice.", p: "$7.50" },
-      { n: "Egg Coffee", d: "Whipped egg cream over hot Vietnamese coffee.", p: "$7.50" },
-      { n: "Matcha Latte", d: "Stone-ground matcha with steamed milk.", p: "$7.00" },
-      { n: "Avocado Smoothie", d: "Fresh avocado blended with milk and palm sugar.", p: "$8.00" },
-    ],
+    to: "/vietnamese-food",
+    titleEn: "Vietnamese Food",
+    titleVi: "Ăn Vặt Việt Nam",
+    img: fingerImg,
   },
   {
-    name: "Finger Food",
-    tagline: "Crispy bites for every catch-up.",
-    items: [
-      { n: "Crispy Spring Rolls", d: "Golden rolls with pork, prawn and vermicelli, herbs & nước chấm.", p: "$10.00" },
-      { n: "Salt & Pepper Squid", d: "Crispy squid tossed with chilli, salt and spring onion.", p: "$13.50" },
-      { n: "Karaage Chicken", d: "Crunchy fried chicken bites with house mayo.", p: "$11.50" },
-      { n: "Crispy Tofu Bites", d: "Golden tofu with sweet chilli dipping sauce.", p: "$9.00" },
-      { n: "Bánh Mì Sliders", d: "Mini Vietnamese rolls with grilled pork & pâté.", p: "$12.00" },
-      { n: "Sweet Potato Fries", d: "Lightly salted, served with garlic aioli.", p: "$8.50" },
-    ],
+    to: "/sweet-desserts",
+    titleEn: "Sweet Desserts",
+    titleVi: "Tráng Miệng",
+    img: cheImg,
   },
-];
+] as const;
 
-function MenuPage() {
+function MenuHubPage() {
   return (
     <>
       <section className="py-24 px-6 bg-gradient-hero text-center">
         <div className="mx-auto max-w-3xl">
-          <SectionLabel>The Menu</SectionLabel>
+          <SectionLabel>Menu</SectionLabel>
           <h1 className="mt-6 font-display text-6xl md:text-7xl text-balance">
-            Made <em className="text-primary">fresh,</em> made for sharing.
+            Choose a <em className="text-primary">course</em>
           </h1>
           <p className="mt-6 text-muted-foreground">
-            A modern take on Vietnamese classics — desserts, coffee and crispy bites,
-            crafted in-house every day.
+            Each category has hero dishes, photos keyed to{" "}
+            <span className="text-foreground font-medium">STT ảnh</span>, and Uber Eats
+            ordering.
           </p>
         </div>
       </section>
 
       <section className="py-20 px-6">
-        <div className="mx-auto max-w-5xl space-y-24">
-          {sections.map((s) => (
-            <div key={s.name}>
-              <div className="text-center">
-                <SectionLabel>{s.tagline}</SectionLabel>
-                <h2 className="mt-5 font-display text-4xl md:text-5xl italic text-primary">
-                  {s.name}
-                </h2>
+        <div className="mx-auto max-w-5xl grid md:grid-cols-3 gap-8">
+          {links.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="group block border border-border bg-card/30 overflow-hidden rounded-sm hover:border-primary/50 transition-colors"
+            >
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={item.img}
+                  alt=""
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  width={800}
+                  height={600}
+                  loading="lazy"
+                />
               </div>
-
-              <ul className="mt-12 grid md:grid-cols-2 gap-x-12 gap-y-8">
-                {s.items.map((it) => (
-                  <li key={it.n} className="border-b border-border/60 pb-6">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="font-display text-2xl text-foreground">{it.n}</h3>
-                      <span className="font-display text-xl text-primary tabular-nums">
-                        {it.p}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                      {it.d}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              <div className="p-6">
+                <h2 className="font-display text-2xl text-primary italic">{item.titleEn}</h2>
+                <p className="text-[0.65rem] tracking-[0.25em] uppercase text-muted-foreground">
+                  {item.titleVi}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-foreground group-hover:text-primary transition">
+                  Open <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </Link>
           ))}
         </div>
-
-        <p className="mt-20 text-center text-xs tracking-[0.25em] uppercase text-muted-foreground">
-          Prices in AUD · Menu may vary by location
-        </p>
       </section>
     </>
   );

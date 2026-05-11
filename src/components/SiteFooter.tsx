@@ -12,17 +12,39 @@ export function SiteFooter() {
             </span>
           </div>
           <p className="mt-4 max-w-md text-sm text-muted-foreground leading-relaxed">
-            Where tradition meets your next hangout. Vietnamese desserts, bold iced coffee
-            and crispy bites — made fresh, made for sharing.
+            Iced coffee · Vietnamese snacks · Sweet chè — two branches in Sydney&apos;s
+            southwest, made for sharing.
           </p>
         </div>
 
         <div>
           <h4 className="text-xs tracking-[0.25em] uppercase text-primary">Explore</h4>
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/menu" className="hover:text-primary">Menu</Link></li>
-            <li><Link to="/about" className="hover:text-primary">Our Story</Link></li>
-            <li><Link to="/contact" className="hover:text-primary">Locations</Link></li>
+            <li>
+              <Link to="/iced-coffee" className="hover:text-primary">
+                Iced Coffee
+              </Link>
+            </li>
+            <li>
+              <Link to="/vietnamese-food" className="hover:text-primary">
+                Vietnamese Food
+              </Link>
+            </li>
+            <li>
+              <Link to="/sweet-desserts" className="hover:text-primary">
+                Sweet Desserts
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-primary">
+                Our Story
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-primary">
+                Locations
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -30,7 +52,8 @@ export function SiteFooter() {
           <h4 className="text-xs tracking-[0.25em] uppercase text-primary">Visit</h4>
           <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
             <li>Canley Heights · Cabramatta</li>
-            <li>Open 7 days · 8AM – 10PM</li>
+            <li>Mon–Thu 7:00 AM – 10:00 PM</li>
+            <li>Fri–Sun 7:00 AM – 11:00 PM</li>
             <li>(+61) 282 013 894</li>
           </ul>
         </div>
