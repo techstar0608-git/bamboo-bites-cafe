@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SectionLabel } from "@/components/SectionLabel";
-import { ProductHeroCard } from "@/components/bambu/ProductHeroCard";
+import { UberMenuGroupedList } from "@/components/bambu/UberMenuGroupedList";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import cafeImg from "@/assets/category-cafe.jpg";
+import cafeImg from "@/assets/category-cafe.png";
 import { UBER_EATS_DEFAULT } from "@/lib/branches";
+import { ICED_COFFEE, ICED_COFFEE_EXTRAS } from "@/data/uber-menu.generated";
 
 export const Route = createFileRoute("/iced-coffee")({
   head: () => ({
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/iced-coffee")({
       {
         name: "description",
         content:
-          "Vietnamese iced coffee at Bambu: salted coffee, coconut coffee, cà phê sữa đá. Uber Eats prices shown; pickup is typically lower.",
+          "Full iced coffee menu from Bambu Uber — Vietnamese salted, coconut, condensed milk coffee and more. Pickup and Uber Eats prices.",
       },
     ],
   }),
@@ -45,63 +46,40 @@ function IcedCoffeePage() {
         </div>
       </section>
 
-      <section className="py-16 px-6">
-        <div className="mx-auto max-w-4xl space-y-16">
+      <section className="py-12 px-6">
+        <div className="mx-auto max-w-4xl">
           <p className="text-center text-sm text-muted-foreground">
-            Prices below are Uber Eats; pickup is usually about $2 less per item.
+            Prices from workbook <strong className="text-foreground font-medium">Bambu · Uber Menu · 19.04.2026</strong>
+            — pickup (in-store) and Uber Eats shown per row.
           </p>
+        </div>
+      </section>
 
-          <ProductHeroCard
-            sttAnh={1}
-            img={cafeImg}
-            titleEn="Vietnamese Salted Coffee (Iced)"
-            titleVi="Cà Phê Muối Đá"
-            price="$11.50 (R) / $14.90 (L) AUD"
-            ingredients="Slow-brewed phin coffee, condensed milk, salted cream."
-            highlight="Sweet, salty and bitter in balance — unlike ordinary coffee. Bambu's standout signature."
-            pairing="Pair with Bánh Tráng Trộn or Phô Mai Que for the perfect afternoon pick-me-up."
-            badges={["signature"]}
-            orderUrl={UBER_EATS_DEFAULT}
-          />
-
-          <ProductHeroCard
-            sttAnh={2}
-            img={cafeImg}
-            titleEn="Vietnamese Coconut Coffee (Iced)"
-            titleVi="Cà Phê Dừa Đá"
-            price="$10.50 (R) / $12.50 (L) AUD"
-            ingredients="Condensed milk coffee, fresh coconut cream."
-            highlight="Gentle coconut richness with enough coffee kick — ideal if you prefer a milder brew. A summer favourite."
-            pairing="Try with Smashed Mix Fruit or an Avocado Coconut Bowl for dessert + coffee in one visit."
-            orderUrl={UBER_EATS_DEFAULT}
-          />
-
-          <ProductHeroCard
-            sttAnh={3}
-            img={cafeImg}
-            titleEn="Condensed Milk Coffee (Iced)"
-            titleVi="Cà Phê Sữa Đá"
-            price="$6.90 (S) / $8.50 (R) / $10.90 (L) AUD"
-            ingredients="Vietnamese phin coffee, condensed milk, ice."
-            highlight="Classic Vietnamese iced milk coffee — simple, strong, and never wrong. The safe choice for first-timers."
-            pairing="Order with any chè for the iconic Vietnamese combo."
-            orderUrl={UBER_EATS_DEFAULT}
-          />
+      <section className="pb-20 px-6">
+        <div className="mx-auto max-w-4xl">
+          <UberMenuGroupedList items={ICED_COFFEE} placeholderImg={cafeImg} />
         </div>
       </section>
 
       <section className="py-16 px-6 bg-card/40 border-t border-border/40">
         <div className="mx-auto max-w-2xl">
-          <h2 className="font-display text-2xl text-center text-foreground">Toppings & extras</h2>
+          <h2 className="font-display text-2xl text-center text-foreground">Add-ons & customisation</h2>
           <Accordion type="single" collapsible className="mt-8 w-full">
             <AccordionItem value="extras">
-              <AccordionTrigger className="text-foreground">Customize your drink</AccordionTrigger>
+              <AccordionTrigger className="text-foreground">Extras (from spreadsheet)</AccordionTrigger>
               <AccordionContent>
-                <ul className="space-y-2 text-sm text-muted-foreground pt-2">
-                  <li>Extra shot espresso — +$0.50</li>
-                  <li>Decaf — +$0.50</li>
-                  <li>Caramel / Hazelnut / Vanilla syrup — +$0.50</li>
-                  <li>Plant milk: Soy / Almond / Oat / Lactose-free — +$0.90</li>
+                <ul className="space-y-3 text-sm text-muted-foreground pt-2">
+                  {ICED_COFFEE_EXTRAS.map((ex) => (
+                    <li key={`${ex.nameEn}-${ex.nameVi}`} className="flex flex-wrap justify-between gap-2 border-b border-border/30 pb-2">
+                      <span>
+                        <span className="text-foreground">{ex.nameEn}</span>
+                        {ex.nameVi ? (
+                          <span className="block text-xs italic opacity-90">{ex.nameVi}</span>
+                        ) : null}
+                      </span>
+                      <span className="text-primary tabular-nums whitespace-nowrap">{ex.priceLine}</span>
+                    </li>
+                  ))}
                 </ul>
               </AccordionContent>
             </AccordionItem>

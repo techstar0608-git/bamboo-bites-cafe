@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import heroImg from "@/assets/hero-bambu.jpg";
 import cheImg from "@/assets/category-che.jpg";
-import cafeImg from "@/assets/category-cafe.jpg";
-import fingerImg from "@/assets/category-finger.jpg";
+import cafeImg from "@/assets/category-cafe.png";
+import fingerImg from "@/assets/category-finger.png";
 import { SectionLabel } from "@/components/SectionLabel";
 import { branches, UBER_EATS_CANLEY, UBER_EATS_CABRAMATTA } from "@/lib/branches";
 

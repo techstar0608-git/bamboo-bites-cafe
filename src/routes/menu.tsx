@@ -50,9 +50,8 @@ function MenuHubPage() {
             Choose a <em className="text-primary">course</em>
           </h1>
           <p className="mt-6 text-muted-foreground">
-            Each category has hero dishes, photos keyed to{" "}
-            <span className="text-foreground font-medium">STT ảnh</span>, and Uber Eats
-            ordering.
+            Iced coffee, Vietnamese bites and desserts are loaded from the latest Uber menu
+            workbook — browse by category below.
           </p>
         </div>
       </section>

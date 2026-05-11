@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SectionLabel } from "@/components/SectionLabel";
-import { ProductHeroCard } from "@/components/bambu/ProductHeroCard";
+import { UberMenuList } from "@/components/bambu/UberMenuList";
 import cheImg from "@/assets/category-che.jpg";
 import { UBER_EATS_DEFAULT } from "@/lib/branches";
+import { FRUIT_BOWLS_DESSERT, SWEET_DESSERT } from "@/data/uber-menu.generated";
 
 export const Route = createFileRoute("/sweet-desserts")({
   head: () => ({
@@ -11,37 +12,12 @@ export const Route = createFileRoute("/sweet-desserts")({
       {
         name: "description",
         content:
-          "Vietnamese chè, fruit bowls and halo halo at Bambu. Hero desserts plus full chè list — optional durian add-on.",
+          "Chè, fruit bowls, dầm trái cây — full dessert menu from the Bambu Uber spreadsheet with pickup & Uber pricing.",
       },
     ],
   }),
   component: SweetDessertsPage,
 });
-
-const otherChe = [
-  {
-    name: "Bambu Special — Chè Bambu Thập Cẩm",
-    price: "$15.50",
-    note: "Jackfruit, lychee, avocado, young coconut, red & mung beans, tamarind, coconut water",
-  },
-  {
-    name: "Ching Bo Leung — Chè Sâm Bổ Lượng",
-    price: "$14.50",
-    note: "Water chestnut, lotus seed, longan, seaweed, barley, red date",
-  },
-  {
-    name: "Panna Cotta — Chè Khúc Bạch",
-    price: "$14.90",
-    note: "Panna cotta, basil seed, lychee, pineapple, sliced almond",
-  },
-  {
-    name: "Smashed Durian — Sầu Riêng Dầm",
-    price: "$18.90",
-    note: "Durian, coconut cream, white pearls (+$3.50 extra durian on Uber Eats menu) · guest favourite",
-    badge: "Best seller" as const,
-  },
-  { name: "Bánh Flan", price: "$11.90", note: "Traditional soft custard flan" },
-];
 
 function SweetDessertsPage() {
   return (
@@ -56,8 +32,7 @@ function SweetDessertsPage() {
             Vietnamese chè, fruit bowls and ice blends made to linger over.
           </p>
           <p className="mt-2 text-sm text-muted-foreground italic">
-            Nơi bữa ăn trở thành một khoảnh khắc. Chè, dầm trái cây và đá xay — để ngồi lại
-            thật lâu.
+            Chè, dầm trái cây — cập nhật từ menu Uber 19.04.2026.
           </p>
           <a
             href={UBER_EATS_DEFAULT}
@@ -70,75 +45,31 @@ function SweetDessertsPage() {
         </div>
       </section>
 
+      <section className="py-12 px-6">
+        <div className="mx-auto max-w-3xl rounded-sm border border-primary/25 bg-primary/5 px-5 py-4 text-center text-sm text-muted-foreground">
+          <span className="text-foreground font-medium">Extra durian</span> add-on (workbook):{" "}
+          <strong className="text-primary">$4 pickup</strong> · <strong className="text-primary">$5 Uber Eats</strong>.
+          Some items list their own durian surcharges in notes.
+        </div>
+      </section>
+
       <section className="py-16 px-6">
-        <div className="mx-auto max-w-4xl space-y-16">
-          <ProductHeroCard
-            sttAnh={7}
-            img={cheImg}
-            titleEn="Pandan Noodle Sweet"
-            titleVi="Chè Bánh Lọt — Củ Năng"
-            price="$13.50 AUD"
-            ingredients="Pandan jellies, crunchy water chestnut, ruby chestnuts, shaved ice."
-            highlight="Striking colour — green noodles, red chestnuts — light, refreshing and classically Vietnamese."
-            pairing="Cool down with Cà Phê Dừa Đá or Soursop Tea."
-            orderUrl={UBER_EATS_DEFAULT}
-          />
-
-          <ProductHeroCard
-            sttAnh={8}
-            img={cheImg}
-            titleEn="Awsom Trio"
-            titleVi="Chè 3 Màu"
-            price="$13.90 AUD"
-            ingredients="Red bean, mung bean, pandan noodles, ruby chestnuts, clear jelly, peanuts, coconut cream."
-            highlight="Three bold layers — as photogenic as it is delicious. Gentle sweetness, nutty crunch, soft coconut cream."
-            pairing="Classic pairing: Cà Phê Sữa Đá — peanuts and coffee, a Vietnamese favourite."
-            orderUrl={UBER_EATS_DEFAULT}
-          />
-
-          <ProductHeroCard
-            sttAnh={9}
-            img={cheImg}
-            titleEn="Halo Halo"
-            titleVi="Chè Halo Halo"
-            price="$15.50 AUD"
-            ingredients="Rainbow jelly, coconut jelly, pandan noodles, taro ice cream, peanuts, ruby chestnuts, coconut water."
-            highlight="Our most colourful bowl — every layer a new flavour and hue. Taro ice cream melts into coconut for a mellow finish. Generous enough to share (or finish solo)."
-            pairing="Contrast the sweetness with Cà Phê Muối Đá or Trà Đào Cam Sả."
-            badges={["must-try"]}
-            orderUrl={UBER_EATS_DEFAULT}
-          />
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <SectionLabel>Chè & sweet cups</SectionLabel>
+            <h2 className="mt-4 font-display text-4xl italic text-primary">Sweet chè</h2>
+          </div>
+          <UberMenuList items={SWEET_DESSERT} placeholderImg={cheImg} compact />
         </div>
       </section>
 
       <section className="py-16 px-6 bg-card/40 border-t border-border/40">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display text-2xl text-center">More chè & desserts</h2>
-          <p className="mt-2 text-center text-sm text-muted-foreground">
-            Extra durian add-on <span className="text-foreground font-medium">+$5.00</span> where
-            available — confirm on Uber Eats.
-          </p>
-          <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-            {otherChe.map((it) => (
-              <li
-                key={it.name}
-                className="border border-border/50 bg-background/50 p-4 text-sm text-muted-foreground relative"
-              >
-                {"badge" in it && it.badge ? (
-                  <span className="absolute top-3 right-3 bg-[#1B5E20] text-white text-[0.55rem] tracking-[0.12em] uppercase px-2 py-0.5">
-                    {it.badge}
-                  </span>
-                ) : null}
-                <span className="font-display text-lg text-foreground block pr-20">
-                  {it.name} — {it.price}
-                </span>
-                <span className="mt-1 block">{it.note}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-8 text-xs text-center text-muted-foreground tracking-wide">
-            Ask staff or check Uber Eats for vegan-friendly chè options.
-          </p>
+          <div className="text-center mb-12">
+            <SectionLabel>Bowls & dầm</SectionLabel>
+            <h2 className="mt-4 font-display text-4xl italic text-primary">Fruit bowls & more</h2>
+          </div>
+          <UberMenuList items={FRUIT_BOWLS_DESSERT} placeholderImg={cheImg} compact />
         </div>
       </section>
     </>
