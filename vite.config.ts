@@ -12,4 +12,13 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  vite: {
+    preview: {
+      allowedHosts: [
+        "localhost",
+        ".run.app",
+        "bamboo-bites-cafe-236988962359.europe-west1.run.app",
+      ],
+    },
+  },
 });
