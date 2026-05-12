@@ -13,6 +13,18 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
+    // Cloudflare worker bundle uses `index.js`; TanStack preview loads `<outDir>/server.js`.
+    environments: {
+      ssr: {
+        build: {
+          rollupOptions: {
+            output: {
+              entryFileNames: "server.js",
+            },
+          },
+        },
+      },
+    },
     // Cloud Run (and any *.run.app hostname): allow the incoming Host header.
     // Listing hosts is fragile; preview + Workers dev stack may not merge lists reliably.
     server: {
