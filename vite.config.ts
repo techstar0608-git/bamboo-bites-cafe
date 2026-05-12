@@ -13,12 +13,13 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
+    // Cloud Run (and any *.run.app hostname): allow the incoming Host header.
+    // Listing hosts is fragile; preview + Workers dev stack may not merge lists reliably.
+    server: {
+      allowedHosts: true,
+    },
     preview: {
-      allowedHosts: [
-        "localhost",
-        ".run.app",
-        "bamboo-bites-cafe-236988962359.europe-west1.run.app",
-      ],
+      allowedHosts: true,
     },
   },
 });
