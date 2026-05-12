@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
-import cafeImg from "@/assets/category-cafe.jpg";
-import fingerImg from "@/assets/category-finger.jpg";
-import cheImg from "@/assets/category-che.jpg";
+import cafeImg from "@/assets/category-cafe.png";
+import fingerImg from "@/assets/category-finger.png";
+import cheImg from "@/assets/category-che.png";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({

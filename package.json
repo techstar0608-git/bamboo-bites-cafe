@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "bun run export-menu && vite build",
+    "build:docker": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
-    "export-menu": "python3 scripts/export_uber_menu.py",
+    "export-menu": "bash scripts/run_export_menu.sh",
+    "init-prod-xlsx": "bash scripts/run_export_menu.sh --init-prod-xlsx",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

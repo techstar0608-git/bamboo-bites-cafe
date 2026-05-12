@@ -1,6 +1,6 @@
 /**
- * AUTO-GENERATED from `Bambu _ Uber Menu 19.04.2026.xlsx`
- * Do not edit by hand — run: `python3 scripts/export_uber_menu.py`
+ * AUTO-GENERATED from `uber-menu-prod.xlsx`
+ * Do not edit by hand — run: `bun run export-menu` (or `python3 scripts/export_uber_menu.py`)
  */
 
 export type UberMenuRow = {
@@ -60,9 +60,9 @@ export const FRUIT_BOWLS_DESSERT: UberMenuRow[] = [
 
 export const ICED_COFFEE: UberMenuRow[] = [
   {stt: 1, nameVi: 'Cà Phê Muối (Đá)', nameEn: 'Vietnamese Salted Coffee (Iced)', nameUber: 'Vietnamese Salted Coffee (Iced) - Cà Phê Muối (Đá)', size: 'R', pricePickup: 10, priceUber: 11.5, description: 'Condensed milk cofee and salted cream', photoStt: 'https://drive.google.com/file/d/1D3ct4Pc9Dyec1b-8pq2oTzon4oeKx23I/view?usp=sharing', notes: null, },
-  {stt: 2, nameVi: 'Cà Phê Muối (Đá)', nameEn: 'Vietnamese Salted Coffee (Iced)', nameUber: 'Vietnamese Salted Coffee (Iced) - Cà Phê Muối (Đá)', size: 'L', pricePickup: 12.9, priceUber: 14.9, description: 'Condensed milk cofee and salted cream', photoStt:  'https://drive.google.com/file/d/1D3ct4Pc9Dyec1b-8pq2oTzon4oeKx23I/view?usp=sharing', notes: null, },
-  {stt: 3, nameVi: 'Cà Phê Muối (Frap)', nameEn: 'Iced Frap (Coffee)', nameUber: 'Iced Frap (Coffee) - Cà Phê Muối (Frap)', size: 'R', pricePickup: 9.9, priceUber: 11.5, description: 'Blended Condensed Milk Coffee and Salted cream', photoStt:  'https://drive.google.com/file/d/1D3ct4Pc9Dyec1b-8pq2oTzon4oeKx23I/view?usp=sharing', notes: null, },
-  {stt: 4, nameVi: 'Cà Phê Muối (Frap)', nameEn: 'Iced Frap (Coffee)', nameUber: 'Iced Frap (Coffee) - Cà Phê Muối (Frap)', size: 'L', pricePickup: 11.9, priceUber: 13.5, description: 'Blended Condensed Milk Coffee and Salted cream', photoStt:  'https://drive.google.com/file/d/1D3ct4Pc9Dyec1b-8pq2oTzon4oeKx23I/view?usp=sharing', notes: null, },
+  {stt: 2, nameVi: 'Cà Phê Muối (Đá)', nameEn: 'Vietnamese Salted Coffee (Iced)', nameUber: 'Vietnamese Salted Coffee (Iced) - Cà Phê Muối (Đá)', size: 'L', pricePickup: 12.9, priceUber: 14.9, description: 'Condensed milk cofee and salted cream', photoStt: 'https://drive.google.com/file/d/1D3ct4Pc9Dyec1b-8pq2oTzon4oeKx23I/view?usp=sharing', notes: null, },
+  {stt: 3, nameVi: 'Cà Phê Muối (Frap)', nameEn: 'Iced Frap (Coffee)', nameUber: 'Iced Frap (Coffee) - Cà Phê Muối (Frap)', size: 'R', pricePickup: 9.9, priceUber: 11.5, description: 'Blended Condensed Milk Coffee and Salted cream', photoStt: 'https://drive.google.com/file/d/1D3ct4Pc9Dyec1b-8pq2oTzon4oeKx23I/view?usp=sharing', notes: null, },
+  {stt: 4, nameVi: 'Cà Phê Muối (Frap)', nameEn: 'Iced Frap (Coffee)', nameUber: 'Iced Frap (Coffee) - Cà Phê Muối (Frap)', size: 'L', pricePickup: 11.9, priceUber: 13.5, description: 'Blended Condensed Milk Coffee and Salted cream', photoStt: 'https://drive.google.com/file/d/1D3ct4Pc9Dyec1b-8pq2oTzon4oeKx23I/view?usp=sharing', notes: null, },
   {stt: 5, nameVi: 'Cà Phê Dừa (Đá)', nameEn: 'Vietnamese Coconut Coffee (Iced)', nameUber: 'Vietnamese Coconut Coffee (Iced) - Cà Phê Dừa (Đá)', size: 'R', pricePickup: 8.9, priceUber: 10.5, description: 'Condensed Milk Coffee and coconut cream', photoStt: 'https://drive.google.com/file/d/1PVCXX1A0pGD9571_gFEjQWBVSD9Y5-4a/view?usp=sharing', notes: null, },
   {stt: 6, nameVi: 'Cà Phê Dừa (Đá)', nameEn: 'Vietnamese Coconut Coffee (Iced)', nameUber: 'Vietnamese Coconut Coffee (Iced) - Cà Phê Dừa (Đá)', size: 'L', pricePickup: 10.9, priceUber: 12.5, description: 'Condensed Milk Coffee and coconut cream', photoStt: null, notes: null, },
   {stt: 7, nameVi: 'Cà Phê Bạc Xỉu (Đá)', nameEn: 'Vietnamese White Coffee', nameUber: 'Vietnamese White Coffee - Cà Phê Bạc Xỉu (Đá)', size: 'S', pricePickup: 6, priceUber: 6.9, description: 'Condensed Milk Coffee with Creamy Fresh Milk', photoStt: 'https://drive.google.com/file/d/1V_J5eQXpylKRp45jb2nf91PlXEliBVHT/view?usp=sharing', notes: null, },

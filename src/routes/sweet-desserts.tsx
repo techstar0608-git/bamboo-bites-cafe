@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SectionLabel } from "@/components/SectionLabel";
 import { UberMenuList } from "@/components/bambu/UberMenuList";
-import cheImg from "@/assets/category-che.jpg";
+import cheImg from "@/assets/category-che.png";
 import { UBER_EATS_DEFAULT } from "@/lib/branches";
 import { FRUIT_BOWLS_DESSERT, SWEET_DESSERT } from "@/data/uber-menu.generated";
 
