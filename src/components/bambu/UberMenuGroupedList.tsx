@@ -2,10 +2,17 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { UberMenuRow } from "@/data/uber-menu.generated";
-import { formatPricePair } from "@/lib/menu-format";
 import { getProductImageUrl, isNumericPhotoStt } from "@/lib/product-images";
 import { groupMenuRowsByProductKey } from "@/lib/group-menu-rows";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  MenuCircularProductImage,
+  MenuDottedBoard,
+  MenuDottedRow,
+  MenuPriceStack,
+  pairIntoGridRows,
+  splitIntoTwoColumns,
+} from "@/components/bambu/MenuDottedBoard";
 
 type UberMenuGroupedListProps = {
   items: UberMenuRow[];
@@ -40,7 +47,13 @@ function badgeFromNotes(notes: string | null): string | null {
   return null;
 }
 
-function GroupedCard({ variants, placeholderImg }: { variants: UberMenuRow[]; placeholderImg: string }) {
+function GroupedCard({
+  variants,
+  placeholderImg,
+}: {
+  variants: UberMenuRow[];
+  placeholderImg: string;
+}) {
   const sorted = variants;
   const head = sorted[0]!;
   const sizes = sorted.map((v) => v.size).filter((s): s is string => s != null && s !== "");
@@ -66,102 +79,108 @@ function GroupedCard({ variants, placeholderImg }: { variants: UberMenuRow[]; pl
   const photoStt = photoForGroup(sorted);
 
   const productKey = head.nameUber ?? `${head.nameEn}-${head.nameVi}`;
+  const subtitle = [description, head.nameVi?.trim()].filter(Boolean).join(" · ") || undefined;
+
+  const notesExtra =
+    (notes && !badge) || (badge && notes && notes !== badge) ? notes : null;
+
+  const sizeBlock =
+    sizes.length > 1 ? (
+      <div>
+        <span className="mb-2 block text-[0.65rem] font-medium tracking-[0.18em] text-muted-foreground uppercase">
+          Size
+        </span>
+        <ToggleGroup
+          type="single"
+          value={selectedSize}
+          onValueChange={(v) => v && setSelectedSize(v)}
+          className="flex flex-wrap justify-start gap-2"
+          aria-label={`${head.nameEn} size`}
+        >
+          {sorted
+            .filter((v) => v.size != null && v.size !== "")
+            .map((v) => (
+              <ToggleGroupItem
+                key={`${productKey}-${v.size}`}
+                value={v.size!}
+                className="h-9 px-4 py-2 text-xs tracking-wider uppercase data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:hover:bg-primary/90"
+              >
+                {v.size}
+              </ToggleGroupItem>
+            ))}
+        </ToggleGroup>
+      </div>
+    ) : sizes.length === 1 ? (
+      <p className="text-[0.65rem] tracking-[0.18em] text-muted-foreground uppercase">
+        Size · {sizes[0]}
+      </p>
+    ) : null;
 
   return (
-    <li className="flex gap-4 border-b border-border/50 pb-8">
-      <div className="flex-none w-[4.5rem] sm:w-24 shrink-0">
-        <div className="relative aspect-square overflow-hidden rounded-sm border border-border/50 bg-card/30">
-          <img
-            src={imgSrc}
-            alt={head.nameEn ? `${head.nameEn} — ${head.nameVi}` : head.nameVi || ""}
-            width={128}
-            height={128}
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            className="h-full w-full object-cover"
-          />
-          {isNumericPhotoStt(photoStt) ? (
-            <span className="absolute bottom-0.5 left-0.5 bg-background/90 px-1 py-0.5 text-[0.45rem] tracking-tight uppercase text-primary leading-none">
-              {photoStt}
-            </span>
-          ) : null}
-        </div>
-      </div>
-
-      <div className="min-w-0 flex flex-col flex-1">
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <h3 className="font-display text-xl md:text-2xl text-foreground">{head.nameEn}</h3>
+    <MenuDottedRow
+      image={
+        <MenuCircularProductImage
+          src={imgSrc}
+          alt={head.nameEn ? `${head.nameEn} — ${head.nameVi}` : head.nameVi || "Menu item"}
+          photoSttBadge={
+            isNumericPhotoStt(photoStt) ? (
+              <span className="absolute bottom-0 right-0 rounded-tl bg-background/95 px-1 py-px text-[0.42rem] font-semibold uppercase leading-none text-primary shadow-sm ring-1 ring-border/60">
+                {photoStt}
+              </span>
+            ) : undefined
+          }
+        />
+      }
+      title={
+        <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span>{head.nameEn || head.nameVi}</span>
           {badge ? (
-            <span className="rounded-sm bg-primary px-2 py-0.5 text-[0.55rem] tracking-[0.12em] text-primary-foreground uppercase">
+            <span className="rounded-sm bg-primary px-1.5 py-0.5 text-[0.55rem] font-semibold tracking-[0.1em] text-primary-foreground uppercase">
               {badge}
             </span>
           ) : null}
-        </div>
-        {head.nameVi ? (
-          <p className="mt-0.5 text-sm text-muted-foreground italic">{head.nameVi}</p>
-        ) : null}
-
-        {sizes.length > 1 ? (
-          <div className="mt-4">
-            <span className="text-[0.65rem] tracking-[0.2em] uppercase text-muted-foreground block mb-2">
-              Size
-            </span>
-            <ToggleGroup
-              type="single"
-              value={selectedSize}
-              onValueChange={(v) => v && setSelectedSize(v)}
-              className="justify-start flex-wrap gap-2"
-              aria-label={`${head.nameEn} size`}
-            >
-              {sorted
-                .filter((v) => v.size != null && v.size !== "")
-                .map((v) => (
-                  <ToggleGroupItem
-                    key={`${productKey}-${v.size}`}
-                    value={v.size!}
-                    className="h-9 px-4 py-2 text-xs tracking-wider uppercase data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:hover:bg-primary/90"
-                  >
-                    {v.size}
-                  </ToggleGroupItem>
-                ))}
-            </ToggleGroup>
+        </span>
+      }
+      subtitle={subtitle}
+      price={<MenuPriceStack row={active} />}
+      below={
+        notesExtra || sizeBlock ? (
+          <div className="space-y-2">
+            {sizeBlock}
+            {notesExtra ? (
+              <p className="text-[0.7rem] leading-relaxed text-amber-800">{notesExtra}</p>
+            ) : null}
           </div>
-        ) : sizes.length === 1 ? (
-          <p className="mt-3 text-[0.65rem] tracking-[0.2em] uppercase text-muted-foreground">
-            Size · {sizes[0]}
-          </p>
-        ) : null}
-
-        <p className="mt-3 font-display text-lg text-primary tabular-nums">
-          {formatPricePair(active)}
-        </p>
-
-        {description ? (
-          <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{description}</p>
-        ) : null}
-        {notes && !badge ? (
-          <p className="mt-2 text-xs text-amber-200/90">{notes}</p>
-        ) : null}
-        {badge && notes && notes !== badge ? (
-          <p className="mt-2 text-xs text-amber-200/90">{notes}</p>
-        ) : null}
-      </div>
-    </li>
+        ) : null
+      }
+    />
   );
 }
 
 export function UberMenuGroupedList({ items, placeholderImg }: UberMenuGroupedListProps) {
   const groups = useMemo(() => groupMenuRowsByProductKey(items), [items]);
+  const [colA, colB] = splitIntoTwoColumns(groups);
+  const rows = pairIntoGridRows(colA, colB);
 
   return (
-    <ul className="space-y-8">
-      {groups.map((variants) => (
-        <GroupedCard
-          key={variants[0]!.nameUber ?? `${variants[0]!.nameEn}-${variants[0]!.nameVi}`}
-          variants={variants}
-          placeholderImg={placeholderImg}
-        />
-      ))}
-    </ul>
+    <MenuDottedBoard>
+      <div
+        role="list"
+        className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2 md:items-start md:gap-y-10 md:gap-x-16 lg:gap-x-20 xl:gap-x-28 2xl:gap-x-32"
+      >
+        {rows.flatMap(([lv, rv], rowIdx) => [
+          <div key={`grp-L-${rowIdx}`} className="min-w-0 self-start">
+            {lv ? (
+              <GroupedCard variants={lv} placeholderImg={placeholderImg} />
+            ) : null}
+          </div>,
+          <div key={`grp-R-${rowIdx}`} className="min-w-0 self-start">
+            {rv ? (
+              <GroupedCard variants={rv} placeholderImg={placeholderImg} />
+            ) : null}
+          </div>,
+        ])}
+      </div>
+    </MenuDottedBoard>
   );
 }

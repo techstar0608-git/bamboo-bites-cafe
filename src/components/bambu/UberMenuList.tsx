@@ -1,113 +1,101 @@
 import type { UberMenuRow } from "@/data/uber-menu.generated";
-import { formatPricePair } from "@/lib/menu-format";
 import { getProductImageUrl, isNumericPhotoStt } from "@/lib/product-images";
+import {
+  MenuCircularProductImage,
+  MenuDottedBoard,
+  MenuDottedRow,
+  MenuPriceStack,
+  pairIntoGridRows,
+  splitIntoTwoColumns,
+} from "@/components/bambu/MenuDottedBoard";
 
 type UberMenuListProps = {
   items: UberMenuRow[];
   placeholderImg: string;
-  /** Smaller rows without thumbnail column */
+  /** Legacy flag — layout is always dotted two-column menu board */
   compact?: boolean;
 };
 
-export function UberMenuList({ items, placeholderImg, compact }: UberMenuListProps) {
+function badgeForRow(notes: string | null | undefined): string | null {
+  if (!notes) return null;
+  if (notes.toLowerCase().includes("best") || notes === "Best Seller") return "Best Seller";
+  if (notes === "NEW" || notes.includes("NEW")) return "New";
+  return null;
+}
+
+function subtitleLine(r: UberMenuRow): string | undefined {
+  const d = r.description?.trim();
+  const v = r.nameVi?.trim();
+  if (d && v) return `${d} · ${v}`;
+  return d || v || undefined;
+}
+
+function renderRow(r: UberMenuRow, placeholderImg: string) {
+  const imgSrc = getProductImageUrl(r.photoStt, placeholderImg);
+  const badge = badgeForRow(r.notes);
+  const subtitle = subtitleLine(r);
+
+  const noteExtra =
+    (r.notes && !badge) || (badge && r.notes && r.notes !== badge) ? r.notes : null;
+
   return (
-    <ul className="space-y-8">
-      {items.map((r, idx) => {
-        const key = `${r.stt ?? "x"}-${r.nameEn}-${r.size ?? ""}-${idx}`;
-        const imgSrc = getProductImageUrl(r.photoStt, placeholderImg);
-        const badge =
-          r.notes?.toLowerCase().includes("best") || r.notes === "Best Seller"
-            ? "Best Seller"
-            : r.notes === "NEW" || r.notes?.includes("NEW")
-              ? "New"
-              : null;
-        const body = (
-          <div className="min-w-0 flex flex-col justify-center">
-            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <h3 className="font-display text-xl md:text-2xl text-foreground">{r.nameEn}</h3>
-              {r.size ? (
-                <span className="text-[0.65rem] tracking-[0.2em] uppercase text-muted-foreground">
-                  {r.size}
-                </span>
-              ) : null}
-              {badge ? (
-                <span className="rounded-sm bg-primary px-2 py-0.5 text-[0.55rem] tracking-[0.12em] text-primary-foreground uppercase">
-                  {badge}
-                </span>
-              ) : null}
-            </div>
-            {r.nameVi ? (
-              <p className="mt-0.5 text-sm text-muted-foreground italic">{r.nameVi}</p>
-            ) : null}
-            <p className="mt-2 font-display text-lg text-primary tabular-nums">
-              {formatPricePair(r)}
-            </p>
-            {r.description ? (
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{r.description}</p>
-            ) : null}
-            {r.notes && !badge ? (
-              <p className="mt-2 text-xs text-amber-200/90">{r.notes}</p>
-            ) : null}
-            {badge && r.notes && r.notes !== badge ? (
-              <p className="mt-2 text-xs text-amber-200/90">{r.notes}</p>
-            ) : null}
-          </div>
-        );
+    <MenuDottedRow
+      image={
+        <MenuCircularProductImage
+          src={imgSrc}
+          alt={r.nameEn ? `${r.nameEn} — ${r.nameVi}` : r.nameVi || "Menu item"}
+          photoSttBadge={
+            isNumericPhotoStt(r.photoStt) ? (
+              <span className="absolute bottom-0 right-0 rounded-tl bg-background/95 px-1 py-px text-[0.42rem] font-semibold uppercase leading-none text-primary shadow-sm ring-1 ring-border/60">
+                {r.photoStt}
+              </span>
+            ) : undefined
+          }
+        />
+      }
+      title={
+        <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span>{r.nameEn || r.nameVi}</span>
+          {r.size ? (
+            <span className="text-[0.65rem] font-medium tracking-[0.12em] text-muted-foreground uppercase">
+              {r.size}
+            </span>
+          ) : null}
+          {badge ? (
+            <span className="rounded-sm bg-primary px-1.5 py-0.5 text-[0.55rem] font-semibold tracking-[0.1em] text-primary-foreground uppercase">
+              {badge}
+            </span>
+          ) : null}
+        </span>
+      }
+      subtitle={subtitle}
+      price={<MenuPriceStack row={r} />}
+      below={
+        noteExtra ? <p className="text-[0.7rem] leading-relaxed text-amber-800">{noteExtra}</p> : null
+      }
+    />
+  );
+}
 
-        if (compact) {
-          return (
-            <li
-              key={key}
-              className="flex gap-4 border-b border-border/50 pb-8"
-            >
-              <div className="flex-none w-[4.5rem] sm:w-24 shrink-0">
-                <div className="relative aspect-square overflow-hidden rounded-sm border border-border/50 bg-card/30">
-                  <img
-                    src={imgSrc}
-                    alt={r.nameEn ? `${r.nameEn} — ${r.nameVi}` : r.nameVi || ""}
-                    width={128}
-                    height={128}
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                    className="h-full w-full object-cover"
-                  />
-                  {isNumericPhotoStt(r.photoStt) ? (
-                    <span className="absolute bottom-0.5 left-0.5 bg-background/90 px-1 py-0.5 text-[0.45rem] tracking-tight uppercase text-primary leading-none">
-                      {r.photoStt}
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-              {body}
-            </li>
-          );
-        }
+export function UberMenuList({ items, placeholderImg }: UberMenuListProps) {
+  const [colA, colB] = splitIntoTwoColumns(items);
+  const rows = pairIntoGridRows(colA, colB);
 
-        return (
-          <li
-            key={key}
-            className="grid sm:grid-cols-[minmax(0,140px)_1fr] md:grid-cols-[minmax(0,160px)_1fr] gap-5 border-b border-border/50 pb-10"
-          >
-            <div className="relative aspect-square md:aspect-[4/3] overflow-hidden rounded-sm border border-border/50 bg-card/30">
-              <img
-                src={imgSrc}
-                alt={r.nameEn ? `${r.nameEn} — ${r.nameVi}` : r.nameVi || "Menu item"}
-                width={320}
-                height={320}
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover"
-              />
-              {isNumericPhotoStt(r.photoStt) ? (
-                <span className="absolute bottom-2 left-2 bg-background/95 border border-primary/40 px-2 py-1 text-[0.55rem] tracking-[0.15em] uppercase text-primary">
-                  STT ảnh {r.photoStt}
-                </span>
-              ) : null}
-            </div>
-            {body}
-          </li>
-        );
-      })}
-    </ul>
+  return (
+    <MenuDottedBoard>
+      <div
+        role="list"
+        className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2 md:items-start md:gap-y-10 md:gap-x-16 lg:gap-x-20 xl:gap-x-28 2xl:gap-x-32"
+      >
+        {rows.flatMap(([l, r], rowIdx) => [
+          <div key={`menu-L-${rowIdx}`} className="min-w-0 self-start">
+            {l ? renderRow(l, placeholderImg) : null}
+          </div>,
+          <div key={`menu-R-${rowIdx}`} className="min-w-0 self-start">
+            {r ? renderRow(r, placeholderImg) : null}
+          </div>,
+        ])}
+      </div>
+    </MenuDottedBoard>
   );
 }
