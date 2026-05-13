@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:ital,opsz,wght@0,9..40,300..1000;1,9..40,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Outfit:wght@300..800&display=swap");
 
 @import "tailwindcss" source(none);
 @source "../src";
@@ -7,9 +7,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-sans: "DM Sans", system-ui, sans-serif;
-  --font-accent: "Caveat", cursive;
+  /* Editorial serif + geometric sans — warm hospitality, aligns with botanical / cafe brand */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --font-accent: "Fraunces", Georgia, "Times New Roman", serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -43,54 +44,65 @@
 :root {
   --radius: 1rem;
 
-  /* Foodily-inspired: warm cream surfaces, charcoal type, coral CTA */
-  --background: oklch(0.985 0.012 88);
-  --foreground: oklch(0.26 0.02 46);
+  /* Green-forward: sage surfaces, forest type, botanical CTA */
+  --background: oklch(0.985 0.01 150);
+  --foreground: oklch(0.26 0.025 150);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.26 0.02 46);
+  --card-foreground: oklch(0.26 0.025 150);
 
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.26 0.02 46);
+  --popover-foreground: oklch(0.26 0.025 150);
 
-  --primary: oklch(0.6 0.2 37);
-  --primary-foreground: oklch(0.99 0 0);
+  --primary: oklch(0.5 0.14 154);
+  --primary-foreground: oklch(0.99 0.004 150);
 
-  --secondary: oklch(0.95 0.02 88);
-  --secondary-foreground: oklch(0.26 0.02 46);
+  --secondary: oklch(0.95 0.02 150);
+  --secondary-foreground: oklch(0.26 0.025 150);
 
-  --muted: oklch(0.94 0.018 88);
-  --muted-foreground: oklch(0.48 0.02 52);
+  --muted: oklch(0.94 0.022 148);
+  --muted-foreground: oklch(0.46 0.03 152);
 
-  --accent: oklch(0.93 0.045 150);
-  --accent-foreground: oklch(0.3 0.06 150);
+  --accent: oklch(0.92 0.04 152);
+  --accent-foreground: oklch(0.3 0.08 154);
 
-  --gold: oklch(0.6 0.2 37);
-  --gold-foreground: oklch(0.99 0 0);
-  --cream: oklch(0.985 0.012 88);
+  --gold: oklch(0.5 0.14 154);
+  --gold-foreground: oklch(0.99 0.004 150);
+  --cream: oklch(0.985 0.01 150);
 
   --destructive: oklch(0.58 0.22 25);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.88 0.02 88);
-  --input: oklch(0.9 0.02 88);
-  --ring: oklch(0.6 0.2 37);
+  --border: oklch(0.88 0.028 150);
+  --input: oklch(0.9 0.025 150);
+  --ring: oklch(0.5 0.14 154);
 
   --gradient-hero: linear-gradient(
     165deg,
-    oklch(0.99 0.01 90) 0%,
-    oklch(0.96 0.03 78) 48%,
-    oklch(0.94 0.045 72) 100%
+    oklch(0.99 0.01 152) 0%,
+    oklch(0.97 0.025 154) 48%,
+    oklch(0.94 0.035 152) 100%
   );
-  --gradient-gold: linear-gradient(135deg, oklch(0.64 0.2 36), oklch(0.52 0.18 32));
-  --gradient-deal: linear-gradient(120deg, oklch(0.97 0.04 55) 0%, oklch(0.95 0.06 45) 100%);
-  --shadow-elegant: 0 22px 55px -18px oklch(0.22 0.03 46 / 0.14);
-  --shadow-gold: 0 14px 36px -12px oklch(0.6 0.2 37 / 0.35);
+  --gradient-gold: linear-gradient(
+    135deg,
+    oklch(0.55 0.14 154),
+    oklch(0.42 0.12 158)
+  );
+  --gradient-deal: linear-gradient(
+    120deg,
+    oklch(0.97 0.03 150) 0%,
+    oklch(0.92 0.045 156) 100%
+  );
+  --shadow-elegant: 0 22px 55px -18px oklch(0.22 0.04 154 / 0.14);
+  --shadow-gold: 0 14px 36px -12px oklch(0.5 0.14 154 / 0.32);
 
-  /* Foodily-style hero slab */
-  --hero-olive: #b5b897;
-  --hero-olive-deep: #9da382;
+  /* Hero slab — forest sage */
+  --hero-olive-deep: #3d5842;
+  --hero-olive: #4f6f55;
+  --hero-olive-soft: #7a9f80;
+  --hero-ring-offset: #5a7860;
 }
+
 
 @layer base {
   * {
@@ -119,7 +131,8 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+    font-optical-sizing: auto;
   }
 }
 
@@ -129,6 +142,9 @@
 
 @utility font-accent {
   font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 500;
+  font-optical-sizing: auto;
 }
 
 @utility bg-gradient-hero {
@@ -156,7 +172,12 @@
 }
 
 @utility bg-hero-foodily {
-  background: linear-gradient(155deg, var(--hero-olive-deep) 0%, var(--hero-olive) 52%, #c4c8a8 100%);
+  background: linear-gradient(
+    155deg,
+    var(--hero-olive-deep) 0%,
+    var(--hero-olive) 52%,
+    var(--hero-olive-soft) 100%
+  );
 }
 
 /* Home hero carousel — enter animations */

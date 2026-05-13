@@ -193,7 +193,7 @@ export function HomeHeroSlider() {
           type="button"
           onClick={scrollPrev}
           aria-label="Previous slide"
-          className="flex size-11 items-center justify-center rounded-full border border-white/40 bg-white/[0.07] text-white shadow-sm backdrop-blur-sm transition hover:bg-white/15 hover:ring-2 hover:ring-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#a3a886] md:size-[3.25rem]"
+          className="flex size-11 items-center justify-center rounded-full border border-white/40 bg-white/[0.07] text-white shadow-sm backdrop-blur-sm transition hover:bg-white/15 hover:ring-2 hover:ring-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)] md:size-[3.25rem]"
         >
           <ChevronLeft className="size-5 opacity-90 md:size-6" strokeWidth={1.5} />
         </button>
@@ -201,7 +201,7 @@ export function HomeHeroSlider() {
           type="button"
           onClick={scrollNext}
           aria-label="Next slide"
-          className="flex size-11 items-center justify-center rounded-full border border-white/40 bg-white/[0.07] text-white shadow-sm backdrop-blur-sm transition hover:bg-white/15 hover:ring-2 hover:ring-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#a3a886] md:size-[3.25rem]"
+          className="flex size-11 items-center justify-center rounded-full border border-white/40 bg-white/[0.07] text-white shadow-sm backdrop-blur-sm transition hover:bg-white/15 hover:ring-2 hover:ring-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--hero-ring-offset)] md:size-[3.25rem]"
         >
           <ChevronRight className="size-5 opacity-90 md:size-6" strokeWidth={1.5} />
         </button>
