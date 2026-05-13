@@ -10,6 +10,7 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "export-menu": "bash scripts/run_export_menu.sh",
+    "strip-hero-bg": "bash scripts/strip-hero-product-bg.sh",
     "init-prod-xlsx": "bash scripts/run_export_menu.sh --init-prod-xlsx",
     "lint": "eslint .",
     "format": "prettier --write ."

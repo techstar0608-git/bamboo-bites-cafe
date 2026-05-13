@@ -6,9 +6,12 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useRouterState,
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { cn } from "@/lib/utils";
+import faviconLogo from "@/assets/logo-bambu.png";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
@@ -88,6 +91,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: faviconLogo,
+      },
+      {
+        rel: "apple-touch-icon",
+        href: faviconLogo,
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -112,12 +124,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isHome = pathname === "/";
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen min-w-0 max-w-full flex-col overflow-x-clip">
         <SiteHeader />
-        <main className="flex-1 pt-20">
+        <main className={cn("min-w-0 flex-1 overflow-x-clip", isHome ? "pt-0" : "pt-20")}>
           <Outlet />
         </main>
         <SiteFooter />

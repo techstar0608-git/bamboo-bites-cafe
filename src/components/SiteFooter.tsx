@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { FormEvent } from "react";
+import logoBambu from "@/assets/logo-bambu.png";
 
 export function SiteFooter() {
   function onSubscribe(e: FormEvent<HTMLFormElement>) {
@@ -10,12 +11,17 @@ export function SiteFooter() {
     <footer className="bg-foreground text-background">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-2">
-          <div className="flex items-baseline gap-2">
-            <span className="font-display text-4xl text-background italic">Bambu</span>
-            <span className="text-xs tracking-[0.3em] text-background/70 uppercase">
-              Cafe & Desserts
-            </span>
-          </div>
+          <Link to="/" className="inline-block outline-none ring-primary ring-offset-2 ring-offset-foreground focus-visible:rounded-md focus-visible:ring-2">
+            <img
+              src={logoBambu}
+              alt="Bambu Desserts Cafe"
+              width={640}
+              height={360}
+              className="h-16 w-auto max-w-[220px] object-contain object-left opacity-95 sm:h-20 sm:max-w-[260px]"
+              decoding="async"
+            />
+            <span className="sr-only">Bambu Cafe &amp; Desserts — home</span>
+          </Link>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-background/75">
             Iced coffee · Vietnamese snacks · Sweet chè — two branches in Sydney&apos;s southwest,
             made for sharing.

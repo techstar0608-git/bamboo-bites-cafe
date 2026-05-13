@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import heroImg from "@/assets/hero-bambu.jpg";
 import cheImg from "@/assets/category-che.png";
 import cafeImg from "@/assets/category-cafe.png";
 import fingerImg from "@/assets/category-finger.png";
+import { HomeHeroSlider } from "@/components/HomeHeroSlider";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
 import { branches, UBER_EATS_CANLEY, UBER_EATS_CABRAMATTA } from "@/lib/branches";
 
@@ -51,77 +52,28 @@ const categories = [
 function HomePage() {
   return (
     <>
-      <section className="relative flex min-h-[92vh] items-center justify-center overflow-hidden bg-gradient-hero">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-40"
-          style={{
-            backgroundImage: `url(${heroImg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-background via-background/85 to-background/92" />
+      <HomeHeroSlider />
 
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <p className="font-accent text-3xl text-primary sm:text-4xl md:text-[2.65rem]">Made fresh daily</p>
-
-          <div className="mt-6 inline-flex items-center rounded-full border border-primary/30 bg-card/80 px-6 py-2.5 shadow-elegant backdrop-blur-sm">
-            <span className="text-[0.65rem] font-semibold tracking-[0.32em] text-primary uppercase">
-              Bambu Cafe & Desserts
-            </span>
+      <ScrollReveal variant="zoom">
+        <section className="px-6 py-28">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionLabel>Brand intro</SectionLabel>
+            <p className="mt-8 text-lg leading-relaxed text-muted-foreground text-balance">
+              Born in the heart of Sydney&apos;s southwest, Bambu Cafe & Desserts is a place built
+              around one thing: bringing people together.
+            </p>
+            <p className="mt-6 text-lg leading-relaxed text-muted-foreground text-balance">
+              From slow-brewed Vietnamese coffee to colourful dessert bowls and fresh street food
+              bites — everything on our menu is made to share, savour, and come back for.
+            </p>
+            <p className="mt-8 font-display text-2xl italic leading-relaxed text-primary">
+              Two locations. One family. Always fresh.
+            </p>
           </div>
+        </section>
+      </ScrollReveal>
 
-          <h1 className="mt-8 font-display text-6xl leading-[1.05] text-balance sm:text-7xl md:text-8xl">
-            <span className="italic text-foreground">Bambu</span>
-          </h1>
-
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed font-light text-muted-foreground sm:text-xl">
-            Where Every Sip Tells a Story — Vietnamese drinks, sweets &amp; bites in Sydney&apos;s
-            southwest.
-          </p>
-
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href={UBER_EATS_CANLEY}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-9 py-4 text-xs font-semibold tracking-[0.26em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
-            >
-              Order Now <ArrowRight className="size-4" />
-            </a>
-            <a
-              href="#find-us"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-foreground/15 bg-card/60 px-9 py-4 text-xs font-semibold tracking-[0.26em] text-foreground uppercase backdrop-blur-sm transition hover:border-primary hover:text-primary"
-            >
-              Find Us
-            </a>
-          </div>
-        </div>
-
-        <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-muted-foreground">
-          <div className="h-10 w-px bg-primary/45" />
-          <span className="text-[0.6rem] tracking-[0.38em] uppercase">Scroll</span>
-        </div>
-      </section>
-
-      <section className="px-6 py-28">
-        <div className="mx-auto max-w-3xl text-center">
-          <SectionLabel>Brand intro</SectionLabel>
-          <p className="mt-8 text-lg leading-relaxed text-muted-foreground text-balance">
-            Born in the heart of Sydney&apos;s southwest, Bambu Cafe & Desserts is a place built
-            around one thing: bringing people together.
-          </p>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground text-balance">
-            From slow-brewed Vietnamese coffee to colourful dessert bowls and fresh street food
-            bites — everything on our menu is made to share, savour, and come back for.
-          </p>
-          <p className="mt-8 font-display text-2xl italic leading-relaxed text-primary">
-            Two locations. One family. Always fresh.
-          </p>
-        </div>
-      </section>
-
+      <ScrollReveal variant="rise">
       <section className="border-y border-primary/15 bg-linear-to-br from-primary to-[oklch(0.52_0.16_34)] px-6 py-20 text-primary-foreground">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-10 text-center md:grid-cols-4 md:gap-8">
           <div>
@@ -150,7 +102,9 @@ function HomePage() {
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
+      <ScrollReveal variant="skew-in" stagger>
       <section className="bg-muted/50 px-6 py-28">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
@@ -206,7 +160,9 @@ function HomePage() {
           </p>
         </div>
       </section>
+      </ScrollReveal>
 
+      <ScrollReveal variant="pulse-up">
       <section className="bg-gradient-deal px-6 py-24">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-10 text-center lg:flex-row lg:items-center lg:justify-between lg:text-left">
           <div className="max-w-xl">
@@ -231,7 +187,9 @@ function HomePage() {
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
+      <ScrollReveal variant="corner-in">
       <section className="px-6 py-28">
         <div className="mx-auto max-w-3xl">
           <div
@@ -258,7 +216,9 @@ function HomePage() {
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
+      <ScrollReveal variant="skew-in" stagger>
       <section className="scroll-mt-28 bg-muted/40 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
@@ -307,7 +267,9 @@ function HomePage() {
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
+      <ScrollReveal variant="peek" stagger>
       <section id="find-us" className="scroll-mt-28 bg-background px-6 py-28">
         <div className="mx-auto max-w-6xl">
           <div className="mb-16 text-center">
@@ -363,7 +325,9 @@ function HomePage() {
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
+      <ScrollReveal variant="float-in">
       <section className="border-t border-border/50 px-6 py-28">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="font-display text-4xl text-balance md:text-5xl">Ready to order?</h2>
@@ -390,6 +354,7 @@ function HomePage() {
           </div>
         </div>
       </section>
+      </ScrollReveal>
     </>
   );
 }
