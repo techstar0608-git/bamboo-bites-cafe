@@ -45,7 +45,7 @@ function AboutPage() {
             loading="lazy"
             width={1536}
             height={1024}
-            className="rounded-sm shadow-elegant w-full aspect-[4/3] object-cover"
+            className="aspect-[4/3] w-full rounded-3xl object-cover shadow-elegant"
           />
           <div>
             <SectionLabel>Who we are</SectionLabel>
@@ -73,7 +73,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="py-24 px-6 bg-card/40">
+      <section className="bg-muted/50 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <SectionLabel>Values</SectionLabel>
@@ -105,9 +105,9 @@ function AboutPage() {
             ].map(({ Icon, t, tv, d }) => (
               <div
                 key={t}
-                className="border border-border bg-background p-8 hover:border-primary/50 transition-colors text-center md:text-left"
+                className="rounded-3xl border border-border bg-card p-8 text-center shadow-elegant transition-colors hover:border-primary/40 md:text-left"
               >
-                <div className="inline-flex w-14 h-14 items-center justify-center rounded-sm border border-primary/40 text-primary mx-auto md:mx-0">
+                <div className="mx-auto inline-flex size-14 items-center justify-center rounded-2xl border border-primary/35 text-primary md:mx-0">
                   <Icon className="w-6 h-6" />
                 </div>
                 <h3 className="mt-6 font-display text-2xl">{t}</h3>
@@ -132,7 +132,7 @@ function AboutPage() {
             {branches.map((b) => (
               <article
                 key={b.key}
-                className="border border-border bg-card/40 overflow-hidden rounded-sm"
+                className="overflow-hidden rounded-3xl border border-border bg-card shadow-elegant"
               >
                 <img
                   src={b.key === "canley" ? interiorImg : heroImg}
@@ -153,7 +153,7 @@ function AboutPage() {
                     href={b.uberEatsUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-[#1B5E20] text-white text-xs tracking-[0.25em] uppercase font-medium hover:opacity-90 transition"
+                    className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-xs font-semibold tracking-[0.25em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
                   >
                     Order Now <ArrowRight className="w-4 h-4" />
                   </a>

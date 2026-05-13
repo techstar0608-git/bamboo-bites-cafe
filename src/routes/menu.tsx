@@ -62,7 +62,7 @@ function MenuHubPage() {
             <Link
               key={item.to}
               to={item.to}
-              className="group block border border-border bg-card/30 overflow-hidden rounded-sm hover:border-primary/50 transition-colors"
+              className="group block overflow-hidden rounded-3xl border border-border/80 bg-card shadow-elegant transition hover:border-primary/40"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img

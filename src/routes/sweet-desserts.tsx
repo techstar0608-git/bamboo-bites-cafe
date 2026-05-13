@@ -38,15 +38,15 @@ function SweetDessertsPage() {
             href={UBER_EATS_DEFAULT}
             target="_blank"
             rel="noreferrer"
-            className="mt-8 inline-flex items-center justify-center px-8 py-4 bg-[#1B5E20] text-white text-xs tracking-[0.3em] uppercase font-medium hover:opacity-90 transition"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-xs font-semibold tracking-[0.3em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
           >
             Order Now
           </a>
         </div>
       </section>
 
-      <section className="py-12 px-6">
-        <div className="mx-auto max-w-3xl rounded-sm border border-primary/25 bg-primary/5 px-5 py-4 text-center text-sm text-muted-foreground">
+      <section className="px-6 py-12">
+        <div className="mx-auto max-w-3xl rounded-2xl border border-primary/20 bg-primary/5 px-5 py-4 text-center text-sm text-muted-foreground">
           <span className="text-foreground font-medium">Extra durian</span> add-on (workbook):{" "}
           <strong className="text-primary">$4 pickup</strong> · <strong className="text-primary">$5 Uber Eats</strong>.
           Some items list their own durian surcharges in notes.
@@ -63,7 +63,7 @@ function SweetDessertsPage() {
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-card/40 border-t border-border/40">
+      <section className="border-t border-border/40 bg-muted/50 px-6 py-16">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <SectionLabel>Bowls & dầm</SectionLabel>

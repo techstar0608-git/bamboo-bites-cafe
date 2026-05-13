@@ -31,7 +31,7 @@ export function UberMenuList({ items, placeholderImg, compact }: UberMenuListPro
                 </span>
               ) : null}
               {badge ? (
-                <span className="bg-[#1B5E20] text-white text-[0.55rem] tracking-[0.12em] uppercase px-2 py-0.5">
+                <span className="rounded-sm bg-primary px-2 py-0.5 text-[0.55rem] tracking-[0.12em] text-primary-foreground uppercase">
                   {badge}
                 </span>
               ) : null}

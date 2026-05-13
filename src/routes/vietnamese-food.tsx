@@ -39,7 +39,7 @@ function VietnameseFoodPage() {
             href={UBER_EATS_DEFAULT}
             target="_blank"
             rel="noreferrer"
-            className="mt-8 inline-flex items-center justify-center px-8 py-4 bg-[#1B5E20] text-white text-xs tracking-[0.3em] uppercase font-medium hover:opacity-90 transition"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-xs font-semibold tracking-[0.3em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
           >
             Order Now
           </a>

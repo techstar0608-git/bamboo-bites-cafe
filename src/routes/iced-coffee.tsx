@@ -39,7 +39,7 @@ function IcedCoffeePage() {
             href={UBER_EATS_DEFAULT}
             target="_blank"
             rel="noreferrer"
-            className="mt-8 inline-flex items-center justify-center px-8 py-4 bg-[#1B5E20] text-white text-xs tracking-[0.3em] uppercase font-medium hover:opacity-90 transition"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-xs font-semibold tracking-[0.3em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
           >
             Order Now
           </a>
@@ -61,7 +61,7 @@ function IcedCoffeePage() {
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-card/40 border-t border-border/40">
+      <section className="border-t border-border/40 bg-muted/50 px-6 py-16">
         <div className="mx-auto max-w-2xl">
           <h2 className="font-display text-2xl text-center text-foreground">Add-ons & customisation</h2>
           <Accordion type="single" collapsible className="mt-8 w-full">

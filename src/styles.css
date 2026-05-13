@@ -1,14 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:ital,opsz,wght@0,9..40,300..1000;1,9..40,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
 
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap");
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Cormorant Garamond", serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-accent: "Caveat", cursive;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -40,50 +41,51 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 1rem;
 
-  /* Deep forest green palette */
-  --background: oklch(0.18 0.04 155);
-  --foreground: oklch(0.96 0.02 90);
+  /* Foodily-inspired: warm cream surfaces, charcoal type, coral CTA */
+  --background: oklch(0.985 0.012 88);
+  --foreground: oklch(0.26 0.02 46);
 
-  --card: oklch(0.22 0.04 155);
-  --card-foreground: oklch(0.96 0.02 90);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.26 0.02 46);
 
-  --popover: oklch(0.22 0.04 155);
-  --popover-foreground: oklch(0.96 0.02 90);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.26 0.02 46);
 
-  --primary: oklch(0.78 0.13 85);          /* warm gold */
-  --primary-foreground: oklch(0.18 0.04 155);
+  --primary: oklch(0.6 0.2 37);
+  --primary-foreground: oklch(0.99 0 0);
 
-  --secondary: oklch(0.28 0.05 155);
-  --secondary-foreground: oklch(0.96 0.02 90);
+  --secondary: oklch(0.95 0.02 88);
+  --secondary-foreground: oklch(0.26 0.02 46);
 
-  --muted: oklch(0.26 0.04 155);
-  --muted-foreground: oklch(0.78 0.03 90);
+  --muted: oklch(0.94 0.018 88);
+  --muted-foreground: oklch(0.48 0.02 52);
 
-  --accent: oklch(0.32 0.06 150);
-  --accent-foreground: oklch(0.96 0.02 90);
+  --accent: oklch(0.93 0.045 150);
+  --accent-foreground: oklch(0.3 0.06 150);
 
-  --gold: oklch(0.78 0.13 85);
-  --gold-foreground: oklch(0.18 0.04 155);
-  --cream: oklch(0.96 0.02 90);
+  --gold: oklch(0.6 0.2 37);
+  --gold-foreground: oklch(0.99 0 0);
+  --cream: oklch(0.985 0.012 88);
 
-  --destructive: oklch(0.6 0.22 25);
-  --destructive-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.32 0.04 155 / 60%);
-  --input: oklch(0.32 0.04 155);
-  --ring: oklch(0.78 0.13 85);
+  --border: oklch(0.88 0.02 88);
+  --input: oklch(0.9 0.02 88);
+  --ring: oklch(0.6 0.2 37);
 
   --gradient-hero: linear-gradient(
-    135deg,
-    oklch(0.16 0.04 155) 0%,
-    oklch(0.22 0.05 150) 50%,
-    oklch(0.18 0.04 155) 100%
+    165deg,
+    oklch(0.99 0.01 90) 0%,
+    oklch(0.96 0.03 78) 48%,
+    oklch(0.94 0.045 72) 100%
   );
-  --gradient-gold: linear-gradient(135deg, oklch(0.82 0.14 88), oklch(0.7 0.13 75));
-  --shadow-elegant: 0 20px 60px -20px oklch(0 0 0 / 0.5);
-  --shadow-gold: 0 10px 40px -10px oklch(0.78 0.13 85 / 0.35);
+  --gradient-gold: linear-gradient(135deg, oklch(0.64 0.2 36), oklch(0.52 0.18 32));
+  --gradient-deal: linear-gradient(120deg, oklch(0.97 0.04 55) 0%, oklch(0.95 0.06 45) 100%);
+  --shadow-elegant: 0 22px 55px -18px oklch(0.22 0.03 46 / 0.14);
+  --shadow-gold: 0 14px 36px -12px oklch(0.6 0.2 37 / 0.35);
 }
 
 @layer base {
@@ -102,14 +104,21 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 }
 
 @utility font-display {
   font-family: var(--font-display);
+}
+
+@utility font-accent {
+  font-family: var(--font-accent);
 }
 
 @utility bg-gradient-hero {
@@ -118,6 +127,10 @@
 
 @utility bg-gradient-gold {
   background: var(--gradient-gold);
+}
+
+@utility bg-gradient-deal {
+  background: var(--gradient-deal);
 }
 
 @utility shadow-elegant {

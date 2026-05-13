@@ -39,7 +39,7 @@ function ContactPage() {
           {branches.map((b) => (
             <article
               key={b.key}
-              className="border border-border bg-card/40 p-10 hover:border-primary/60 transition-colors"
+              className="rounded-3xl border border-border bg-card p-10 shadow-elegant transition-colors hover:border-primary/50"
             >
               <h2 className="font-display text-3xl md:text-4xl italic text-primary">
                 {b.title}
@@ -81,7 +81,7 @@ function ContactPage() {
                   href={b.uberEatsUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#1B5E20] text-white text-xs tracking-[0.25em] uppercase font-medium hover:opacity-90 transition"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-xs font-semibold tracking-[0.25em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
                 >
                   Order on Uber Eats <ArrowRight className="w-4 h-4" />
                 </a>
@@ -89,7 +89,7 @@ function ContactPage() {
                   href={b.mapUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground text-xs tracking-[0.25em] uppercase hover:border-primary hover:text-primary transition"
+                  className="inline-flex items-center gap-2 rounded-full border-2 border-border px-7 py-3 text-xs font-semibold tracking-[0.25em] text-foreground uppercase transition hover:border-primary hover:text-primary"
                 >
                   Get Directions
                 </a>
@@ -99,7 +99,7 @@ function ContactPage() {
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-card/40">
+      <section className="bg-muted/50 px-6 py-20">
         <div className="mx-auto max-w-3xl text-center">
           <SectionLabel>Stay in touch</SectionLabel>
           <h2 className="mt-6 font-display text-4xl md:text-5xl text-balance">

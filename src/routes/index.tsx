@@ -28,6 +28,7 @@ const categories = [
     to: "/iced-coffee",
     img: cafeImg,
     desc: "Bold, slow-brewed Vietnamese coffee — perfectly iced.",
+    countLabel: "Full drink list",
   },
   {
     titleEn: "Vietnamese Food",
@@ -35,6 +36,7 @@ const categories = [
     to: "/vietnamese-food",
     img: fingerImg,
     desc: "Street snacks and dishes made fresh — familiar flavours from home.",
+    countLabel: "Snacks & plates",
   },
   {
     titleEn: "Sweet Desserts",
@@ -42,37 +44,41 @@ const categories = [
     to: "/sweet-desserts",
     img: cheImg,
     desc: "Chè, fruit bowls and ice blends meant to share and linger over.",
+    countLabel: "Chè & sweets",
   },
 ] as const;
 
 function HomePage() {
   return (
     <>
-      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-gradient-hero">
+      <section className="relative flex min-h-[92vh] items-center justify-center overflow-hidden bg-gradient-hero">
         <div
           aria-hidden
-          className="absolute inset-0 opacity-25 mix-blend-luminosity"
+          className="absolute inset-0 opacity-40"
           style={{
             backgroundImage: `url(${heroImg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/60" />
+        <div className="absolute inset-0 bg-linear-to-t from-background via-background/85 to-background/92" />
 
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <div className="inline-flex items-center gap-3 px-5 py-2 border border-primary/40 text-primary text-[0.65rem] tracking-[0.4em] uppercase">
-            <span className="h-px w-6 bg-primary" />
-            Bambu Cafe & Desserts
-            <span className="h-px w-6 bg-primary" />
+          <p className="font-accent text-3xl text-primary sm:text-4xl md:text-[2.65rem]">Made fresh daily</p>
+
+          <div className="mt-6 inline-flex items-center rounded-full border border-primary/30 bg-card/80 px-6 py-2.5 shadow-elegant backdrop-blur-sm">
+            <span className="text-[0.65rem] font-semibold tracking-[0.32em] text-primary uppercase">
+              Bambu Cafe & Desserts
+            </span>
           </div>
 
-          <h1 className="mt-10 font-display text-6xl sm:text-7xl md:text-8xl leading-[0.95] text-balance">
-            <span className="italic text-primary">Bambu</span>
+          <h1 className="mt-8 font-display text-6xl leading-[1.05] text-balance sm:text-7xl md:text-8xl">
+            <span className="italic text-foreground">Bambu</span>
           </h1>
 
-          <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-light">
-            Where Every Sip Tells a Story
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed font-light text-muted-foreground sm:text-xl">
+            Where Every Sip Tells a Story — Vietnamese drinks, sweets &amp; bites in Sydney&apos;s
+            southwest.
           </p>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
@@ -80,85 +86,85 @@ function HomePage() {
               href={UBER_EATS_CANLEY}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#1B5E20] text-white text-xs tracking-[0.3em] uppercase font-medium hover:opacity-90 transition"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-9 py-4 text-xs font-semibold tracking-[0.26em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
             >
-              Order Now <ArrowRight className="w-4 h-4" />
+              Order Now <ArrowRight className="size-4" />
             </a>
             <a
               href="#find-us"
-              className="inline-flex items-center gap-2 px-8 py-4 border border-border text-foreground text-xs tracking-[0.3em] uppercase hover:border-primary hover:text-primary transition"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-foreground/15 bg-card/60 px-9 py-4 text-xs font-semibold tracking-[0.26em] text-foreground uppercase backdrop-blur-sm transition hover:border-primary hover:text-primary"
             >
               Find Us
             </a>
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground">
-          <div className="h-12 w-px bg-primary/40" />
-          <span className="text-[0.6rem] tracking-[0.4em] uppercase">Scroll</span>
+        <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-muted-foreground">
+          <div className="h-10 w-px bg-primary/45" />
+          <span className="text-[0.6rem] tracking-[0.38em] uppercase">Scroll</span>
         </div>
       </section>
 
-      <section className="py-28 px-6">
+      <section className="px-6 py-28">
         <div className="mx-auto max-w-3xl text-center">
           <SectionLabel>Brand intro</SectionLabel>
-          <p className="mt-8 text-muted-foreground leading-relaxed text-lg text-balance">
+          <p className="mt-8 text-lg leading-relaxed text-muted-foreground text-balance">
             Born in the heart of Sydney&apos;s southwest, Bambu Cafe & Desserts is a place built
             around one thing: bringing people together.
           </p>
-          <p className="mt-6 text-muted-foreground leading-relaxed text-lg text-balance">
+          <p className="mt-6 text-lg leading-relaxed text-muted-foreground text-balance">
             From slow-brewed Vietnamese coffee to colourful dessert bowls and fresh street food
             bites — everything on our menu is made to share, savour, and come back for.
           </p>
-          <p className="mt-8 font-display text-2xl text-primary italic leading-relaxed">
+          <p className="mt-8 font-display text-2xl italic leading-relaxed text-primary">
             Two locations. One family. Always fresh.
           </p>
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-[#1B5E20] text-white">
-        <div className="mx-auto max-w-6xl grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 text-center">
+      <section className="border-y border-primary/15 bg-linear-to-br from-primary to-[oklch(0.52_0.16_34)] px-6 py-20 text-primary-foreground">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-10 text-center md:grid-cols-4 md:gap-8">
           <div>
-            <div className="font-display text-4xl md:text-5xl tabular-nums">2</div>
-            <div className="mt-2 text-[0.65rem] tracking-[0.25em] uppercase text-white/85">
+            <div className="font-display text-4xl tabular-nums md:text-5xl">2</div>
+            <div className="mt-2 text-[0.65rem] tracking-[0.26em] text-primary-foreground/90 uppercase">
               Branches in Sydney
             </div>
           </div>
           <div>
-            <div className="font-display text-4xl md:text-5xl tabular-nums">4.9 ★</div>
-            <div className="mt-2 text-[0.65rem] tracking-[0.25em] uppercase text-white/85">
+            <div className="font-display text-4xl tabular-nums md:text-5xl">4.9 ★</div>
+            <div className="mt-2 text-[0.65rem] tracking-[0.26em] text-primary-foreground/90 uppercase">
               Uber Eats · Cabramatta
             </div>
           </div>
           <div>
-            <div className="font-display text-4xl md:text-5xl tabular-nums">4.5 ★</div>
-            <div className="mt-2 text-[0.65rem] tracking-[0.25em] uppercase text-white/85">
+            <div className="font-display text-4xl tabular-nums md:text-5xl">4.5 ★</div>
+            <div className="mt-2 text-[0.65rem] tracking-[0.26em] text-primary-foreground/90 uppercase">
               Uber Eats · Canley Heights
             </div>
           </div>
           <div className="col-span-2 md:col-span-1">
-            <div className="font-display text-4xl md:text-5xl tabular-nums">100+</div>
-            <div className="mt-2 text-[0.65rem] tracking-[0.25em] uppercase text-white/85">
+            <div className="font-display text-4xl tabular-nums md:text-5xl">100+</div>
+            <div className="mt-2 text-[0.65rem] tracking-[0.26em] text-primary-foreground/90 uppercase">
               Dishes on the menu
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-28 px-6 bg-card/40">
+      <section className="bg-muted/50 px-6 py-28">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
-            <SectionLabel>Featured categories</SectionLabel>
-            <h2 className="mt-6 font-display text-5xl md:text-6xl text-balance">
-              What we&apos;re known <em className="text-primary">for</em>
+            <SectionLabel>Best for you</SectionLabel>
+            <h2 className="mt-6 font-display text-5xl text-balance md:text-6xl">
+              What we&apos;re known <em className="text-primary not-italic">for</em>
             </h2>
           </div>
 
-          <div className="mt-16 grid md:grid-cols-3 gap-8">
+          <div className="mt-16 grid gap-8 md:grid-cols-3">
             {categories.map((c) => (
               <article
                 key={c.to}
-                className="group relative overflow-hidden bg-background border border-border hover:border-primary/50 transition-colors"
+                className="group overflow-hidden rounded-3xl border border-border/60 bg-card shadow-elegant transition hover:border-primary/35 hover:shadow-gold"
               >
                 <div className="aspect-[4/5] overflow-hidden">
                   <img
@@ -171,35 +177,72 @@ function HomePage() {
                   />
                 </div>
                 <div className="p-7">
-                  <h3 className="font-display text-2xl text-primary italic">{c.titleEn}</h3>
-                  <p className="mt-1 text-[0.65rem] tracking-[0.28em] uppercase text-muted-foreground">
+                  <p className="text-[0.62rem] font-semibold tracking-[0.22em] text-muted-foreground uppercase">
+                    {c.countLabel}
+                  </p>
+                  <h3 className="mt-2 font-display text-2xl text-foreground italic">{c.titleEn}</h3>
+                  <p className="mt-1 text-[0.65rem] tracking-[0.28em] text-primary uppercase">
                     {c.titleVi}
                   </p>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{c.desc}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
                   <Link
                     to={c.to}
-                    className="mt-5 inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-foreground group-hover:text-primary transition"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-xs font-semibold tracking-[0.22em] text-foreground uppercase transition group-hover:border-primary group-hover:text-primary"
                   >
-                    See more · Xem thêm <ArrowRight className="w-3.5 h-3.5" />
+                    View menu <ArrowRight className="size-3.5" />
                   </Link>
                 </div>
               </article>
             ))}
           </div>
+
+          <p className="mt-12 text-center">
+            <Link
+              to="/menu"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-xs font-semibold tracking-[0.22em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
+            >
+              View all categories <ArrowRight className="size-4" />
+            </Link>
+          </p>
         </div>
       </section>
 
-      <section className="py-28 px-6">
+      <section className="bg-gradient-deal px-6 py-24">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-10 text-center lg:flex-row lg:items-center lg:justify-between lg:text-left">
+          <div className="max-w-xl">
+            <p className="text-xs font-semibold tracking-[0.35em] text-primary uppercase">This week</p>
+            <h2 className="mt-4 font-display text-4xl text-balance md:text-5xl">
+              Big flavours, <em className="text-primary not-italic">short wait</em>
+            </h2>
+            <p className="mt-4 text-muted-foreground leading-relaxed">
+              Order your usual or try something new — both stores fire the menu fresh through lunch,
+              dinner, and late-night dessert runs.
+            </p>
+          </div>
+          <div className="shrink-0">
+            <a
+              href={UBER_EATS_CABRAMATTA}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-10 py-4 text-xs font-semibold tracking-[0.26em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
+            >
+              Order on Uber Eats <ArrowRight className="size-4" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-28">
         <div className="mx-auto max-w-3xl">
           <div
-            className="mb-10 rounded-sm border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-center text-xs tracking-wide text-amber-100/90"
+            className="mb-10 rounded-2xl border border-amber-600/25 bg-amber-500/10 px-4 py-3 text-center text-xs tracking-wide text-amber-950/90"
             data-approval-notice
           >
-            <span className="font-semibold text-amber-200">[PENDING APPROVAL]</span> Brand
-            story copy below is placeholder — please confirm with ownership before final launch.
+            <span className="font-semibold text-amber-800">[PENDING APPROVAL]</span> Brand story
+            copy below is placeholder — please confirm with ownership before final launch.
           </div>
           <SectionLabel>Brand story</SectionLabel>
-          <div className="mt-8 space-y-6 text-muted-foreground leading-relaxed text-lg text-balance">
+          <div className="mt-8 space-y-6 text-lg leading-relaxed text-muted-foreground text-balance">
             <p>
               We opened our first store in Canley Heights in 2025 — not with a grand plan, but
               with a simple desire: to create a space that feels like home.
@@ -216,20 +259,69 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="find-us" className="py-28 px-6 bg-card/40 scroll-mt-28">
+      <section className="scroll-mt-28 bg-muted/40 px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <SectionLabel>Find us</SectionLabel>
-            <h2 className="mt-6 font-display text-5xl md:text-6xl text-balance">
-              Two <em className="text-primary">locations</em>
+          <div className="text-center">
+            <SectionLabel>Order with confidence</SectionLabel>
+            <h2 className="mt-6 font-display text-4xl text-balance md:text-5xl">
+              Uber Eats <em className="text-primary not-italic">ratings</em>
             </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground">
+              Live star ratings and review counts from our store listings — tap through to read
+              feedback on Uber Eats.
+            </p>
           </div>
-
-          <div className="grid lg:grid-cols-2 gap-10">
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
             {branches.map((b) => (
               <article
                 key={b.key}
-                className="border border-border bg-background/60 overflow-hidden rounded-sm flex flex-col"
+                className="flex flex-col rounded-3xl border border-border/70 bg-card p-8 shadow-elegant"
+              >
+                <p className="font-display text-5xl tabular-nums text-foreground">{b.uberEatsRating}</p>
+                <p className="mt-2 font-display text-xl text-primary italic">{b.title}</p>
+                <p className="mt-3 grow text-sm text-muted-foreground">{b.uberEatsReviewNote}</p>
+                <a
+                  href={b.uberEatsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-primary uppercase transition hover:underline"
+                >
+                  Store on Uber Eats <ArrowRight className="size-3.5" />
+                </a>
+              </article>
+            ))}
+            <article className="flex flex-col rounded-3xl border border-border/70 bg-card p-8 shadow-elegant">
+              <p className="font-display text-5xl tabular-nums text-foreground">100+</p>
+              <p className="mt-2 font-display text-xl italic text-primary">Dishes</p>
+              <p className="mt-3 grow text-sm text-muted-foreground">
+                Iced coffee, chè, bowls and street-food picks — browse the full workbook-backed
+                menu online.
+              </p>
+              <Link
+                to="/menu"
+                className="mt-6 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-primary uppercase transition hover:underline"
+              >
+                Browse menu hub <ArrowRight className="size-3.5" />
+              </Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="find-us" className="scroll-mt-28 bg-background px-6 py-28">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-16 text-center">
+            <SectionLabel>Find us</SectionLabel>
+            <h2 className="mt-6 font-display text-5xl text-balance md:text-6xl">
+              Two <em className="text-primary not-italic">locations</em>
+            </h2>
+          </div>
+
+          <div className="grid gap-10 lg:grid-cols-2">
+            {branches.map((b) => (
+              <article
+                key={b.key}
+                className="flex flex-col overflow-hidden rounded-3xl border border-border/80 bg-card shadow-elegant"
               >
                 <div className="aspect-[16/10] w-full bg-muted">
                   <iframe
@@ -240,8 +332,8 @@ function HomePage() {
                     referrerPolicy="no-referrer-when-downgrade"
                   />
                 </div>
-                <div className="p-8 flex flex-col flex-1">
-                  <h3 className="font-display text-3xl italic text-primary">{b.title}</h3>
+                <div className="flex flex-1 flex-col p-8">
+                  <h3 className="font-display text-3xl text-primary italic">{b.title}</h3>
                   <p className="mt-2 text-sm text-foreground">{b.addressLine}</p>
                   <p className="mt-4 text-sm text-muted-foreground">{b.hoursShort}</p>
                   <p className="mt-2 text-sm text-muted-foreground">
@@ -252,7 +344,7 @@ function HomePage() {
                       href={b.mapUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#1B5E20] text-white text-xs tracking-[0.25em] uppercase font-medium hover:opacity-90 transition"
+                      className="inline-flex items-center gap-2 rounded-full border-2 border-border px-7 py-3 text-xs font-semibold tracking-[0.22em] text-foreground uppercase transition hover:border-primary hover:text-primary"
                     >
                       Get Directions
                     </a>
@@ -260,7 +352,7 @@ function HomePage() {
                       href={b.uberEatsUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground text-xs tracking-[0.25em] uppercase hover:border-primary hover:text-primary transition"
+                      className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-xs font-semibold tracking-[0.22em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
                     >
                       Uber Eats
                     </a>
@@ -272,28 +364,28 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="py-28 px-6 border-t border-border/40">
+      <section className="border-t border-border/50 px-6 py-28">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="font-display text-4xl md:text-5xl text-balance">Ready to order?</h2>
-          <p className="mt-4 text-muted-foreground text-lg">
+          <h2 className="font-display text-4xl text-balance md:text-5xl">Ready to order?</h2>
+          <p className="mt-4 text-lg text-muted-foreground">
             Fresh drinks and desserts, delivered to your door.
           </p>
-          <div className="mt-10 flex flex-col sm:flex-row flex-wrap justify-center gap-4">
+          <div className="mt-10 flex flex-col flex-wrap justify-center gap-4 sm:flex-row">
             <a
               href={UBER_EATS_CANLEY}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#1B5E20] text-white text-xs tracking-[0.25em] uppercase font-medium hover:opacity-90 transition"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-9 py-4 text-xs font-semibold tracking-[0.22em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
             >
-              Order from Canley Heights <ArrowRight className="w-4 h-4" />
+              Order from Canley Heights <ArrowRight className="size-4" />
             </a>
             <a
               href={UBER_EATS_CABRAMATTA}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#1B5E20] text-white text-xs tracking-[0.25em] uppercase font-medium hover:opacity-90 transition"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-9 py-4 text-xs font-semibold tracking-[0.22em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
             >
-              Order from Cabramatta <ArrowRight className="w-4 h-4" />
+              Order from Cabramatta <ArrowRight className="size-4" />
             </a>
           </div>
         </div>

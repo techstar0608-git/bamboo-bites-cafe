@@ -16,22 +16,26 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-background/70 border-b border-border/40">
-      <div className="mx-auto max-w-7xl px-6 h-20 flex items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-2 group shrink-0" onClick={() => setOpen(false)}>
-          <span className="font-display italic text-3xl text-primary leading-none">Bambu</span>
-          <span className="hidden sm:inline text-[0.65rem] tracking-[0.3em] text-muted-foreground uppercase border-l border-border pl-2">
+    <header className="fixed top-0 inset-x-0 z-50 border-b border-border/80 bg-background/90 shadow-sm backdrop-blur-md">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-6">
+        <Link
+          to="/"
+          className="group flex shrink-0 items-center gap-2"
+          onClick={() => setOpen(false)}
+        >
+          <span className="font-display text-3xl leading-none text-primary italic">Bambu</span>
+          <span className="hidden border-l border-border pl-2 text-[0.65rem] uppercase tracking-[0.28em] text-muted-foreground sm:inline">
             Cafe & Desserts
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className="text-xs xl:text-sm tracking-[0.12em] xl:tracking-[0.18em] uppercase text-foreground/80 hover:text-primary transition-colors whitespace-nowrap"
-              activeProps={{ className: "text-primary" }}
+              className="whitespace-nowrap text-xs tracking-[0.14em] text-foreground/75 uppercase transition-colors hover:text-primary xl:text-sm xl:tracking-[0.18em]"
+              activeProps={{ className: "whitespace-nowrap text-xs font-semibold tracking-[0.14em] text-primary uppercase xl:text-sm xl:tracking-[0.18em]" }}
               activeOptions={{ exact: l.exact }}
             >
               {l.label}
@@ -39,18 +43,18 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex shrink-0 items-center gap-2">
           <a
             href={UBER_EATS_DEFAULT}
             target="_blank"
             rel="noreferrer"
-            className="hidden md:inline-flex items-center px-4 xl:px-5 py-2.5 text-[0.65rem] xl:text-xs tracking-[0.15em] xl:tracking-[0.2em] uppercase bg-gradient-gold text-gold-foreground font-medium rounded-sm shadow-gold hover:opacity-90 transition whitespace-nowrap"
+            className="hidden rounded-full bg-primary px-5 py-2.5 text-[0.65rem] font-semibold tracking-[0.18em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95 md:inline-flex xl:px-6 xl:text-xs xl:tracking-[0.2em]"
           >
             Order
           </a>
 
           <button
-            className="lg:hidden text-foreground p-1"
+            className="p-1 text-foreground lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -60,15 +64,15 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-border/40 bg-background/95 max-h-[calc(100vh-5rem)] overflow-y-auto">
-          <div className="px-6 py-6 flex flex-col gap-5">
+        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-border/60 bg-background lg:hidden">
+          <div className="flex flex-col gap-5 px-6 py-6">
             {links.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="text-sm tracking-[0.18em] uppercase text-foreground/80"
-                activeProps={{ className: "text-primary" }}
+                className="text-sm tracking-[0.18em] text-foreground/80 uppercase"
+                activeProps={{ className: "text-sm font-semibold tracking-[0.18em] text-primary uppercase" }}
                 activeOptions={{ exact: l.exact }}
               >
                 {l.label}
@@ -78,7 +82,7 @@ export function SiteHeader() {
               href={UBER_EATS_DEFAULT}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center px-5 py-3 text-xs tracking-[0.2em] uppercase bg-gradient-gold text-gold-foreground font-medium rounded-sm"
+              className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-xs font-semibold tracking-[0.2em] text-primary-foreground uppercase shadow-gold"
             >
               Order Now
             </a>

@@ -92,7 +92,7 @@ function GroupedCard({ variants, placeholderImg }: { variants: UberMenuRow[]; pl
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <h3 className="font-display text-xl md:text-2xl text-foreground">{head.nameEn}</h3>
           {badge ? (
-            <span className="bg-[#1B5E20] text-white text-[0.55rem] tracking-[0.12em] uppercase px-2 py-0.5">
+            <span className="rounded-sm bg-primary px-2 py-0.5 text-[0.55rem] tracking-[0.12em] text-primary-foreground uppercase">
               {badge}
             </span>
           ) : null}
@@ -119,7 +119,7 @@ function GroupedCard({ variants, placeholderImg }: { variants: UberMenuRow[]; pl
                   <ToggleGroupItem
                     key={`${productKey}-${v.size}`}
                     value={v.size!}
-                    className="text-xs uppercase tracking-wider px-4 py-2 h-9 data-[state=on]:bg-[#1B5E20] data-[state=on]:text-white data-[state=on]:hover:bg-[#1B5E20]/90"
+                    className="h-9 px-4 py-2 text-xs tracking-wider uppercase data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:hover:bg-primary/90"
                   >
                     {v.size}
                   </ToggleGroupItem>
