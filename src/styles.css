@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Outfit:wght@300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@300..800&display=swap");
 
 @import "tailwindcss" source(none);
 @source "../src";
@@ -8,9 +8,9 @@
 
 @theme inline {
   /* Editorial serif + geometric sans — warm hospitality, aligns with botanical / cafe brand */
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-sans: "Outfit", system-ui, sans-serif;
-  --font-accent: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-display: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-accent: "DM Serif Display", Georgia, "Times New Roman", serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

@@ -4,9 +4,9 @@ import aboutHeroFig from "@/assets/Bambu/about-figma/about-hero.jpg";
 import aboutBrandStoryFig from "@/assets/Bambu/about-figma/about-brand-story.jpg";
 import aboutCounterFig from "@/assets/Bambu/about-figma/about-counter.jpg";
 import aboutFruitFig from "@/assets/Bambu/about-figma/about-fruit.jpg";
-import { FigmaBambooWave } from "@/components/figma/FigmaBambooWave";
 import { FigmaPageFooter } from "@/components/figma/FigmaPageFooter";
 import { FigmaPageHero } from "@/components/figma/FigmaPageHero";
+import { LeafDivider } from "@/components/figma/LeafDivider";
 import { HomeFindUsSection } from "@/components/home/HomeFindUsSection";
 import { bambuAbout } from "@/lib/bambu-assets";
 
@@ -39,6 +39,7 @@ function AboutPage() {
         alt="Inside Bambu cafe"
         overlayTitle="Who We Are"
         overlayBreadcrumb={{ current: "About" }}
+        imageClassName="absolute left-[-160.78%] top-[-32.42%] h-[132.34%] w-[275%] max-w-none object-fill"
       />
       <div className="mx-auto max-w-3xl">
         <div className="space-y-5 px-5 py-8 text-center text-[0.8125rem] leading-relaxed tracking-[0.02em] text-[#2b2b2b] md:px-6 md:text-sm">
@@ -57,8 +58,6 @@ function AboutPage() {
             coffee to the colourful dessert bowls that become the centrepiece of every table.
           </p>
         </div>
-
-        <FigmaBambooWave />
 
         <section className="px-5 py-10 md:px-6">
           <div className="overflow-hidden rounded-2xl ring-1 ring-border/50">
@@ -123,6 +122,7 @@ function AboutPage() {
         </section>
 
         <section className="px-5 py-10 md:px-6">
+          <LeafDivider className="mb-4 text-primary" />
           <h2 className="text-center font-display text-2xl text-primary">What People Say</h2>
           <div className="mt-6 grid grid-cols-2 gap-3">
             {bambuAbout.reviews.map((src, i) => (

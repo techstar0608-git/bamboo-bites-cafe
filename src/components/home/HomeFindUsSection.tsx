@@ -8,7 +8,7 @@ export function HomeFindUsSection() {
     <section id="find-us" className="scroll-mt-28 bg-background px-5 py-14 md:px-6 md:py-20">
         <div className="mx-auto max-w-md md:max-w-4xl">
           <div className="text-center">
-            <h2 className="font-display text-2xl text-[#2b2b2b] md:text-3xl">Find Us</h2>
+            <h2 className="font-display text-2xl text-primary md:text-3xl">Find Us</h2>
             <p className="mt-2 text-sm text-[#2b2b2b]/75">
               Two locations. One family. Always fresh.
             </p>

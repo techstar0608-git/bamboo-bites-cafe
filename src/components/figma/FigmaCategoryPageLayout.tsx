@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { FigmaBambooWave } from "@/components/figma/FigmaBambooWave";
 import { FigmaPageFooter } from "@/components/figma/FigmaPageFooter";
 import { FigmaPageHero } from "@/components/figma/FigmaPageHero";
 import { FigmaPillButton } from "@/components/home/FigmaPillButton";
@@ -46,7 +45,6 @@ export function FigmaCategoryPageLayout({
           </div>
         ) : null}
       </div>
-      <FigmaBambooWave />
       <div className="mx-auto max-w-3xl px-5 py-8 md:px-6">{children}</div>
       {showFindUs ? <HomeFindUsSection /> : null}
       <FigmaPageFooter />

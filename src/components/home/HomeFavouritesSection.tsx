@@ -1,33 +1,41 @@
 import { Link } from "@tanstack/react-router";
-import { bambuBranchPhotos, bambuHomeIcedCoffee, favDessertHero } from "@/lib/bambu-assets";
+import favCoffee from "@/assets/Bambu/favourites/fav-coffee.png";
+import favFood from "@/assets/Bambu/favourites/fav-food.png";
+import favDessert from "@/assets/Bambu/favourites/fav-dessert.png";
 import { FigmaPillButton } from "@/components/home/FigmaPillButton";
+import { LeafDivider } from "@/components/figma/LeafDivider";
+import { cn } from "@/lib/utils";
 
 const favourites = [
   {
     title: "Iced Coffee →",
     to: "/iced-coffee",
-    img: bambuHomeIcedCoffee,
+    img: favCoffee,
     alt: "Iced Vietnamese coffee",
+    objectPos: "object-center",
   },
   {
     title: "Cabramatta Food →",
     to: "/vietnamese-food",
-    img: bambuBranchPhotos.cabramatta,
+    img: favFood,
     alt: "Vietnamese street food",
+    objectPos: "object-[center_88%]",
   },
   {
     title: "Sweet Desserts →",
     to: "/sweet-desserts",
-    img: favDessertHero,
+    img: favDessert,
     alt: "Sweet chè and desserts",
+    objectPos: "object-[center_70%]",
   },
 ] as const;
 
 /** Figma — Our Favourites stacked category cards */
 export function HomeFavouritesSection() {
   return (
-    <section className="bg-background px-5 py-14 md:px-6 md:py-20">
+    <section className="relative z-10 px-5 py-14 md:px-6 md:py-20">
         <div className="mx-auto max-w-md md:max-w-2xl lg:max-w-4xl">
+          <LeafDivider className="mb-4 text-primary" />
           <h2 className="text-center font-display text-2xl text-[#2b2b2b] md:text-3xl">
             Our Favourites
           </h2>
@@ -46,7 +54,7 @@ export function HomeFavouritesSection() {
                     width={340}
                     height={265}
                     loading="lazy"
-                    className="h-full w-full object-cover"
+                    className={cn("h-full w-full object-cover", item.objectPos)}
                   />
                 </div>
                 <p className="py-4 text-center text-sm font-medium tracking-[0.02em] text-[#2b2b2b]">

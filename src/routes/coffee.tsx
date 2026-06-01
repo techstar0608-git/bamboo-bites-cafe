@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FigmaCategoryPageLayout } from "@/components/figma/FigmaCategoryPageLayout";
 import { FigmaFeaturedProduct } from "@/components/figma/FigmaFeaturedProduct";
+import { LeafDivider } from "@/components/figma/LeafDivider";
 import { bambuSignature } from "@/lib/bambu-assets";
 
 export const Route = createFileRoute("/coffee")({
@@ -46,18 +47,11 @@ function CoffeePage() {
         </section>
 
         <section>
-          <h2 className="mb-4 text-center font-display text-xl text-primary">Signature Pours</h2>
-          <div className="grid grid-cols-2 gap-3 sm:gap-5">
-            <FigmaFeaturedProduct
-              name="Vietnamese Salted Coffee"
-              image={bambuSignature.salted}
-              compact
-            />
-            <FigmaFeaturedProduct
-              name="Vietnamese Coconut Coffee"
-              image={bambuSignature.coconut}
-              compact
-            />
+          <h2 className="mb-6 text-center font-display text-xl text-primary">Signature Pours</h2>
+          <div className="space-y-6">
+            <FigmaFeaturedProduct name="Vietnamese Salted Coffee" image={bambuSignature.salted} />
+            <LeafDivider className="text-primary" />
+            <FigmaFeaturedProduct name="Vietnamese Coconut Coffee" image={bambuSignature.coconut} />
           </div>
         </section>
 

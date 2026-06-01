@@ -81,7 +81,7 @@ export function HomeHeroFigma() {
                   loop
                   playsInline
                   aria-label={slide.alt}
-                  className="absolute inset-0 size-full object-cover"
+                  className="absolute inset-0 size-full object-cover object-[center_60%]"
                 />
               </div>
             </div>

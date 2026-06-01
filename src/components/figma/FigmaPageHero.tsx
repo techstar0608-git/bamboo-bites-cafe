@@ -6,6 +6,8 @@ type FigmaPageHeroProps = {
   image?: string;
   alt?: string;
   className?: string;
+  /** Override the hero image classes (e.g. to match a specific Figma crop) */
+  imageClassName?: string;
   /** Optional title overlay band (inner pages) */
   overlayTitle?: string;
   /** Optional breadcrumb shown under the overlay title */
@@ -26,6 +28,7 @@ export function FigmaPageHero({
   className,
   overlayTitle,
   overlayBreadcrumb,
+  imageClassName,
   video,
   poster,
 }: FigmaPageHeroProps) {
@@ -44,7 +47,13 @@ export function FigmaPageHero({
             className="size-full object-cover"
           />
         ) : (
-          <img src={image} alt={alt} width={390} height={540} className="size-full object-cover" />
+          <img
+            src={image}
+            alt={alt}
+            width={390}
+            height={540}
+            className={cn("size-full object-cover", imageClassName)}
+          />
         )}
         <FigmaHeroSpeckle className="h-[34%] translate-y-[42%]" />
         {overlayTitle ? (
