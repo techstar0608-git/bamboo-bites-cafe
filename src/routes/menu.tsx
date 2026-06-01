@@ -1,9 +1,12 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
-import { SectionLabel } from "@/components/SectionLabel";
-import cafeImg from "@/assets/category-cafe.png";
-import fingerImg from "@/assets/category-finger.png";
-import cheImg from "@/assets/category-che.png";
+import { createFileRoute } from "@tanstack/react-router";
+import { FigmaBambooWave } from "@/components/figma/FigmaBambooWave";
+import { FigmaMenuGrid, type FigmaMenuGridItem } from "@/components/figma/FigmaMenuGrid";
+import { FigmaPageFooter } from "@/components/figma/FigmaPageFooter";
+import { FigmaPageHero } from "@/components/figma/FigmaPageHero";
+import { FigmaPillButton } from "@/components/home/FigmaPillButton";
+import { HomeFindUsSection } from "@/components/home/HomeFindUsSection";
+import { bambuMenuGridImages, bambuMenuHero } from "@/lib/bambu-assets";
+import { UBER_EATS_DEFAULT } from "@/lib/branches";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -19,74 +22,53 @@ export const Route = createFileRoute("/menu")({
   component: MenuHubPage,
 });
 
-const links = [
-  {
-    to: "/iced-coffee",
-    titleEn: "Iced Coffee",
-    titleVi: "Cà Phê Đá",
-    img: cafeImg,
-  },
-  {
-    to: "/vietnamese-food",
-    titleEn: "Vietnamese Food",
-    titleVi: "Ăn Vặt Việt Nam",
-    img: fingerImg,
-  },
-  {
-    to: "/sweet-desserts",
-    titleEn: "Sweet Desserts",
-    titleVi: "Tráng Miệng",
-    img: cheImg,
-  },
+const MENU_LABELS = [
+  { label: "Sweet Desserts →", to: "/sweet-desserts" },
+  { label: "Fruit Bowls →", to: "/sweet-desserts" },
+  { label: "Pennywort Drinks →", to: "/pennywort" },
+  { label: "Fresh Juice →", to: "/fresh-juice" },
+  { label: "Matcha Drinks →", to: "/matcha" },
+  { label: "Fruit Drinks & Tea →", to: "/fruit-drinks-tea" },
+  { label: "Ice Blended →", to: "/ice-blended" },
+  { label: "Iced Coffee →", to: "/iced-coffee" },
+  { label: "Hot Coffee →", to: "/espresso-hot" },
+  { label: "New Drinks →", to: "/new-drink" },
+  { label: "Foods →", to: "/vietnamese-food" },
+  { label: "Smoothies →", to: "/smoothies" },
 ] as const;
+
+const MENU_GRID: FigmaMenuGridItem[] = MENU_LABELS.map((item, i) => ({
+  ...item,
+  image: bambuMenuGridImages[i] ?? bambuMenuGridImages[0],
+}));
 
 function MenuHubPage() {
   return (
-    <>
-      <section className="py-24 px-6 bg-gradient-hero text-center">
-        <div className="mx-auto max-w-3xl">
-          <SectionLabel>Menu</SectionLabel>
-          <h1 className="mt-6 font-display text-6xl md:text-7xl text-balance">
-            Choose a <em className="text-primary">course</em>
-          </h1>
-          <p className="mt-6 text-muted-foreground">
-            Iced coffee, Vietnamese bites and desserts are loaded from the latest Uber menu
-            workbook — browse by category below.
-          </p>
+    <div className="bg-cream">
+      <FigmaPageHero
+        video={bambuMenuHero.video}
+        poster={bambuMenuHero.poster}
+        alt="Bambu menu highlights"
+        overlayTitle="Our Menu"
+        overlayBreadcrumb={{ current: "Menu" }}
+      />
+      <div className="mx-auto max-w-3xl">
+        <p className="px-5 pt-8 text-center text-[0.8125rem] leading-relaxed tracking-[0.02em] text-[#2b2b2b]/85 md:px-6 md:text-sm">
+          Explore everything we have to offer — from Vietnamese coffee to desserts and street food
+          bites.
+        </p>
+        <div className="px-5 py-8 md:px-6">
+          <FigmaMenuGrid items={MENU_GRID} />
         </div>
-      </section>
-
-      <section className="py-20 px-6">
-        <div className="mx-auto max-w-5xl grid md:grid-cols-3 gap-8">
-          {links.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="group block overflow-hidden rounded-3xl border border-border/80 bg-card shadow-elegant transition hover:border-primary/40"
-            >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={item.img}
-                  alt=""
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  width={800}
-                  height={600}
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-6">
-                <h2 className="font-display text-2xl text-primary italic">{item.titleEn}</h2>
-                <p className="text-[0.65rem] tracking-[0.25em] uppercase text-muted-foreground">
-                  {item.titleVi}
-                </p>
-                <span className="mt-4 inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-foreground group-hover:text-primary transition">
-                  Open <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </Link>
-          ))}
+        <div className="flex justify-center px-5 pb-8">
+          <FigmaPillButton href={UBER_EATS_DEFAULT} target="_blank" rel="noreferrer">
+            Order Now →
+          </FigmaPillButton>
         </div>
-      </section>
-    </>
+      </div>
+      <FigmaBambooWave />
+      <HomeFindUsSection />
+      <FigmaPageFooter />
+    </div>
   );
 }

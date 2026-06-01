@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SectionLabel } from "@/components/SectionLabel";
-import { UberMenuList } from "@/components/bambu/UberMenuList";
-import cheImg from "@/assets/category-che.png";
-import { UBER_EATS_DEFAULT } from "@/lib/branches";
+import { FigmaCategoryPageLayout } from "@/components/figma/FigmaCategoryPageLayout";
+import { MenuLeaderBoard, MenuOrderNow } from "@/components/bambu/MenuLeaderBoard";
+import { bambuCategoryHero, bambuCategoryThumbs } from "@/lib/bambu-assets";
 import { FRUIT_BOWLS_DESSERT, SWEET_DESSERT } from "@/data/uber-menu.generated";
 
 export const Route = createFileRoute("/sweet-desserts")({
@@ -21,57 +20,27 @@ export const Route = createFileRoute("/sweet-desserts")({
 
 function SweetDessertsPage() {
   return (
-    <>
-      <section className="py-24 px-6 bg-gradient-hero text-center">
-        <div className="mx-auto max-w-3xl">
-          <SectionLabel>Sweet Desserts — Tráng Miệng</SectionLabel>
-          <h1 className="mt-6 font-display text-5xl md:text-7xl text-balance leading-[1.05]">
-            Where the meal becomes <em className="text-primary">a moment.</em>
-          </h1>
-          <p className="mt-6 text-muted-foreground text-lg">
-            Vietnamese chè, fruit bowls and ice blends made to linger over.
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground italic">
-            Chè, dầm trái cây — cập nhật từ menu Uber 19.04.2026.
-          </p>
-          <a
-            href={UBER_EATS_DEFAULT}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-xs font-semibold tracking-[0.3em] text-primary-foreground uppercase shadow-gold transition hover:opacity-95"
-          >
-            Order Now
-          </a>
-        </div>
-      </section>
-
-      <section className="px-6 py-12">
-        <div className="mx-auto max-w-3xl rounded-2xl border border-primary/20 bg-primary/5 px-5 py-4 text-center text-sm text-muted-foreground">
-          <span className="text-foreground font-medium">Extra durian</span> add-on (workbook):{" "}
-          <strong className="text-primary">$4 pickup</strong> · <strong className="text-primary">$5 Uber Eats</strong>.
-          Some items list their own durian surcharges in notes.
-        </div>
-      </section>
-
-      <section className="py-16 px-6">
-        <div className="mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <SectionLabel>Chè & sweet cups</SectionLabel>
-            <h2 className="mt-4 font-display text-4xl italic text-primary">Sweet chè</h2>
-          </div>
-          <UberMenuList items={SWEET_DESSERT} placeholderImg={cheImg} compact />
-        </div>
-      </section>
-
-      <section className="border-t border-border/40 bg-muted/50 px-6 py-16">
-        <div className="mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <SectionLabel>Bowls & dầm</SectionLabel>
-            <h2 className="mt-4 font-display text-4xl italic text-primary">Fruit bowls & more</h2>
-          </div>
-          <UberMenuList items={FRUIT_BOWLS_DESSERT} placeholderImg={cheImg} compact />
-        </div>
-      </section>
-    </>
+    <FigmaCategoryPageLayout
+      title="Sweet Desserts"
+      breadcrumbCurrent="Menu"
+      heroImage={bambuCategoryHero.sweetDesserts}
+      heroAlt="Sweet desserts"
+    >
+      <div className="space-y-10">
+        <MenuLeaderBoard
+          heading="Chè & sweet cups"
+          items={SWEET_DESSERT}
+          placeholderImg={bambuCategoryThumbs.dessert}
+          section="sweet-dessert"
+        />
+        <MenuLeaderBoard
+          heading="Fruit bowls & more"
+          items={FRUIT_BOWLS_DESSERT}
+          placeholderImg={bambuCategoryThumbs.dessert}
+          section="fruit-bowls"
+        />
+      </div>
+      <MenuOrderNow />
+    </FigmaCategoryPageLayout>
   );
 }

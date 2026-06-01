@@ -44,8 +44,8 @@
 :root {
   --radius: 1rem;
 
-  /* Green-forward: sage surfaces, forest type, botanical CTA */
-  --background: oklch(0.985 0.01 150);
+  /* Cream base (#FFFAF0), forest type, botanical green CTA */
+  --background: #fffaf0;
   --foreground: oklch(0.26 0.025 150);
 
   --card: oklch(1 0 0);
@@ -68,7 +68,7 @@
 
   --gold: oklch(0.5 0.14 154);
   --gold-foreground: oklch(0.99 0.004 150);
-  --cream: oklch(0.985 0.01 150);
+  --cream: #fffaf0;
 
   --destructive: oklch(0.58 0.22 25);
   --destructive-foreground: oklch(0.99 0 0);
@@ -805,4 +805,26 @@
     transform: none !important;
     transition: none !important;
   }
+}
+
+/* Decorative motion disabled site-wide */
+.scroll-reveal-scope,
+.scroll-reveal-scope * {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  clip-path: none !important;
+}
+
+.animate-ppt-slide,
+.animate-home-hero-float,
+.animate-home-hero-text,
+.animate-home-hero-img {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  clip-path: none !important;
 }

@@ -1,14 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { FormEvent } from "react";
 import logoBambu from "@/assets/logo-bambu.png";
+import { cn } from "@/lib/utils";
 
-export function SiteFooter() {
+export function SiteFooter({ className }: { className?: string }) {
   function onSubscribe(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
   }
 
   return (
-    <footer className="bg-foreground text-background">
+    <footer className={cn("bg-foreground text-background", className)}>
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-2">
           <Link to="/" className="inline-block outline-none ring-primary ring-offset-2 ring-offset-foreground focus-visible:rounded-md focus-visible:ring-2">
@@ -34,8 +35,18 @@ export function SiteFooter() {
           </h4>
           <ul className="mt-4 space-y-2.5 text-sm text-background/75">
             <li>
+              <Link to="/menu" className="transition hover:text-background">
+                Full Menu
+              </Link>
+            </li>
+            <li>
               <Link to="/iced-coffee" className="transition hover:text-background">
                 Iced Coffee
+              </Link>
+            </li>
+            <li>
+              <Link to="/fruit-drinks-tea" className="transition hover:text-background">
+                Fruit Drinks &amp; Tea
               </Link>
             </li>
             <li>

@@ -126,6 +126,29 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isHome = pathname === "/";
+  const figmaFooterRoutes = [
+    "/",
+    "/menu",
+    "/about",
+    "/contact",
+    "/sweet-desserts",
+    "/coffee",
+    "/food",
+    "/desserts",
+    "/iced-coffee",
+    "/vietnamese-food",
+    "/fruit-drinks-tea",
+    "/fresh-juice",
+    "/smoothies",
+    "/pennywort",
+    "/espresso-hot",
+    "/ice-blended",
+    "/matcha",
+    "/new-drink",
+  ] as const;
+  const hideSiteFooter = figmaFooterRoutes.includes(
+    pathname as (typeof figmaFooterRoutes)[number],
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -134,7 +157,7 @@ function RootComponent() {
         <main className={cn("min-w-0 flex-1 overflow-x-clip", isHome ? "pt-0" : "pt-20")}>
           <Outlet />
         </main>
-        <SiteFooter />
+        <SiteFooter className={cn(hideSiteFooter && "hidden")} />
       </div>
     </QueryClientProvider>
   );
