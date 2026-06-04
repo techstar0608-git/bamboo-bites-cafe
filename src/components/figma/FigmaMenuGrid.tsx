@@ -17,7 +17,7 @@ export function FigmaMenuGrid({ items }: { items: FigmaMenuGridItem[] }) {
           to={item.to}
           className="group block text-center"
         >
-          <div className="aspect-[166/197] overflow-hidden rounded-xl bg-muted/40 ring-1 ring-border/40 group-hover:ring-primary/35">
+          <div className="aspect-[166/197] overflow-hidden bg-muted/40 ring-1 ring-border/40 group-hover:ring-primary/35">
             <img
               src={item.image}
               alt={item.imageAlt ?? item.label}

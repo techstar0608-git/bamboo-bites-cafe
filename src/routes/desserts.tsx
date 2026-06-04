@@ -35,7 +35,7 @@ function DessertsPage() {
     >
       <div className="space-y-10">
         <section className="space-y-4 text-center">
-          <h2 className="font-display text-2xl text-primary">Our Dessert Story</h2>
+          <h2 className="font-display text-2xl text-heading">Our Dessert Story</h2>
           <p className="mx-auto max-w-prose text-sm leading-relaxed text-[#2b2b2b]/80">
             Bambu began with dessert. Our chè is built bowl by bowl — jackfruit, jellies, beans,
             taro and silky coconut milk over crushed ice. From the classic thập cẩm to fresh fruit
@@ -44,7 +44,7 @@ function DessertsPage() {
         </section>
 
         <section>
-          <h2 className="mb-4 text-center font-display text-xl text-primary">Sweet Favourites</h2>
+          <h2 className="mb-4 text-center font-display text-xl text-heading">Sweet Favourites</h2>
           <div className="grid grid-cols-2 gap-3 sm:gap-5">
             <FigmaFeaturedProduct name="Bambu Special Chè" image={bambuCategoryThumbs.dessert} compact />
             <FigmaFeaturedProduct name="Fresh Fruit Bowls" image={bambuCategoryThumbs.dessert} compact />

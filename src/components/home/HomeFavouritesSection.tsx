@@ -36,7 +36,7 @@ export function HomeFavouritesSection() {
     <section className="relative z-10 px-5 py-14 md:px-6 md:py-20">
         <div className="mx-auto max-w-md md:max-w-2xl lg:max-w-4xl">
           <LeafDivider className="mb-4 text-primary" />
-          <h2 className="text-center font-display text-2xl text-[#2b2b2b] md:text-3xl">
+          <h2 className="text-center font-display text-2xl text-heading md:text-3xl">
             Our Favourites
           </h2>
 

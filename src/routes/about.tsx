@@ -70,7 +70,7 @@ function AboutPage() {
               />
             </div>
           </div>
-          <h2 className="mt-8 text-center font-display text-2xl text-primary">Brand Story</h2>
+          <h2 className="mt-8 text-center font-display text-2xl text-heading">Brand Story</h2>
           <div className="mt-6 space-y-4 text-center text-[0.8125rem] leading-relaxed tracking-[0.02em] text-[#2b2b2b] md:text-sm">
             <p>Some cafes are built around a drink. Bambu was built around a table.</p>
             <p>
@@ -102,7 +102,7 @@ function AboutPage() {
               </div>
             ))}
           </div>
-          <h2 className="mt-10 text-center font-display text-2xl text-primary">Value Pillars</h2>
+          <h2 className="mt-10 text-center font-display text-2xl text-heading">Value Pillars</h2>
           <img
             src={valuePillarsImg}
             alt="Vietnamese Roots, Made to Share, Rooted in the Community"
@@ -123,7 +123,7 @@ function AboutPage() {
 
         <section className="px-5 py-10 md:px-6">
           <LeafDivider className="mb-4 text-primary" />
-          <h2 className="text-center font-display text-2xl text-primary">What People Say</h2>
+          <h2 className="text-center font-display text-2xl text-heading">What People Say</h2>
           <div className="mt-6 grid grid-cols-2 gap-3">
             {bambuAbout.reviews.map((src, i) => (
               <div

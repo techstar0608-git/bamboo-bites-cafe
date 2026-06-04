@@ -28,6 +28,20 @@ import menuNewDrinks from "@/assets/Bambu/Menu/ChatGPT Image 19_34_21 31 thg 5, 
 import menuFoods from "@/assets/Bambu/Menu/ChatGPT Image 20_10_53 31 thg 5, 2026.png";
 import menuSmoothies from "@/assets/Bambu/Menu/ChatGPT Image 19_42_14 31 thg 5, 2026.png";
 
+// — Menu hub category thumbnails downloaded from Figma (mapped by category name) —
+import catSweetDesserts from "@/assets/Bambu/Menu/figma-categories/cat-sweet-desserts.png";
+import catFruitBowls from "@/assets/Bambu/Menu/figma-categories/cat-fruit-bowls.png";
+import catPennywort from "@/assets/Bambu/Menu/figma-categories/cat-pennywort.png";
+import catFreshJuice from "@/assets/Bambu/Menu/figma-categories/cat-fresh-juice.png";
+import catMatcha from "@/assets/Bambu/Menu/figma-categories/cat-matcha.png";
+import catFruitDrinksTea from "@/assets/Bambu/Menu/figma-categories/cat-fruit-drinks-tea.png";
+import catIceBlended from "@/assets/Bambu/Menu/figma-categories/cat-ice-blended.png";
+import catIcedCoffee from "@/assets/Bambu/Menu/figma-categories/cat-iced-coffee.png";
+import catHotCoffee from "@/assets/Bambu/Menu/figma-categories/cat-hot-coffee.png";
+import catNewDrinks from "@/assets/Bambu/Menu/figma-categories/cat-new-drinks.png";
+import catFoods from "@/assets/Bambu/Menu/figma-categories/cat-foods.png";
+import catSmoothies from "@/assets/Bambu/Menu/figma-categories/cat-smoothies.png";
+
 // — About —
 import aboutHero from "@/assets/Bambu/About Us/DSC05098.jpg";
 import aboutValue1 from "@/assets/Bambu/About Us/DSC05124.jpg";
@@ -36,10 +50,10 @@ import aboutValue3 from "@/assets/Bambu/About Us/DSC05108.jpg";
 import aboutReview1 from "@/assets/Bambu/About Us/review.png";
 import aboutReview2 from "@/assets/Bambu/About Us/review 2.png";
 
-// — Signature coffee —
-import signatureSalted from "@/assets/Bambu/Signature/coffee/best 1.jpg";
-import signatureCoconut from "@/assets/Bambu/Signature/coffee/Ultra_realistic_Vietnamese_café_beverage_202605312023.jpeg";
-import signatureHero from "@/assets/Bambu/Signature/coffee/ChatGPT Image 23_23_10 31 thg 5, 2026.png";
+// — Signature coffee (Signature Pours images downloaded from Figma) —
+import signatureSalted from "@/assets/Bambu/Signature/coffee/figma-salted-coffee.jpg";
+import signatureCoconut from "@/assets/Bambu/Signature/coffee/figma-coconut-coffee.png";
+import signatureHero from "@/assets/Bambu/Signature/coffee/figma-coffee-hero.jpg";
 
 // — Category thumbnails (product folders) —
 import thumbCoffee from "@/assets/Bambu/Ảnh sản phẩm/6.Iced Coffee/Bản sao của 46.png";
@@ -62,20 +76,27 @@ export const bambuMenuHero = {
   poster: menuIcedCoffee,
 } as const;
 
-export const bambuMenuGridImages = [
-  menuSweetDesserts,
-  menuFruitBowls,
-  menuPennywort,
-  menuFreshJuice,
-  menuMatcha,
-  menuFruitDrinksTea,
-  menuIceBlended,
-  menuIcedCoffee,
-  menuHotCoffee,
-  menuNewDrinks,
-  menuFoods,
-  menuSmoothies,
-] as const;
+/**
+ * Menu hub category thumbnails — keyed by destination route so each label on
+ * the Our Menu grid shows its correct Figma representative image.
+ * Smoothies has no Figma cell, so it keeps the existing themed photo.
+ */
+export const bambuMenuCategoryByRoute: Record<string, string> = {
+  "/sweet-desserts": catSweetDesserts,
+  "/pennywort": catPennywort,
+  "/fresh-juice": catFreshJuice,
+  "/matcha": catMatcha,
+  "/fruit-drinks-tea": catFruitDrinksTea,
+  "/ice-blended": catIceBlended,
+  "/iced-coffee": catIcedCoffee,
+  "/espresso-hot": catHotCoffee,
+  "/new-drink": catNewDrinks,
+  "/vietnamese-food": catFoods,
+  "/smoothies": catSmoothies,
+};
+
+/** Figma "Fruit Bowls" cell uses its own image even though it links to desserts. */
+export const bambuMenuFruitBowls = catFruitBowls;
 
 /** Per-category hero = the themed photo shown for it on the Our Menu hub */
 export const bambuCategoryHero = {

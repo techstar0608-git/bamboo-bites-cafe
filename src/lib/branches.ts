@@ -13,6 +13,10 @@ export type Branch = {
   mapUrl: string;
   mapEmbedSrc: string;
   hoursShort: string;
+  /** Figma Find Us card — structured opening hours */
+  hours: { weekdayLabel: string; weekdayTime: string; weekendLabel: string; weekendTime: string };
+  ratingValue: string;
+  reviewCount: string;
   uberEatsRating: string;
   uberEatsReviewNote: string;
   uberEatsUrl: string;
@@ -28,6 +32,14 @@ export const branches: Branch[] = [
     mapEmbedSrc:
       "https://maps.google.com/maps?q=226+Canley+Vale+Road,+Canley+Heights+NSW+2166&z=15&output=embed",
     hoursShort: "Mon–Thu · 7:00 AM – 10:00 PM · Fri–Sun · 7:00 AM – 11:00 PM",
+    hours: {
+      weekdayLabel: "Mon – Thurs:",
+      weekdayTime: "7:00am – 22:00pm",
+      weekendLabel: "Fri – Sun:",
+      weekendTime: "7:00am – 23:00pm",
+    },
+    ratingValue: "4.5",
+    reviewCount: "45 reviews",
     uberEatsRating: "4.5 ★",
     uberEatsReviewNote: "Uber Eats — 45 reviews",
     uberEatsUrl: UBER_EATS_CANLEY,
@@ -41,6 +53,14 @@ export const branches: Branch[] = [
     mapEmbedSrc:
       "https://maps.google.com/maps?q=Shop+16/47+Park+Road,+Cabramatta+NSW+2166&z=15&output=embed",
     hoursShort: "Mon–Thu · 7:00 AM – 10:00 PM · Fri–Sun · 7:00 AM – 11:00 PM",
+    hours: {
+      weekdayLabel: "Mon – Thurs:",
+      weekdayTime: "7:00am – 22:00pm",
+      weekendLabel: "Fri – Sun:",
+      weekendTime: "7:00am – 23:00pm",
+    },
+    ratingValue: "4.9",
+    reviewCount: "13 reviews",
     uberEatsRating: "4.9 ★",
     uberEatsReviewNote: "Uber Eats — 13 reviews",
     uberEatsUrl: UBER_EATS_CABRAMATTA,

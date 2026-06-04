@@ -31,13 +31,13 @@ function CoffeePage() {
       title="Coffee"
       breadcrumbCurrent="Coffee"
       intro={intro}
-      heroImage={bambuSignature.coconut}
+      heroImage={bambuSignature.hero}
       heroAlt="Signature Bambu coffee"
       orderCta={false}
     >
       <div className="space-y-10">
         <section className="space-y-4 text-center">
-          <h2 className="font-display text-2xl text-primary">Our Coffee Story</h2>
+          <h2 className="font-display text-2xl text-heading">Our Coffee Story</h2>
           <p className="mx-auto max-w-prose text-sm leading-relaxed text-[#2b2b2b]/80">
             Every cup at Bambu starts with robusta beans roasted dark and brewed slow. It's the
             taste of Saigon street corners and family kitchens — strong enough to stand up to ice,
@@ -47,7 +47,7 @@ function CoffeePage() {
         </section>
 
         <section>
-          <h2 className="mb-6 text-center font-display text-xl text-primary">Signature Pours</h2>
+          <h2 className="mb-6 text-center font-display text-xl text-heading">Signature Pours</h2>
           <div className="space-y-6">
             <FigmaFeaturedProduct name="Vietnamese Salted Coffee" image={bambuSignature.salted} />
             <LeafDivider className="text-primary" />

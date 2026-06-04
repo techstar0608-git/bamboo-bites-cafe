@@ -5,7 +5,11 @@ import { FigmaPageFooter } from "@/components/figma/FigmaPageFooter";
 import { FigmaPageHero } from "@/components/figma/FigmaPageHero";
 import { FigmaPillButton } from "@/components/home/FigmaPillButton";
 import { HomeFindUsSection } from "@/components/home/HomeFindUsSection";
-import { bambuMenuGridImages, bambuMenuHero } from "@/lib/bambu-assets";
+import {
+  bambuMenuCategoryByRoute,
+  bambuMenuFruitBowls,
+  bambuMenuHero,
+} from "@/lib/bambu-assets";
 import { UBER_EATS_DEFAULT } from "@/lib/branches";
 
 export const Route = createFileRoute("/menu")({
@@ -22,11 +26,13 @@ export const Route = createFileRoute("/menu")({
   component: MenuHubPage,
 });
 
+// Order mirrors the Figma "Our Menu" grid (row by row, left → right).
 const MENU_LABELS = [
   { label: "Sweet Desserts →", to: "/sweet-desserts" },
-  { label: "Fruit Bowls →", to: "/sweet-desserts" },
-  { label: "Pennywort Drinks →", to: "/pennywort" },
+  { label: "Fruit Bowls →", to: "/fruit-bowls" },
+  { label: "Smoothies →", to: "/smoothies" },
   { label: "Fresh Juice →", to: "/fresh-juice" },
+  { label: "Pennywort Drinks →", to: "/pennywort" },
   { label: "Matcha Drinks →", to: "/matcha" },
   { label: "Fruit Drinks & Tea →", to: "/fruit-drinks-tea" },
   { label: "Ice Blended →", to: "/ice-blended" },
@@ -34,12 +40,13 @@ const MENU_LABELS = [
   { label: "Hot Coffee →", to: "/espresso-hot" },
   { label: "New Drinks →", to: "/new-drink" },
   { label: "Foods →", to: "/vietnamese-food" },
-  { label: "Smoothies →", to: "/smoothies" },
 ] as const;
 
-const MENU_GRID: FigmaMenuGridItem[] = MENU_LABELS.map((item, i) => ({
+const MENU_GRID: FigmaMenuGridItem[] = MENU_LABELS.map((item) => ({
   ...item,
-  image: bambuMenuGridImages[i] ?? bambuMenuGridImages[0],
+  image: item.label.startsWith("Fruit Bowls")
+    ? bambuMenuFruitBowls
+    : (bambuMenuCategoryByRoute[item.to] ?? bambuMenuFruitBowls),
 }));
 
 function MenuHubPage() {

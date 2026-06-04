@@ -21,7 +21,7 @@ export function MenuLeaderBoard({ heading, items, placeholderImg, section }: Men
   return (
     <section>
       {heading ? (
-        <h2 className="mb-3 text-center font-display text-xl text-primary">{heading}</h2>
+        <h2 className="mb-3 text-center font-display text-xl text-heading">{heading}</h2>
       ) : null}
       <div className="rounded-2xl border border-dashed border-primary/40 bg-card/40 p-4 shadow-sm sm:p-6 md:p-8">
         <ul role="list" className="space-y-7 md:space-y-8">

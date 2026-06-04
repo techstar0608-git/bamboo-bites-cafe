@@ -36,7 +36,7 @@ function FoodPage() {
     >
       <div className="space-y-10">
         <section className="space-y-4 text-center">
-          <h2 className="font-display text-2xl text-primary">Our Food Story</h2>
+          <h2 className="font-display text-2xl text-heading">Our Food Story</h2>
           <p className="mx-auto max-w-prose text-sm leading-relaxed text-[#2b2b2b]/80">
             From grilled skewers and crispy bites to hearty rice and noodle plates, every dish at
             Bambu is a taste of home. We cook the way our families do — fresh herbs, bold sauces and
@@ -46,7 +46,7 @@ function FoodPage() {
         </section>
 
         <section>
-          <h2 className="mb-4 text-center font-display text-xl text-primary">Kitchen Favourites</h2>
+          <h2 className="mb-4 text-center font-display text-xl text-heading">Kitchen Favourites</h2>
           <div className="grid grid-cols-2 gap-3 sm:gap-5">
             <FigmaFeaturedProduct name="Cabramatta Plates" image={bambuCategoryThumbs.food} compact />
             <FigmaFeaturedProduct name="Canley Heights Bites" image={bambuAbout.values[1]} compact />

@@ -19,6 +19,7 @@ import { Route as MatchaRouteImport } from './routes/matcha'
 import { Route as IcedCoffeeRouteImport } from './routes/iced-coffee'
 import { Route as IceBlendedRouteImport } from './routes/ice-blended'
 import { Route as FruitDrinksTeaRouteImport } from './routes/fruit-drinks-tea'
+import { Route as FruitBowlsRouteImport } from './routes/fruit-bowls'
 import { Route as FreshJuiceRouteImport } from './routes/fresh-juice'
 import { Route as FoodRouteImport } from './routes/food'
 import { Route as EspressoHotRouteImport } from './routes/espresso-hot'
@@ -78,6 +79,11 @@ const FruitDrinksTeaRoute = FruitDrinksTeaRouteImport.update({
   path: '/fruit-drinks-tea',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FruitBowlsRoute = FruitBowlsRouteImport.update({
+  id: '/fruit-bowls',
+  path: '/fruit-bowls',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FreshJuiceRoute = FreshJuiceRouteImport.update({
   id: '/fresh-juice',
   path: '/fresh-juice',
@@ -128,6 +134,7 @@ export interface FileRoutesByFullPath {
   '/espresso-hot': typeof EspressoHotRoute
   '/food': typeof FoodRoute
   '/fresh-juice': typeof FreshJuiceRoute
+  '/fruit-bowls': typeof FruitBowlsRoute
   '/fruit-drinks-tea': typeof FruitDrinksTeaRoute
   '/ice-blended': typeof IceBlendedRoute
   '/iced-coffee': typeof IcedCoffeeRoute
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/espresso-hot': typeof EspressoHotRoute
   '/food': typeof FoodRoute
   '/fresh-juice': typeof FreshJuiceRoute
+  '/fruit-bowls': typeof FruitBowlsRoute
   '/fruit-drinks-tea': typeof FruitDrinksTeaRoute
   '/ice-blended': typeof IceBlendedRoute
   '/iced-coffee': typeof IcedCoffeeRoute
@@ -169,6 +177,7 @@ export interface FileRoutesById {
   '/espresso-hot': typeof EspressoHotRoute
   '/food': typeof FoodRoute
   '/fresh-juice': typeof FreshJuiceRoute
+  '/fruit-bowls': typeof FruitBowlsRoute
   '/fruit-drinks-tea': typeof FruitDrinksTeaRoute
   '/ice-blended': typeof IceBlendedRoute
   '/iced-coffee': typeof IcedCoffeeRoute
@@ -191,6 +200,7 @@ export interface FileRouteTypes {
     | '/espresso-hot'
     | '/food'
     | '/fresh-juice'
+    | '/fruit-bowls'
     | '/fruit-drinks-tea'
     | '/ice-blended'
     | '/iced-coffee'
@@ -211,6 +221,7 @@ export interface FileRouteTypes {
     | '/espresso-hot'
     | '/food'
     | '/fresh-juice'
+    | '/fruit-bowls'
     | '/fruit-drinks-tea'
     | '/ice-blended'
     | '/iced-coffee'
@@ -231,6 +242,7 @@ export interface FileRouteTypes {
     | '/espresso-hot'
     | '/food'
     | '/fresh-juice'
+    | '/fruit-bowls'
     | '/fruit-drinks-tea'
     | '/ice-blended'
     | '/iced-coffee'
@@ -252,6 +264,7 @@ export interface RootRouteChildren {
   EspressoHotRoute: typeof EspressoHotRoute
   FoodRoute: typeof FoodRoute
   FreshJuiceRoute: typeof FreshJuiceRoute
+  FruitBowlsRoute: typeof FruitBowlsRoute
   FruitDrinksTeaRoute: typeof FruitDrinksTeaRoute
   IceBlendedRoute: typeof IceBlendedRoute
   IcedCoffeeRoute: typeof IcedCoffeeRoute
@@ -336,6 +349,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FruitDrinksTeaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fruit-bowls': {
+      id: '/fruit-bowls'
+      path: '/fruit-bowls'
+      fullPath: '/fruit-bowls'
+      preLoaderRoute: typeof FruitBowlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/fresh-juice': {
       id: '/fresh-juice'
       path: '/fresh-juice'
@@ -404,6 +424,7 @@ const rootRouteChildren: RootRouteChildren = {
   EspressoHotRoute: EspressoHotRoute,
   FoodRoute: FoodRoute,
   FreshJuiceRoute: FreshJuiceRoute,
+  FruitBowlsRoute: FruitBowlsRoute,
   FruitDrinksTeaRoute: FruitDrinksTeaRoute,
   IceBlendedRoute: IceBlendedRoute,
   IcedCoffeeRoute: IcedCoffeeRoute,

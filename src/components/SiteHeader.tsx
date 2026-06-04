@@ -48,10 +48,20 @@ export function SiteHeader() {
         open && "max-h-dvh overflow-hidden",
       )}
     >
-      <div className="mx-auto flex h-20 w-full max-w-7xl shrink-0 items-center justify-between gap-4 px-6">
+      <div className="relative mx-auto flex h-20 w-full max-w-7xl shrink-0 items-center justify-between gap-4 px-6">
+        <button
+          type="button"
+          className="relative z-1 inline-flex min-h-10 min-w-10 shrink-0 items-center justify-center rounded-lg bg-background p-1.5 text-foreground ring-1 ring-border/65 shadow-sm lg:hidden [&_svg]:size-6"
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+        >
+          {open ? <X className="size-6 shrink-0" /> : <Menu className="size-6 shrink-0" />}
+        </button>
+
         <Link
           to="/"
-          className="group flex shrink-0 items-center gap-2 outline-none ring-primary ring-offset-2 ring-offset-background focus-visible:rounded-md focus-visible:ring-2"
+          className="group absolute left-1/2 flex shrink-0 -translate-x-1/2 items-center gap-2 outline-none ring-primary ring-offset-2 ring-offset-background focus-visible:rounded-md focus-visible:ring-2 lg:static lg:left-auto lg:translate-x-0"
           onClick={() => setOpen(false)}
         >
           <img
@@ -78,7 +88,7 @@ export function SiteHeader() {
           </TopLink>
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-2">
           <a
             href={UBER_EATS_DEFAULT}
             target="_blank"
@@ -87,16 +97,6 @@ export function SiteHeader() {
           >
             Order
           </a>
-
-          <button
-            type="button"
-            className="relative z-[1] inline-flex min-h-10 min-w-10 shrink-0 items-center justify-center rounded-lg bg-background p-1.5 text-foreground ring-1 ring-border/65 shadow-sm lg:hidden [&_svg]:size-6"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-          >
-            {open ? <X className="size-6 shrink-0" /> : <Menu className="size-6 shrink-0" />}
-          </button>
         </div>
       </div>
 

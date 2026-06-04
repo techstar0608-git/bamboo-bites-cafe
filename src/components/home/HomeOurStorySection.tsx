@@ -15,7 +15,7 @@ export function HomeOurStorySection() {
         />
 
         <div className="relative mx-auto max-w-xl md:max-w-2xl">
-          <h2 className="font-display text-2xl leading-snug text-[#2b2b2b] md:text-3xl">
+          <h2 className="font-display text-2xl leading-snug text-heading md:text-3xl">
             Two locations. One family.
             <br />
             Always fresh.
