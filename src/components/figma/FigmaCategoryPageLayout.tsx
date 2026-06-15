@@ -40,7 +40,7 @@ export function FigmaCategoryPageLayout({
         {orderCta ? (
           <div className="flex justify-center px-5 pb-8">
             <FigmaPillButton href={UBER_EATS_DEFAULT} target="_blank" rel="noreferrer">
-              Order Now →
+              Order in Uber →
             </FigmaPillButton>
           </div>
         ) : null}

@@ -84,7 +84,7 @@ export function HomeFindUsSection() {
                 rel="noreferrer"
                 className="mx-auto inline-flex items-center gap-2 rounded-full bg-[#BD9C30] px-7 py-2.5 text-sm font-medium text-background shadow-gold transition hover:bg-[#a8892a]"
               >
-                Order Now
+                Order in Uber
                 <img src={iconOpen} alt="" aria-hidden className="size-4" />
               </a>
             </article>

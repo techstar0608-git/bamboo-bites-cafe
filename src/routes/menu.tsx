@@ -1,16 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FigmaBambooWave } from "@/components/figma/FigmaBambooWave";
-import { FigmaMenuGrid, type FigmaMenuGridItem } from "@/components/figma/FigmaMenuGrid";
 import { FigmaPageFooter } from "@/components/figma/FigmaPageFooter";
 import { FigmaPageHero } from "@/components/figma/FigmaPageHero";
-import { FigmaPillButton } from "@/components/home/FigmaPillButton";
 import { HomeFindUsSection } from "@/components/home/HomeFindUsSection";
 import {
-  bambuMenuCategoryByRoute,
-  bambuMenuFruitBowls,
-  bambuMenuHero,
-} from "@/lib/bambu-assets";
-import { UBER_EATS_DEFAULT } from "@/lib/branches";
+  MenuCategoryExplorer,
+  type MenuCategory,
+} from "@/components/bambu/MenuCategoryExplorer";
+import { bambuCategoryThumbs, bambuMenuHero } from "@/lib/bambu-assets";
+import {
+  ESPRESSO_HOT,
+  FOOD_CABRAMATTA,
+  FOOD_CANLEY_HEIGHTS,
+  FRESH_JUICE,
+  FRUIT_BOWLS_DESSERT,
+  FRUIT_DRINKS_TEA,
+  ICE_BLENDED,
+  ICED_COFFEE,
+  MATCHA,
+  NEW_DRINK,
+  PENNYWORT,
+  SMOOTHIES,
+  SWEET_DESSERT,
+} from "@/data/uber-menu.generated";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -19,35 +31,79 @@ export const Route = createFileRoute("/menu")({
       {
         name: "description",
         content:
-          "Browse iced coffee, Vietnamese street snacks and sweet desserts — each course has its own page with photos and STT ảnh references.",
+          "Browse our full menu on one page — iced coffee, Vietnamese street snacks and sweet desserts, grouped by category with photos and pricing.",
       },
     ],
   }),
   component: MenuHubPage,
 });
 
-// Order mirrors the Figma "Our Menu" grid (row by row, left → right).
-const MENU_LABELS = [
-  { label: "Sweet Desserts →", to: "/sweet-desserts" },
-  { label: "Fruit Bowls →", to: "/fruit-bowls" },
-  { label: "Smoothies →", to: "/smoothies" },
-  { label: "Fresh Juice →", to: "/fresh-juice" },
-  { label: "Pennywort Drinks →", to: "/pennywort" },
-  { label: "Matcha Drinks →", to: "/matcha" },
-  { label: "Fruit Drinks & Tea →", to: "/fruit-drinks-tea" },
-  { label: "Ice Blended →", to: "/ice-blended" },
-  { label: "Iced Coffee →", to: "/iced-coffee" },
-  { label: "Hot Coffee →", to: "/espresso-hot" },
-  { label: "New Drinks →", to: "/new-drink" },
-  { label: "Foods →", to: "/vietnamese-food" },
-] as const;
+const { coffee, dessert, food } = bambuCategoryThumbs;
 
-const MENU_GRID: FigmaMenuGridItem[] = MENU_LABELS.map((item) => ({
-  ...item,
-  image: item.label.startsWith("Fruit Bowls")
-    ? bambuMenuFruitBowls
-    : (bambuMenuCategoryByRoute[item.to] ?? bambuMenuFruitBowls),
-}));
+// Order mirrors the Figma "Our Menu" grid. Each entry becomes a chip + a section.
+const MENU_CATEGORIES: MenuCategory[] = [
+  {
+    id: "sweet-desserts",
+    label: "Sweet Desserts",
+    boards: [
+      { heading: "Chè & sweet cups", items: SWEET_DESSERT, placeholderImg: dessert, section: "sweet-dessert" },
+      { heading: "Fruit bowls & more", items: FRUIT_BOWLS_DESSERT, placeholderImg: dessert, section: "fruit-bowls" },
+    ],
+  },
+  {
+    id: "smoothies",
+    label: "Smoothies",
+    boards: [{ items: SMOOTHIES, placeholderImg: coffee, section: "smoothies" }],
+  },
+  {
+    id: "fresh-juice",
+    label: "Fresh Juice",
+    boards: [{ items: FRESH_JUICE, placeholderImg: coffee, section: "fresh-juice" }],
+  },
+  {
+    id: "pennywort",
+    label: "Pennywort Drinks",
+    boards: [{ items: PENNYWORT, placeholderImg: coffee, section: "pennywort" }],
+  },
+  {
+    id: "matcha",
+    label: "Matcha Drinks",
+    boards: [{ items: MATCHA, placeholderImg: coffee, section: "matcha" }],
+  },
+  {
+    id: "fruit-drinks-tea",
+    label: "Fruit Drinks & Tea",
+    boards: [{ items: FRUIT_DRINKS_TEA, placeholderImg: coffee, section: "fruit-drinks" }],
+  },
+  {
+    id: "ice-blended",
+    label: "Ice Blended",
+    boards: [{ items: ICE_BLENDED, placeholderImg: coffee, section: "ice-blended" }],
+  },
+  {
+    id: "iced-coffee",
+    label: "Iced Coffee",
+    boards: [{ items: ICED_COFFEE, placeholderImg: coffee, section: "iced-coffee" }],
+  },
+  {
+    id: "hot-coffee",
+    label: "Hot Coffee",
+    boards: [{ items: ESPRESSO_HOT, placeholderImg: coffee, section: "espresso-hot" }],
+  },
+  {
+    id: "new-drinks",
+    label: "New Drinks",
+    boards: [{ items: NEW_DRINK, placeholderImg: coffee, section: "new-drink" }],
+  },
+  {
+    id: "foods",
+    label: "Foods",
+    boards: [
+      { heading: "Cabramatta", items: FOOD_CABRAMATTA, placeholderImg: food, section: "food" },
+      { heading: "Canley Heights", items: FOOD_CANLEY_HEIGHTS, placeholderImg: food, section: "food" },
+    ],
+  },
+];
 
 function MenuHubPage() {
   return (
@@ -59,20 +115,11 @@ function MenuHubPage() {
         overlayTitle="Our Menu"
         overlayBreadcrumb={{ current: "Menu" }}
       />
-      <div className="mx-auto max-w-3xl">
-        <p className="px-5 pt-8 text-center text-[0.8125rem] leading-relaxed tracking-[0.02em] text-[#2b2b2b]/85 md:px-6 md:text-sm">
-          Explore everything we have to offer — from Vietnamese coffee to desserts and street food
-          bites.
-        </p>
-        <div className="px-5 py-8 md:px-6">
-          <FigmaMenuGrid items={MENU_GRID} />
-        </div>
-        <div className="flex justify-center px-5 pb-8">
-          <FigmaPillButton href={UBER_EATS_DEFAULT} target="_blank" rel="noreferrer">
-            Order Now →
-          </FigmaPillButton>
-        </div>
-      </div>
+      <p className="mx-auto max-w-3xl px-5 pt-8 text-center text-[0.8125rem] leading-relaxed tracking-[0.02em] text-[#2b2b2b]/85 md:px-6 md:text-sm">
+        Explore everything we have to offer — from Vietnamese coffee to desserts and street food
+        bites.
+      </p>
+      <MenuCategoryExplorer categories={MENU_CATEGORIES} />
       <FigmaBambooWave />
       <HomeFindUsSection />
       <FigmaPageFooter />

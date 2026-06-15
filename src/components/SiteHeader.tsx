@@ -122,7 +122,7 @@ export function SiteHeader() {
               rel="noreferrer"
               className="mt-2 inline-flex w-full max-w-full shrink-0 items-center justify-center break-words rounded-full bg-[#BD9C30] px-5 py-3 text-center text-xs font-semibold tracking-[0.2em] text-white uppercase shadow-gold"
             >
-              Order Now
+              Order in Uber
             </a>
           </nav>
         </div>

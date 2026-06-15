@@ -8,6 +8,13 @@ import { cn } from "@/lib/utils";
 
 const favourites = [
   {
+    title: "Sweet Desserts →",
+    to: "/sweet-desserts",
+    img: favDessert,
+    alt: "Sweet chè and desserts",
+    objectPos: "object-[center_70%]",
+  },
+  {
     title: "Iced Coffee →",
     to: "/iced-coffee",
     img: favCoffee,
@@ -15,18 +22,11 @@ const favourites = [
     objectPos: "object-center",
   },
   {
-    title: "Cabramatta Food →",
+    title: "Food →",
     to: "/vietnamese-food",
     img: favFood,
     alt: "Vietnamese street food",
     objectPos: "object-[center_88%]",
-  },
-  {
-    title: "Sweet Desserts →",
-    to: "/sweet-desserts",
-    img: favDessert,
-    alt: "Sweet chè and desserts",
-    objectPos: "object-[center_70%]",
   },
 ] as const;
 
