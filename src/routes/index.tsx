@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HomeCategoryStrip } from "@/components/home/HomeCategoryStrip";
-import { HomeFavouritesSection } from "@/components/home/HomeFavouritesSection";
+import { HomePopularSection } from "@/components/home/HomePopularSection";
 import { HomeFindUsSection } from "@/components/home/HomeFindUsSection";
 import { HomeHeroFigma } from "@/components/home/HomeHeroFigma";
 import { HomeLocalsStatsSection } from "@/components/home/HomeLocalsStatsSection";
+import { HomeNewDrinkSection } from "@/components/home/HomeNewDrinkSection";
 import { HomeOurStorySection } from "@/components/home/HomeOurStorySection";
 import { FigmaPageFooter } from "@/components/figma/FigmaPageFooter";
 
@@ -27,7 +28,8 @@ function HomePage() {
       <HomeHeroFigma />
       <HomeCategoryStrip />
       <HomeOurStorySection />
-      <HomeFavouritesSection />
+      <HomeNewDrinkSection />
+      <HomePopularSection />
       <HomeLocalsStatsSection />
       <HomeFindUsSection />
       <FigmaPageFooter />

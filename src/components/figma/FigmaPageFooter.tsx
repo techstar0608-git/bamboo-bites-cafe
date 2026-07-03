@@ -5,7 +5,10 @@ import { Link } from "@tanstack/react-router";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight, Facebook, Instagram, Mail, Phone } from "lucide-react";
 import { branches } from "@/lib/branches";
-import { bambuAbout } from "@/lib/bambu-assets";
+import footerStorefront from "@/assets/Bambu/homepage/footer-gallery/footer-1.jpg";
+import footerFruitStand from "@/assets/Bambu/homepage/footer-gallery/footer-2.jpg";
+import footerHotPairing from "@/assets/Bambu/homepage/footer-gallery/footer-3.png";
+import footerBreakDoneRight from "@/assets/Bambu/homepage/footer-gallery/footer-4.png";
 
 const FOOTER_LINKS = [
   { to: "/", label: "Home", exact: true },
@@ -19,8 +22,13 @@ const SOCIAL = [
   { href: "https://www.instagram.com/", label: "Instagram", icon: Instagram },
 ] as const;
 
-/** Four About-Us photos shown in the footer carousel */
-const GALLERY = [bambuAbout.hero, ...bambuAbout.values] as const;
+/** Footer carousel photos downloaded from the Bambu Figma file */
+const GALLERY = [
+  footerStorefront,
+  footerFruitStand,
+  footerHotPairing,
+  footerBreakDoneRight,
+] as const;
 
 const AUTOPLAY_MS = 4000;
 
@@ -50,7 +58,7 @@ export function FigmaPageFooter() {
           <div className="flex touch-pan-y">
             {GALLERY.map((src, i) => (
               <div key={i} className="min-w-0 shrink-0 grow-0 basis-full">
-                <div className="aspect-[16/10] w-full overflow-hidden md:aspect-[21/9]">
+                <div className="aspect-[39/35] w-full overflow-hidden sm:aspect-[16/10] lg:aspect-[16/7]">
                   <img
                     src={src}
                     alt=""

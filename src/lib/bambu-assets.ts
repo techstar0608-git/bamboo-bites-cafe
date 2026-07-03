@@ -4,9 +4,9 @@
  */
 
 // — homepage —
-import homeHeroVideo1 from "@/assets/Bambu/homepage/create_clip_202605312219.mp4";
-import homeHeroVideo2 from "@/assets/Bambu/homepage/tạo_clip_cho_ảnh_202605312238.mp4";
-import homeHeroVideo3 from "@/assets/Bambu/homepage/Tạo_clip_đổ_nước_cốt_202605312237.mp4";
+import homeHeroStorefront from "@/assets/Bambu/homepage/figma-hero-storefront.png";
+import homeHeroTropicalDrinks from "@/assets/Bambu/homepage/figma-hero-tropical-drinks.png";
+import homeHeroSignatureCoffee from "@/assets/Bambu/homepage/figma-hero-signature-coffee.jpg";
 import homeHeroStill from "@/assets/Bambu/homepage/032626.png";
 import homeIcedCoffee from "@/assets/Bambu/homepage/032603.png";
 import homeBranchCabramatta from "@/assets/Bambu/homepage/032626.png";
@@ -60,10 +60,26 @@ import thumbCoffee from "@/assets/Bambu/Ảnh sản phẩm/6.Iced Coffee/Bản s
 import thumbFood from "@/assets/Bambu/Ảnh sản phẩm/12. FOOD/Bản sao của 1.png";
 import thumbDessert from "@/assets/Bambu/Ảnh sản phẩm/1.Sweet Dessert/Bản sao của 1.png";
 
+/** Figma homepage hero carousel — 3 images downloaded from the Bambu Figma file */
 export const bambuHomeHeroSlides = [
-  { id: "clip-1", type: "video" as const, src: homeHeroVideo1, poster: homeHeroStill, alt: "Bambu cafe drinks" },
-  { id: "clip-2", type: "video" as const, src: homeHeroVideo2, poster: homeHeroStill, alt: "Fresh Bambu beverages" },
-  { id: "clip-3", type: "video" as const, src: homeHeroVideo3, poster: homeHeroStill, alt: "Pouring Bambu coffee" },
+  {
+    id: "storefront",
+    type: "image" as const,
+    src: homeHeroStorefront,
+    alt: "Illustration of the Bambu Cafe & Desserts storefront",
+  },
+  {
+    id: "tropical-drinks",
+    type: "image" as const,
+    src: homeHeroTropicalDrinks,
+    alt: "Bambu tropical drinks and street food on a jungle backdrop",
+  },
+  {
+    id: "signature-coffee",
+    type: "image" as const,
+    src: homeHeroSignatureCoffee,
+    alt: "Bambu signature Vietnamese iced coffees",
+  },
 ] as const;
 
 export const bambuBranchPhotos = {

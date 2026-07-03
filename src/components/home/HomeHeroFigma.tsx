@@ -5,12 +5,11 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { bambuHomeHeroSlides } from "@/lib/bambu-assets";
 import { FIGMA_HERO_FRAME } from "@/components/figma/FigmaPageHero";
-import { FigmaHeroSpeckle } from "@/components/figma/FigmaHeroSpeckle";
 import { FigmaPillButton } from "@/components/home/FigmaPillButton";
 
 const AUTOPLAY_MS = 4000;
 
-/** Figma hero — full-bleed carousel with Bambu videos + Explore Our Menu */
+/** Figma hero — full-bleed carousel with Bambu images + Explore Our Menu */
 export function HomeHeroFigma() {
   const sectionRef = useRef<HTMLElement>(null);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
@@ -73,14 +72,9 @@ export function HomeHeroFigma() {
           {bambuHomeHeroSlides.map((slide) => (
             <div key={slide.id} className="min-w-0 shrink-0 grow-0 basis-full">
               <div className={FIGMA_HERO_FRAME}>
-                <video
+                <img
                   src={slide.src}
-                  poster={slide.poster}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  aria-label={slide.alt}
+                  alt={slide.alt}
                   className="absolute inset-0 size-full object-cover object-[center_60%]"
                 />
               </div>
@@ -89,14 +83,12 @@ export function HomeHeroFigma() {
         </div>
       </div>
 
-      <FigmaHeroSpeckle className="z-0 h-[36%] translate-y-[34%] lg:h-[26%] lg:translate-y-[40%]" />
-
       <div className="pointer-events-none absolute inset-x-0 top-20 bottom-0 flex items-center justify-between px-4 sm:px-6 lg:px-8">
         <button
           type="button"
           onClick={scrollPrev}
           aria-label="Previous slide"
-          className="pointer-events-auto flex size-14 items-center justify-center rounded-full bg-white/90 text-[#2b2b2b] shadow-md transition hover:bg-white"
+          className="pointer-events-auto flex size-14 items-center justify-center rounded-full border border-white/90 bg-transparent text-white/90 transition hover:border-white hover:text-white"
         >
           <ChevronLeft className="size-6" strokeWidth={1.25} />
         </button>
@@ -104,7 +96,7 @@ export function HomeHeroFigma() {
           type="button"
           onClick={scrollNext}
           aria-label="Next slide"
-          className="pointer-events-auto flex size-14 items-center justify-center rounded-full bg-white/90 text-[#2b2b2b] shadow-md transition hover:bg-white"
+          className="pointer-events-auto flex size-14 items-center justify-center rounded-full border border-white/90 bg-transparent text-white/90 transition hover:border-white hover:text-white"
         >
           <ChevronRight className="size-6" strokeWidth={1.25} />
         </button>

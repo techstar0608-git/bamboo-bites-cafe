@@ -46,30 +46,30 @@ export function HomeLocalsStatsSection() {
           Thank you for supporting our family business
         </p>
 
-        {/* Figma: 4 cards, each 76×105 (W×H), 15px gap — taller than wide, top-weighted */}
-        <div className="mt-10 grid grid-cols-4 gap-3 sm:gap-4">
+        {/* Figma: 2×2 grid of 146×202 cards */}
+        <div className="mx-auto mt-10 grid max-w-xs grid-cols-2 gap-4 sm:max-w-sm sm:gap-6">
           {stats.map((stat) => (
             <article
               key={stat.label + stat.sub}
-              className="flex h-full flex-col items-center rounded-2xl bg-white px-1 py-4 shadow-sm ring-1 ring-border/40"
+              className="flex h-full flex-col items-center rounded-[19px] bg-white px-3 py-6 shadow-sm ring-1 ring-border/40"
             >
-              <p className="flex items-center justify-center font-display text-3xl tabular-nums leading-none text-heading sm:text-4xl">
+              <p className="flex items-center justify-center font-display text-4xl tabular-nums leading-none text-heading sm:text-5xl">
                 {stat.value}
                 {stat.showStar ? (
-                  <Star className="ml-0.5 inline size-4 fill-heading text-heading sm:size-5" />
+                  <Star className="ml-1 inline size-5 fill-heading text-heading sm:size-6" />
                 ) : null}
               </p>
 
-              <img src={leafLine} alt="" aria-hidden className="my-1.5 w-[80%]" />
+              <img src={leafLine} alt="" aria-hidden className="my-3 w-[80%]" />
 
-              <div className="flex h-8 items-center justify-center">
+              <div className="flex h-10 items-center justify-center">
                 <StatBadge badge={stat.badge} />
               </div>
 
-              <p className="mt-2 whitespace-nowrap text-[0.625rem] font-semibold leading-tight text-[#2b2b2b] sm:text-xs">
+              <p className="mt-3 whitespace-nowrap text-xs font-semibold leading-tight text-[#2b2b2b] sm:text-sm">
                 {stat.label}
               </p>
-              <p className="mt-0.5 whitespace-nowrap text-[0.5625rem] leading-tight text-[#2b2b2b]/60 sm:text-[0.625rem]">
+              <p className="mt-1 whitespace-nowrap text-[0.6875rem] leading-tight text-[#2b2b2b]/60 sm:text-xs">
                 {stat.sub}
               </p>
             </article>
