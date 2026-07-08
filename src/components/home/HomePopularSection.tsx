@@ -29,14 +29,14 @@ import { FigmaPillButton } from "@/components/home/FigmaPillButton";
 import { UBER_EATS_DEFAULT } from "@/lib/branches";
 import { cn } from "@/lib/utils";
 
-const AUTOPLAY_MS = 4500;
-
 type Slide = {
   name: string;
   /** inner gradient backdrop (Figma 256×340 at 26,35 inside the 308×410 cream card) */
   card: string;
   /** floating-elements layer — animated, sits between backdrop and subject */
   fx: string;
+  /** per-slide fx placement when the Figma layer is offset from the card */
+  fxClass?: string;
   /** dish cut-out — static top layer */
   subject: string;
   /** positioning for subjects that are not full-canvas (e.g. Grilled Bread plate) */
@@ -54,7 +54,14 @@ const slides: Slide[] = [
     subject: mixedFlanSubject,
   },
   { name: "Pitaschio Sweet", card: pistachioCard, fx: pistachioFx, subject: pistachioSubject },
-  { name: "Passion & Calamansi", card: passionCard, fx: passionFx, subject: passionSubject },
+  {
+    name: "Passion & Calamansi",
+    card: passionCard,
+    fx: passionFx,
+    /* Figma places this fx layer 7px lower than the card so the lemon hides behind the cup */
+    fxClass: "left-0 top-[1.7%] w-full",
+    subject: passionSubject,
+  },
   {
     name: "Grilled Bread w Chilli Salt",
     card: grilledBreadCard,
@@ -70,9 +77,54 @@ const slides: Slide[] = [
  * backdrop at the bottom, floating-ingredients layer animating in the middle,
  * dish cut-out on top (Pinterest "carousel animation in Figma" reference).
  */
+/**
+ * Continuous per-slide "closeness to center" (0..1), updated on every scroll
+ * frame. Handles Embla loop points so slides at the wrap seam don't read a
+ * wrong distance (which showed two enlarged cards at once).
+ */
+function useCenterCloseness(emblaApi: ReturnType<typeof useEmblaCarousel>[1]) {
+  const [values, setValues] = useState<number[]>([]);
+
+  const onScroll = useCallback(() => {
+    if (!emblaApi) return;
+    const engine = emblaApi.internalEngine();
+    const scrollProgress = emblaApi.scrollProgress();
+
+    const next = emblaApi.scrollSnapList().map((scrollSnap, index) => {
+      let diffToTarget = scrollSnap - scrollProgress;
+      if (engine.options.loop) {
+        engine.slideLooper.loopPoints.forEach((loopItem) => {
+          const target = loopItem.target();
+          if (index === loopItem.index && target !== 0) {
+            const sign = Math.sign(target);
+            if (sign === -1) diffToTarget = scrollSnap - (1 + scrollProgress);
+            if (sign === 1) diffToTarget = scrollSnap + (1 - scrollProgress);
+          }
+        });
+      }
+      return Math.max(0, 1 - Math.abs(diffToTarget * slides.length));
+    });
+    setValues(next);
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onScroll();
+    emblaApi.on("scroll", onScroll);
+    emblaApi.on("reInit", onScroll);
+    return () => {
+      emblaApi.off("scroll", onScroll);
+      emblaApi.off("reInit", onScroll);
+    };
+  }, [emblaApi, onScroll]);
+
+  return values;
+}
+
 export function HomePopularSection() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center" });
   const [selected, setSelected] = useState(0);
+  const closeness = useCenterCloseness(emblaApi);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -87,16 +139,6 @@ export function HomePopularSection() {
     };
   }, [emblaApi]);
 
-  useEffect(() => {
-    if (!emblaApi) return;
-    const reduced =
-      typeof window.matchMedia === "function" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return undefined;
-    const id = window.setInterval(() => emblaApi.scrollNext(), AUTOPLAY_MS);
-    return () => window.clearInterval(id);
-  }, [emblaApi]);
-
   return (
     <section className="relative z-10 overflow-hidden bg-cream px-0 py-14 md:py-20">
       <div className="mx-auto max-w-md px-5 md:max-w-2xl md:px-6">
@@ -108,18 +150,21 @@ export function HomePopularSection() {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex touch-pan-y">
             {slides.map((slide, index) => {
-              const active = index === selected;
+              /* 0 = far from center, 1 = centered — drives every layer, no CSS transitions so drag stays in sync */
+              const t = closeness[index] ?? (index === selected ? 1 : 0);
+              const cardScale = 0.78 + 0.22 * t;
+              /* ends at exactly 1.0 so fx elements land where the designer placed them (they hide behind the subject) */
+              const fxScale = 0.55 + 0.45 * t;
+              const fxOpacity = t * t;
               return (
                 <div
                   key={slide.name}
-                  className="min-w-0 shrink-0 grow-0 basis-[82%] pl-4 sm:basis-85"
+                  className="min-w-0 shrink-0 grow-0 basis-[70%] pl-4 sm:basis-85"
                 >
                   <div className="relative pt-10">
                     <div
-                      className={cn(
-                        "relative aspect-308/410 overflow-visible rounded-[20px] bg-[#FCEDD9] shadow-[0px_4px_12px_rgba(0,0,0,0.12)] transition-all duration-700 ease-out",
-                        active ? "scale-100 opacity-100" : "scale-[0.92] opacity-60",
-                      )}
+                      className="relative aspect-308/410 overflow-visible rounded-[20px] bg-[#FCEDD9] shadow-[0px_4px_12px_rgba(0,0,0,0.12)]"
+                      style={{ transform: `scale(${cardScale})`, opacity: 0.55 + 0.45 * t }}
                     >
                       {/* layer 1 — gradient backdrop */}
                       <img
@@ -131,7 +176,7 @@ export function HomePopularSection() {
                         loading="lazy"
                         className="absolute left-[8.4%] top-[8.5%] w-[83.1%] rounded-2xl"
                       />
-                      {/* layer 2 — floating elements, animated behind the subject */}
+                      {/* layer 2 — floating elements burst outward from the card center */}
                       <img
                         src={slide.fx}
                         alt=""
@@ -140,30 +185,24 @@ export function HomePopularSection() {
                         height={1448}
                         loading="lazy"
                         className={cn(
-                          "pointer-events-none absolute inset-0 w-full transition-all duration-700 ease-out",
-                          active
-                            ? "translate-y-[-6%] scale-110 opacity-100 delay-150"
-                            : "translate-y-[3%] scale-100 opacity-0",
+                          "pointer-events-none absolute origin-center",
+                          slide.fxClass ?? "inset-0 w-full",
                         )}
+                        style={{ transform: `scale(${fxScale})`, opacity: fxOpacity }}
                       />
                       {/* layer 3 — dish subject on top */}
                       <img
                         src={slide.subject}
                         alt={slide.name}
                         loading="lazy"
-                        className={cn(
-                          "absolute transition-all duration-700 ease-out",
-                          slide.subjectClass ?? "inset-0 w-full",
-                          active ? "scale-100 opacity-100" : "scale-95 opacity-90",
-                        )}
+                        className={cn("absolute", slide.subjectClass ?? "inset-0 w-full")}
+                        style={{ transform: `scale(${0.94 + 0.06 * t})` }}
                       />
                     </div>
 
                     <p
-                      className={cn(
-                        "mt-4 text-center text-base font-bold tracking-wider text-[#2b2b2b] transition-opacity duration-500",
-                        active ? "opacity-100 delay-200" : "opacity-0",
-                      )}
+                      className="mt-4 text-center text-base font-bold tracking-wider text-[#2b2b2b]"
+                      style={{ opacity: t }}
                     >
                       {slide.name}
                     </p>
