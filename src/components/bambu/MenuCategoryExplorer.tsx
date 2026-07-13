@@ -21,9 +21,35 @@ export type MenuCategory = {
 
 /** Fixed site header height (h-20 = 80px) — the category bar sticks just below it. */
 const HEADER_HEIGHT = 80;
-/** Category bar height — sections offset by header + bar so headings clear both. */
-const BAR_HEIGHT = 56;
+/** Category bar height (title row + underline tabs) — sections offset by header + bar. */
+const BAR_HEIGHT = 92;
 const STICKY_OFFSET = HEADER_HEIGHT + BAR_HEIGHT;
+
+function ListIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="8" y1="6" x2="21" y2="6" />
+      <line x1="8" y1="12" x2="21" y2="12" />
+      <line x1="8" y1="18" x2="21" y2="18" />
+      <line x1="3" y1="6" x2="3.01" y2="6" />
+      <line x1="3" y1="12" x2="3.01" y2="12" />
+      <line x1="3" y1="18" x2="3.01" y2="18" />
+    </svg>
+  );
+}
+
+function ClipboardIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+      <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+      <line x1="9" y1="12" x2="9.01" y2="12" />
+      <line x1="13" y1="12" x2="16" y2="12" />
+      <line x1="9" y1="16" x2="9.01" y2="16" />
+      <line x1="13" y1="16" x2="16" y2="16" />
+    </svg>
+  );
+}
 
 /**
  * Single-page menu: a sticky horizontal category bar over every product board.
@@ -88,10 +114,24 @@ export function MenuCategoryExplorer({ categories }: { categories: MenuCategory[
         ref={navRef}
         className="sticky top-20 z-30 border-b border-primary/10 bg-cream/95 backdrop-blur supports-backdrop-filter:bg-cream/80"
       >
+        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 pt-3 md:px-6">
+          <span className="font-display text-lg font-semibold text-heading md:text-xl">
+            Categories
+          </span>
+          <span className="text-primary/60" aria-hidden="true">
+            <ClipboardIcon />
+          </span>
+        </div>
         <nav
-          className="mx-auto flex w-max max-w-full gap-2 overflow-x-auto px-4 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:px-6"
+          className="mx-auto flex max-w-3xl items-center gap-5 overflow-x-auto px-4 pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:px-6"
           aria-label="Menu categories"
         >
+          <span
+            className="mb-2 mt-2 grid size-9 shrink-0 place-items-center rounded-lg border border-primary/20 bg-card/40 text-primary/70"
+            aria-hidden="true"
+          >
+            <ListIcon />
+          </span>
           {categories.map((cat) => {
             const active = cat.id === activeId;
             return (
@@ -105,10 +145,10 @@ export function MenuCategoryExplorer({ categories }: { categories: MenuCategory[
                 onClick={(e) => handleChipClick(e, cat.id)}
                 aria-current={active ? "true" : undefined}
                 className={cn(
-                  "shrink-0 whitespace-nowrap rounded-full border px-4 py-1.5 text-[0.8125rem] font-medium tracking-[0.02em] transition",
+                  "shrink-0 whitespace-nowrap border-b-2 px-1 pb-3 pt-2 text-[0.9375rem] tracking-[0.01em] transition",
                   active
-                    ? "border-primary bg-primary text-white shadow-sm"
-                    : "border-primary/25 bg-card/40 text-[#2b2b2b] hover:border-primary/50 hover:text-primary",
+                    ? "border-primary font-semibold text-primary"
+                    : "border-transparent font-medium text-[#2b2b2b]/70 hover:text-primary",
                 )}
               >
                 {cat.label}
@@ -131,7 +171,7 @@ export function MenuCategoryExplorer({ categories }: { categories: MenuCategory[
               style={{ scrollMarginTop: STICKY_OFFSET }}
               aria-label={cat.label}
             >
-              <h2 className="mb-6 text-center font-display text-2xl text-heading md:text-3xl">
+              <h2 className="mb-4 font-display text-2xl text-heading md:text-3xl">
                 {cat.label}
               </h2>
               <div className="space-y-10">

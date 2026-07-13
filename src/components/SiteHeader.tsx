@@ -82,7 +82,7 @@ export function SiteHeader() {
           <TopLink to="/menu" exact>
             Menu
           </TopLink>
-          <NavDropdown label="Signature" items={SIGNATURE_CHILDREN} />
+          {/* <NavDropdown label="Signature" items={SIGNATURE_CHILDREN} /> */}
           <TopLink to="/about" exact>
             About Us
           </TopLink>
@@ -110,7 +110,7 @@ export function SiteHeader() {
             <MobileLink to="/menu" onClick={() => setOpen(false)}>
               Menu
             </MobileLink>
-            <MobileGroup label="Signature" items={SIGNATURE_CHILDREN} onNavigate={() => setOpen(false)} />
+            {/* <MobileGroup label="Signature" items={SIGNATURE_CHILDREN} onNavigate={() => setOpen(false)} /> */}
 
             <MobileLink to="/about" onClick={() => setOpen(false)}>
               About Us
