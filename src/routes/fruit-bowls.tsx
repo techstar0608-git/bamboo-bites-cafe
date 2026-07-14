@@ -2,38 +2,35 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FigmaCategoryPageLayout } from "@/components/figma/FigmaCategoryPageLayout";
 import { MenuLeaderBoard, MenuOrderNow } from "@/components/bambu/MenuLeaderBoard";
 import { bambuCategoryHero, bambuCategoryThumbs } from "@/lib/bambu-assets";
-import { FRUIT_BOWLS_DESSERT } from "@/data/uber-menu.generated";
+import { SMASHED_FRUIT } from "@/data/uber-menu.generated";
 
 export const Route = createFileRoute("/fruit-bowls")({
   head: () => ({
     meta: [
-      { title: "Fruit Bowls & Dessert — Dầm Trái Cây | Bambu Cafe & Desserts" },
+      { title: "Smashed Fruit & Sweets — Dầm Trái Cây | Bambu Cafe & Desserts" },
       {
         name: "description",
         content:
-          "Fruit bowls & dessert cups — dầm trái cây with pickup & Uber pricing from the Bambu Uber spreadsheet.",
+          "Smashed fruit bowls & sweet cups — dầm trái cây with pickup & delivery pricing from the Bambu menu.",
       },
     ],
   }),
-  component: FruitBowlsPage,
+  component: SmashedFruitPage,
 });
 
-function FruitBowlsPage() {
+function SmashedFruitPage() {
   return (
     <FigmaCategoryPageLayout
-      title="Fruit Bowls"
+      title="Smashed Fruit & Sweets"
       breadcrumbCurrent="Menu"
       heroImage={bambuCategoryHero.fruitBowls}
-      heroAlt="Fruit bowls & dessert"
+      heroAlt="Smashed fruit & sweets"
     >
-      <div className="space-y-10">
-        <MenuLeaderBoard
-          heading="Fruit bowls & more"
-          items={FRUIT_BOWLS_DESSERT}
-          placeholderImg={bambuCategoryThumbs.dessert}
-          section="fruit-bowls"
-        />
-      </div>
+      <MenuLeaderBoard
+        items={SMASHED_FRUIT}
+        placeholderImg={bambuCategoryThumbs.dessert}
+        section="smashed-fruit"
+      />
       <MenuOrderNow />
     </FigmaCategoryPageLayout>
   );

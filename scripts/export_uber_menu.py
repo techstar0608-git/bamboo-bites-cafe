@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""Uber Menu → src/data/uber-menu.generated.ts
+"""Bambu Menu → src/data/uber-menu.generated.ts
 
-Source of truth: `uber-menu-prod.xlsx` in repo root.
-- Sheet `uber-menu-prod` (consolidated) holds every category in a `section` column.
-- Canley foods live in their own sheet `13.CANLEY FOODS` (different layout).
+Source of truth: `bambu _menu.xlsx` in repo root (confirmed menu data).
+- One sheet per category (`1.Sweet Dessert`, `2.Smashed fruit & Sweets`, …).
+- Each row carries a `Product ID` like `P0101` → PXXYY where XX = category,
+  YY = item. Rows are grouped into TS consts by that XX prefix.
+- Rows flagged in the `Inactive` column are skipped (hidden from the site).
+- Images come from the `Image link` column (Google Drive share URLs); the app's
+  product-image resolver rewrites them to embeddable thumbnail URLs.
 
 Commands:
   python3 scripts/export_uber_menu.py
-      Reads uber-menu-prod.xlsx → writes TS. (No-op if the workbook is missing.)
-
-  python3 scripts/export_uber_menu.py --init-prod-xlsx
-      Rebuilds a flat workbook from the current generated TS (migration helper).
+      Reads bambu _menu.xlsx → writes TS. (No-op if the workbook is missing.)
 
 Install: pip install openpyxl
 """
@@ -22,61 +23,54 @@ from pathlib import Path
 
 try:
     import openpyxl
-    from openpyxl.styles import Font
 except ImportError:
     print("Install openpyxl: pip install openpyxl", file=sys.stderr)
     sys.exit(1)
 
 ROOT = Path(__file__).resolve().parents[1]
-XLSX_FLAT = ROOT / "uber-menu-prod.xlsx"
+XLSX = ROOT / "bambu _menu.xlsx"
 OUT = ROOT / "src" / "data" / "uber-menu.generated.ts"
 
-CONSOLIDATED_SHEET = "uber-menu-prod"
-CANLEY_SHEET = "13.CANLEY FOODS"
-
-FLAT_HEADERS = [
-    "section",
-    "stt",
-    "productID",
-    "nameVi",
-    "nameEn",
-    "nameUber",
-    "size",
-    "pricePickup",
-    "priceUber",
-    "description",
-    "photoStt",
-    "notes",
-    "priceLine",
-]
-
-# Each menu category → the TS const it is emitted as.
-# `raw` matches the workbook `section` column (compared case-insensitively,
-# whitespace-collapsed). Order here is the order consts appear in the TS file.
+# Product-ID prefix (PXX) → the TS const it is emitted as.
+# Order here is the order consts appear in the TS file.
 SECTION_SPECS = [
-    {"raw": "1.Sweet Dessert", "const": "SWEET_DESSERT"},
-    {"raw": "9.Fruit Bowls & Dessert", "const": "FRUIT_BOWLS_DESSERT"},
-    {"raw": "2.Fruit Drinks - Tea", "const": "FRUIT_DRINKS_TEA"},
-    {"raw": "3.Fresh Juice", "const": "FRESH_JUICE"},
-    {"raw": "4.Smoothies", "const": "SMOOTHIES"},
-    {"raw": "5.Pennywort Drinks", "const": "PENNYWORT"},
-    {"raw": "6.Iced Coffee", "const": "ICED_COFFEE"},
-    {"raw": "7.Espresso (Hot)", "const": "ESPRESSO_HOT"},
-    {"raw": "8.Ice Blended", "const": "ICE_BLENDED"},
-    {"raw": "10.Matcha Drinks", "const": "MATCHA"},
-    {"raw": "11.New drink", "const": "NEW_DRINK"},
-    {"raw": "12.CABRA FOODS", "const": "FOOD_CABRAMATTA"},
-    {"raw": "13.CANLEY FOODS", "const": "FOOD_CANLEY_HEIGHTS"},
+    {"prefix": "P01", "const": "SWEET_DESSERT"},
+    {"prefix": "P02", "const": "SMASHED_FRUIT"},
+    {"prefix": "P03", "const": "MATCHA"},
+    {"prefix": "P04", "const": "FRUIT_DRINKS_TEA"},
+    {"prefix": "P05", "const": "FRESH_JUICE"},
+    {"prefix": "P06", "const": "OVER_ICE"},
+    {"prefix": "P07", "const": "ESPRESSO_HOT"},
+    {"prefix": "P08", "const": "ICE_BLENDED"},
+    {"prefix": "P09", "const": "SMOOTHIES"},
+    {"prefix": "P10", "const": "BAMBU_SPECIAL"},
+    {"prefix": "P12", "const": "FOOD_CANLEY_HEIGHTS"},
 ]
 
 ALL_CONSTS = [s["const"] for s in SECTION_SPECS]
+PREFIX_TO_CONST = {s["prefix"]: s["const"] for s in SECTION_SPECS}
+
+# Header label (normalised) → record field.
+COLUMN_MAP = {
+    "no.": "stt",
+    "product id": "productId",
+    "vietnamese name": "nameVi",
+    "english name": "nameEn",
+    "name": "nameUber",
+    "inactive": "inactive",
+    "type": "type",
+    "size": "size",
+    "tag": "tag",
+    "pickup price (aud)": "pricePickup",
+    "delivery price (aud)": "priceUber",
+    "description": "description",
+    "image link": "photoStt",
+    "notes": "notes",
+}
 
 
 def _norm_key(s) -> str:
     return re.sub(r"\s+", " ", str(s).strip()).lower()
-
-
-RAW_TO_CONST = {_norm_key(s["raw"]): s["const"] for s in SECTION_SPECS}
 
 
 def ts_str(s: str | None) -> str:
@@ -94,21 +88,6 @@ def ts_num(n: float | int | None) -> str:
     if isinstance(n, float) and n == int(n):
         return str(int(n))
     return str(round(n, 2))
-
-
-def apply_photo_hyperlink(rec: dict, ws, *, excel_row: int, photo_col_0based: int) -> None:
-    if not rec:
-        return
-    c = ws.cell(row=excel_row, column=photo_col_0based + 1)
-    hyp = getattr(c, "hyperlink", None)
-    if hyp is None:
-        return
-    target = getattr(hyp, "target", None)
-    if not target:
-        return
-    t = str(target).strip()
-    if t.lower().startswith(("http://", "https://")):
-        rec["photoStt"] = t
 
 
 def cell_str(v) -> str | None:
@@ -134,132 +113,87 @@ def cell_float(v) -> float | None:
 def cell_stt(v) -> int | None:
     if v is None:
         return None
-    if isinstance(v, (int, float)):
-        try:
-            return int(v) if v == int(v) else int(float(v))
-        except (TypeError, ValueError):
-            return None
-    s = str(v).strip()
-    if not s:
-        return None
     try:
-        return int(float(s))
+        return int(float(v))
     except (TypeError, ValueError):
         return None
 
 
-def cell_photo(v) -> int | str | None:
-    if v is None:
-        return None
-    if isinstance(v, (int, float)):
-        return int(v) if v == int(v) else v
-    s = str(v).strip()
-    return s if s else None
-
-
-def header_map(ws) -> dict[str, int]:
-    row = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
-    m: dict[str, int] = {}
-    for i, h in enumerate(row):
-        if h is None:
-            continue
-        m[str(h).strip().lower()] = i
-    return m
-
-
-def find_stt_header_row(ws) -> int | None:
+def find_header_row(ws) -> tuple[int, dict[str, int]] | None:
+    """Locate the row that holds the column headers and map field → col index."""
     for i, row in enumerate(ws.iter_rows(values_only=True)):
-        if row and len(row) > 2 and row[1] == "STT":
-            return i
+        if not row:
+            continue
+        norm = {_norm_key(c): j for j, c in enumerate(row) if isinstance(c, str)}
+        if "english name" in norm and "product id" in norm:
+            col: dict[str, int] = {}
+            for label, field in COLUMN_MAP.items():
+                if label in norm:
+                    col[field] = norm[label]
+            return i, col
     return None
 
 
-def parse_canley_sheet(ws) -> list[dict]:
-    """Canley foods sheet: stt in col1, names col2/3, uber col4, size col5,
-    pickup col6, uber col7, photo col8, desc col9."""
-    hr = find_stt_header_row(ws)
-    start = hr + 1 if hr is not None else 0
-    recs: list[dict] = []
-    for i, row in enumerate(ws.iter_rows(values_only=True)):
-        if i < start or not row or len(row) < 8:
-            continue
-        stt = cell_stt(row[1])
-        if stt is None:
-            continue
-        vi, en = row[2], row[3]
-        if vi is None and en is None:
-            continue
-        name_vi = cell_str(vi) or ""
-        name_en = cell_str(en) or ""
-        if not name_vi and not name_en:
-            continue
-        rec = {
-            "stt": stt,
-            "nameVi": name_vi,
-            "nameEn": name_en,
-            "nameUber": cell_str(row[4]) if len(row) > 4 else None,
-            "size": cell_str(row[5]) if len(row) > 5 else None,
-            "pricePickup": cell_float(row[6]) if len(row) > 6 else None,
-            "priceUber": cell_float(row[7]) if len(row) > 7 else None,
-            "description": cell_str(row[9]) if len(row) > 9 else None,
-            "photoStt": cell_photo(row[8]) if len(row) > 8 else None,
-            "notes": None,
-        }
-        apply_photo_hyperlink(rec, ws, excel_row=i + 1, photo_col_0based=8)
-        recs.append(rec)
-    return recs
+def apply_photo_hyperlink(rec: dict, ws, *, excel_row: int, photo_col_0based: int) -> None:
+    """Prefer a cell hyperlink target over its display text for the image link."""
+    c = ws.cell(row=excel_row, column=photo_col_0based + 1)
+    hyp = getattr(c, "hyperlink", None)
+    target = getattr(hyp, "target", None) if hyp is not None else None
+    if target:
+        t = str(target).strip()
+        if t.lower().startswith(("http://", "https://")):
+            rec["photoStt"] = t
 
 
-def parse_consolidated(ws) -> dict[str, list[dict]]:
-    col = header_map(ws)
-    expected = {h.lower() for h in FLAT_HEADERS}
-    missing = sorted(expected - set(col.keys()))
-    if missing:
-        raise SystemExit(f"{XLSX_FLAT}: missing columns {missing}. Expected: {FLAT_HEADERS}")
-
+def parse_workbook(path: Path) -> dict[str, list[dict]]:
+    wb = openpyxl.load_workbook(path, data_only=True)
     buckets: dict[str, list[dict]] = {c: [] for c in ALL_CONSTS}
-
-    def get(cells, key):
-        idx = col.get(key)
-        return cells[idx] if idx is not None and idx < len(cells) else None
-
-    for r_i, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
-        cells = list(row)
-        raw = get(cells, "section")
-        if raw is None or not str(raw).strip():
-            continue
-        const = RAW_TO_CONST.get(_norm_key(raw))
-        if const is None:
-            print(f"Warning: row {r_i} unknown section {raw!r}, skipped", file=sys.stderr)
-            continue
-        rec = {
-            "stt": cell_stt(get(cells, "stt")),
-            "nameVi": cell_str(get(cells, "namevi")) or "",
-            "nameEn": cell_str(get(cells, "nameen")) or "",
-            "nameUber": cell_str(get(cells, "nameuber")),
-            "size": cell_str(get(cells, "size")),
-            "pricePickup": cell_float(get(cells, "pricepickup")),
-            "priceUber": cell_float(get(cells, "priceuber")),
-            "description": cell_str(get(cells, "description")),
-            "photoStt": cell_photo(get(cells, "photostt")),
-            "notes": cell_str(get(cells, "notes")),
-        }
-        if not rec["nameVi"] and not rec["nameEn"]:
-            continue
-        apply_photo_hyperlink(rec, ws, excel_row=r_i, photo_col_0based=col["photostt"])
-        buckets[const].append(rec)
-
-    return buckets
-
-
-def parse_flat_workbook(path: Path) -> dict[str, list[dict]]:
-    wb = openpyxl.load_workbook(path, read_only=False, data_only=True)
     try:
-        sheet = CONSOLIDATED_SHEET if CONSOLIDATED_SHEET in wb.sheetnames else wb.sheetnames[0]
-        buckets = parse_consolidated(wb[sheet])
-        # Canley foods come from their own sheet when absent from the consolidated one.
-        if not buckets.get("FOOD_CANLEY_HEIGHTS") and CANLEY_SHEET in wb.sheetnames:
-            buckets["FOOD_CANLEY_HEIGHTS"] = parse_canley_sheet(wb[CANLEY_SHEET])
+        for ws in wb.worksheets:
+            found = find_header_row(ws)
+            if found is None:
+                continue
+            header_idx, col = found
+
+            def get(cells, field):
+                idx = col.get(field)
+                return cells[idx] if idx is not None and idx < len(cells) else None
+
+            for r_i, row in enumerate(
+                ws.iter_rows(min_row=header_idx + 2, values_only=True),
+                start=header_idx + 2,
+            ):
+                cells = list(row)
+                pid = cell_str(get(cells, "productId"))
+                name_en = cell_str(get(cells, "nameEn")) or ""
+                name_vi = cell_str(get(cells, "nameVi")) or ""
+                if not pid or (not name_en and not name_vi):
+                    continue
+                # Skip rows flagged inactive (any non-empty value).
+                if cell_str(get(cells, "inactive")):
+                    continue
+                const = PREFIX_TO_CONST.get(pid[:3].upper())
+                if const is None:
+                    print(f"Warning: {ws.title} row {r_i}: unknown product id {pid!r}, skipped", file=sys.stderr)
+                    continue
+                rec = {
+                    "productId": pid,
+                    "stt": cell_stt(get(cells, "stt")),
+                    "nameVi": name_vi,
+                    "nameEn": name_en,
+                    "nameUber": cell_str(get(cells, "nameUber")),
+                    "type": cell_str(get(cells, "type")),
+                    "size": cell_str(get(cells, "size")),
+                    "tag": cell_str(get(cells, "tag")),
+                    "pricePickup": cell_float(get(cells, "pricePickup")),
+                    "priceUber": cell_float(get(cells, "priceUber")),
+                    "description": cell_str(get(cells, "description")),
+                    "photoStt": cell_str(get(cells, "photoStt")),
+                    "notes": cell_str(get(cells, "notes")),
+                }
+                if "photoStt" in col:
+                    apply_photo_hyperlink(rec, ws, excel_row=r_i, photo_col_0based=col["photoStt"])
+                buckets[const].append(rec)
     finally:
         wb.close()
     return buckets
@@ -270,19 +204,17 @@ def emit_ts(buckets: dict[str, list[dict]], *, source_note: str) -> str:
         lines = [f"export const {name}: UberMenuRow[] = ["]
         for r in rows:
             photo = r.get("photoStt")
-            if isinstance(photo, str):
-                photo_ts = ts_str(photo)
-            elif photo is None:
-                photo_ts = "null"
-            else:
-                photo_ts = ts_num(photo)
+            photo_ts = ts_str(photo) if isinstance(photo, str) else "null"
             lines.append(
                 "  {"
+                + f"productId: {ts_str(r.get('productId'))}, "
                 + f"stt: {ts_num(r.get('stt'))}, "
                 + f"nameVi: {ts_str(r.get('nameVi'))}, "
                 + f"nameEn: {ts_str(r.get('nameEn'))}, "
                 + f"nameUber: {ts_str(r.get('nameUber')) if r.get('nameUber') else 'null'}, "
+                + f"type: {ts_str(r.get('type')) if r.get('type') else 'null'}, "
                 + f"size: {ts_str(r.get('size')) if r.get('size') else 'null'}, "
+                + f"tag: {ts_str(r.get('tag')) if r.get('tag') else 'null'}, "
                 + f"pricePickup: {ts_num(r.get('pricePickup'))}, "
                 + f"priceUber: {ts_num(r.get('priceUber'))}, "
                 + f"description: {ts_str(r.get('description')) if r.get('description') else 'null'}, "
@@ -296,14 +228,20 @@ def emit_ts(buckets: dict[str, list[dict]], *, source_note: str) -> str:
     header = f"""/**
  * AUTO-GENERATED from `{source_note}`
  * Do not edit by hand — run: `bun run export-menu` (or `python3 scripts/export_uber_menu.py`)
+ *
+ * Rows are grouped into consts by their Product ID prefix (P01…P12).
+ * Rows flagged `Inactive` in the workbook are omitted.
  */
 
 export type UberMenuRow = {{
+  productId: string | null;
   stt: number | null;
   nameVi: string;
   nameEn: string;
   nameUber: string | null;
+  type: string | null;
   size: string | null;
+  tag: string | null;
   pricePickup: number | null;
   priceUber: number | null;
   description: string | null;
@@ -329,137 +267,15 @@ export type IcedCoffeeExtra = {{
     return "\n".join(parts)
 
 
-# ── migration helper: generated TS → flat workbook ──────────────────────────
-
-
-def write_flat_workbook(path: Path, buckets: dict[str, list[dict]]) -> None:
-    wb = openpyxl.Workbook()
-    ws = wb.active
-    ws.title = CONSOLIDATED_SHEET
-    ws.append(FLAT_HEADERS)
-    for c in ws[1]:
-        c.font = Font(bold=True)
-    ws.freeze_panes = "A2"
-    const_to_raw = {s["const"]: s["raw"] for s in SECTION_SPECS}
-    for const in ALL_CONSTS:
-        for r in buckets.get(const, []):
-            ws.append([
-                const_to_raw[const],
-                r.get("stt"),
-                None,  # productID
-                r.get("nameVi") or "",
-                r.get("nameEn") or "",
-                r.get("nameUber"),
-                r.get("size"),
-                r.get("pricePickup"),
-                r.get("priceUber"),
-                r.get("description"),
-                r.get("photoStt"),
-                r.get("notes"),
-                None,  # priceLine
-            ])
-    path.parent.mkdir(parents=True, exist_ok=True)
-    wb.save(path)
-    wb.close()
-
-
-def unquote_ts_str(raw: str) -> str:
-    return raw.replace("\\'", "'").replace("\\\\", "\\")
-
-
-def parse_generated_ts(path: Path) -> dict[str, list[dict]]:
-    text = path.read_text(encoding="utf-8")
-
-    def extract_block(name: str) -> str:
-        needle = f"export const {name}: UberMenuRow[] = ["
-        i = text.find(needle)
-        if i < 0:
-            return ""
-        j = i + len(needle)
-        depth = 1
-        k = j
-        while k < len(text) and depth:
-            if text[k] == "[":
-                depth += 1
-            elif text[k] == "]":
-                depth -= 1
-            k += 1
-        return text[j : k - 1]
-
-    def split_objects(block: str) -> list[str]:
-        objs, depth, start = [], 0, 0
-        for i, c in enumerate(block):
-            if c == "{":
-                if depth == 0:
-                    start = i
-                depth += 1
-            elif c == "}":
-                depth -= 1
-                if depth == 0:
-                    objs.append(block[start : i + 1])
-        return objs
-
-    def sfield(line, field):
-        m = re.search(rf"{field}:\s*'((?:\\.|[^'\\])*)'", line)
-        if m:
-            return unquote_ts_str(m.group(1))
-        return None
-
-    def nfield(line, field):
-        if re.search(rf"{field}:\s*null\b", line):
-            return None
-        m = re.search(rf"{field}:\s*([-+]?\d+(?:\.\d+)?)", line)
-        return float(m.group(1)) if m else None
-
-    def pfield(line):
-        if re.search(r"photoStt:\s*null\b", line):
-            return None
-        m = re.search(r"photoStt:\s*'((?:\\.|[^'\\])*)'", line)
-        if m:
-            return unquote_ts_str(m.group(1))
-        m = re.search(r"photoStt:\s*([-+]?\d+(?:\.\d+)?)\b", line)
-        return float(m.group(1)) if m else None
-
-    buckets: dict[str, list[dict]] = {}
-    for const in ALL_CONSTS:
-        rows = []
-        for obj in split_objects(extract_block(const)):
-            line = obj.replace("\n", " ")
-            rows.append({
-                "stt": nfield(line, "stt"),
-                "nameVi": sfield(line, "nameVi") or "",
-                "nameEn": sfield(line, "nameEn") or "",
-                "nameUber": sfield(line, "nameUber"),
-                "size": sfield(line, "size"),
-                "pricePickup": nfield(line, "pricePickup"),
-                "priceUber": nfield(line, "priceUber"),
-                "description": sfield(line, "description"),
-                "photoStt": pfield(line),
-                "notes": sfield(line, "notes"),
-            })
-        buckets[const] = rows
-    return buckets
-
-
 def main() -> None:
-    args = [a for a in sys.argv[1:] if a]
-    if "--init-prod-xlsx" in args:
-        if not OUT.exists():
-            print(f"Missing {OUT}", file=sys.stderr)
-            sys.exit(1)
-        write_flat_workbook(XLSX_FLAT, parse_generated_ts(OUT))
-        print(f"Wrote {XLSX_FLAT} (from {OUT.name})")
+    if not XLSX.exists():
+        print(f"No {XLSX.name} — skipped export (keeping {OUT.name}).")
         return
-
-    if XLSX_FLAT.exists():
-        buckets = parse_flat_workbook(XLSX_FLAT)
-        OUT.parent.mkdir(parents=True, exist_ok=True)
-        OUT.write_text(emit_ts(buckets, source_note=XLSX_FLAT.name), encoding="utf-8")
-        counts = ", ".join(f"{len(buckets.get(c, []))} {c}" for c in ALL_CONSTS)
-        print(f"Wrote {OUT} from {XLSX_FLAT.name}\n  {counts}")
-        return
-
-    print(f"No {XLSX_FLAT.name} — skipped export (keeping {OUT.name}).")
+    buckets = parse_workbook(XLSX)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(emit_ts(buckets, source_note=XLSX.name), encoding="utf-8")
+    counts = ", ".join(f"{len(buckets.get(c, []))} {c}" for c in ALL_CONSTS)
+    print(f"Wrote {OUT} from {XLSX.name}\n  {counts}")
 
 
 if __name__ == "__main__":

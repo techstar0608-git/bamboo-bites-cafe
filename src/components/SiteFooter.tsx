@@ -41,7 +41,7 @@ export function SiteFooter({ className }: { className?: string }) {
             </li>
             <li>
               <Link to="/iced-coffee" className="transition hover:text-background">
-                Iced Coffee
+                Over Ice
               </Link>
             </li>
             <li>
@@ -51,7 +51,7 @@ export function SiteFooter({ className }: { className?: string }) {
             </li>
             <li>
               <Link to="/vietnamese-food" className="transition hover:text-background">
-                Vietnamese Food
+                Canley Foods
               </Link>
             </li>
             <li>

@@ -7,16 +7,15 @@
 
 export type BambuProductSection =
   | "sweet-dessert"
-  | "fruit-bowls"
+  | "smashed-fruit"
   | "fruit-drinks"
   | "fresh-juice"
   | "smoothies"
-  | "pennywort"
-  | "iced-coffee"
+  | "over-ice"
   | "espresso-hot"
   | "ice-blended"
   | "matcha"
-  | "new-drink"
+  | "bambu-special"
   | "food";
 
 type ProductImageOptions = {
@@ -46,18 +45,21 @@ const bambuGlobs = import.meta.glob<string>(
   { eager: true, import: "default" },
 );
 
+// Legacy local-asset folders (old category layout) → current section keys.
+// Remote Drive links now win over local assets, so this only backs items with
+// no image URL; folders map to the nearest current section.
 const FOLDER_TO_SECTION: Record<string, BambuProductSection> = {
   "1.Sweet Dessert": "sweet-dessert",
   "2.Fruit Drinks - Tea": "fruit-drinks",
   "3.Fresh Juice": "fresh-juice",
   "4.Smoothies": "smoothies",
-  "5.Pennywort Drinks": "pennywort",
-  "6.Iced Coffee": "iced-coffee",
+  "5.Pennywort Drinks": "fresh-juice",
+  "6.Iced Coffee": "over-ice",
   "7.Espresso (Hot)": "espresso-hot",
   "8.Ice Blended": "ice-blended",
-  "9.Fruit Bowls & Dessert ": "fruit-bowls",
+  "9.Fruit Bowls & Dessert ": "smashed-fruit",
   "10.Matcha Drinks": "matcha",
-  "11.New drink": "new-drink",
+  "11.New drink": "bambu-special",
   "12. FOOD": "food",
 };
 
@@ -184,14 +186,19 @@ export function getProductImageUrl(
   fallbackUrl: string,
   options?: ProductImageOptions,
 ): string {
+  // Confirmed menu data ships every image as a Google Drive link — a remote
+  // URL always wins over any local/legacy asset match.
+  if (photoStt != null) {
+    const url = String(photoStt).trim();
+    if (url && isHttpUrl(url)) return toDirectImageUrl(url);
+  }
+
   const local = resolveLocal(options);
   if (local) return local;
 
   if (photoStt == null) return fallbackUrl;
   const raw = String(photoStt).trim();
   if (!raw || /không|no\s*image|^n\/?a$/i.test(raw)) return fallbackUrl;
-
-  if (isHttpUrl(raw)) return toDirectImageUrl(raw);
 
   for (const key of candidateKeys(photoStt)) {
     const hit = byBaseName[key];

@@ -33,7 +33,7 @@ export function HomeNewDrinkSection() {
 
       <div className="mt-10 md:mx-auto md:max-w-4xl">
         {posters.map((poster) => (
-          <Link key={poster.src} to="/new-drink" className="block">
+          <Link key={poster.src} to="/bambu-special" className="block">
             <img
               src={poster.src}
               alt={poster.alt}

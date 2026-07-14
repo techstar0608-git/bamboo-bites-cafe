@@ -99,14 +99,14 @@ export const bambuMenuHero = {
  */
 export const bambuMenuCategoryByRoute: Record<string, string> = {
   "/sweet-desserts": catSweetDesserts,
-  "/pennywort": catPennywort,
+  "/fruit-bowls": catFruitBowls,
   "/fresh-juice": catFreshJuice,
   "/matcha": catMatcha,
   "/fruit-drinks-tea": catFruitDrinksTea,
   "/ice-blended": catIceBlended,
   "/iced-coffee": catIcedCoffee,
   "/espresso-hot": catHotCoffee,
-  "/new-drink": catNewDrinks,
+  "/bambu-special": catNewDrinks,
   "/vietnamese-food": catFoods,
   "/smoothies": catSmoothies,
 };

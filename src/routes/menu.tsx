@@ -9,17 +9,15 @@ import {
 } from "@/components/bambu/MenuCategoryExplorer";
 import { bambuCategoryThumbs, bambuMenuHero } from "@/lib/bambu-assets";
 import {
+  BAMBU_SPECIAL,
   ESPRESSO_HOT,
-  FOOD_CABRAMATTA,
   FOOD_CANLEY_HEIGHTS,
   FRESH_JUICE,
-  FRUIT_BOWLS_DESSERT,
   FRUIT_DRINKS_TEA,
   ICE_BLENDED,
-  ICED_COFFEE,
   MATCHA,
-  NEW_DRINK,
-  PENNYWORT,
+  OVER_ICE,
+  SMASHED_FRUIT,
   SMOOTHIES,
   SWEET_DESSERT,
 } from "@/data/uber-menu.generated";
@@ -45,25 +43,12 @@ const MENU_CATEGORIES: MenuCategory[] = [
   {
     id: "sweet-desserts",
     label: "Sweet Desserts",
-    boards: [
-      { heading: "Chè & sweet cups", items: SWEET_DESSERT, placeholderImg: dessert, section: "sweet-dessert" },
-      { heading: "Fruit bowls & more", items: FRUIT_BOWLS_DESSERT, placeholderImg: dessert, section: "fruit-bowls" },
-    ],
+    boards: [{ items: SWEET_DESSERT, placeholderImg: dessert, section: "sweet-dessert" }],
   },
   {
-    id: "smoothies",
-    label: "Smoothies",
-    boards: [{ items: SMOOTHIES, placeholderImg: coffee, section: "smoothies" }],
-  },
-  {
-    id: "fresh-juice",
-    label: "Fresh Juice",
-    boards: [{ items: FRESH_JUICE, placeholderImg: coffee, section: "fresh-juice" }],
-  },
-  {
-    id: "pennywort",
-    label: "Pennywort Drinks",
-    boards: [{ items: PENNYWORT, placeholderImg: coffee, section: "pennywort" }],
+    id: "smashed-fruit",
+    label: "Smashed Fruit & Sweets",
+    boards: [{ items: SMASHED_FRUIT, placeholderImg: dessert, section: "smashed-fruit" }],
   },
   {
     id: "matcha",
@@ -76,32 +61,39 @@ const MENU_CATEGORIES: MenuCategory[] = [
     boards: [{ items: FRUIT_DRINKS_TEA, placeholderImg: coffee, section: "fruit-drinks" }],
   },
   {
+    id: "fresh-juice",
+    label: "Fresh Juice",
+    boards: [{ items: FRESH_JUICE, placeholderImg: coffee, section: "fresh-juice" }],
+  },
+  {
+    id: "over-ice",
+    label: "Over Ice",
+    boards: [{ items: OVER_ICE, placeholderImg: coffee, section: "over-ice" }],
+  },
+  {
+    id: "espresso-hot",
+    label: "Espresso (Hot)",
+    boards: [{ items: ESPRESSO_HOT, placeholderImg: coffee, section: "espresso-hot" }],
+  },
+  {
     id: "ice-blended",
     label: "Ice Blended",
     boards: [{ items: ICE_BLENDED, placeholderImg: coffee, section: "ice-blended" }],
   },
   {
-    id: "iced-coffee",
-    label: "Iced Coffee",
-    boards: [{ items: ICED_COFFEE, placeholderImg: coffee, section: "iced-coffee" }],
+    id: "smoothies",
+    label: "Smoothies",
+    boards: [{ items: SMOOTHIES, placeholderImg: coffee, section: "smoothies" }],
   },
   {
-    id: "hot-coffee",
-    label: "Hot Coffee",
-    boards: [{ items: ESPRESSO_HOT, placeholderImg: coffee, section: "espresso-hot" }],
-  },
-  {
-    id: "new-drinks",
-    label: "New Drinks",
-    boards: [{ items: NEW_DRINK, placeholderImg: coffee, section: "new-drink" }],
+    id: "bambu-special",
+    label: "Bambu Special Menu",
+    boards: [{ items: BAMBU_SPECIAL, placeholderImg: coffee, section: "bambu-special" }],
   },
   {
     id: "foods",
-    label: "Foods",
-    boards: [
-      { heading: "Cabramatta", items: FOOD_CABRAMATTA, placeholderImg: food, section: "food" },
-      { heading: "Canley Heights", items: FOOD_CANLEY_HEIGHTS, placeholderImg: food, section: "food" },
-    ],
+    label: "Canley Foods",
+    boards: [{ items: FOOD_CANLEY_HEIGHTS, placeholderImg: food, section: "food" }],
   },
 ];
 

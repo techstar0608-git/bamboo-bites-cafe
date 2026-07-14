@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FigmaCategoryPageLayout } from "@/components/figma/FigmaCategoryPageLayout";
 import { MenuLeaderBoard, MenuOrderNow } from "@/components/bambu/MenuLeaderBoard";
 import { bambuCategoryHero, bambuCategoryThumbs } from "@/lib/bambu-assets";
-import { FOOD_CABRAMATTA, FOOD_CANLEY_HEIGHTS } from "@/data/uber-menu.generated";
+import { FOOD_CANLEY_HEIGHTS } from "@/data/uber-menu.generated";
 
 export const Route = createFileRoute("/vietnamese-food")({
   head: () => ({
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/vietnamese-food")({
       {
         name: "description",
         content:
-          "Street snacks and combos — Cabramatta and Canley Heights Uber menu prices from the live workbook.",
+          "Street snacks and combos — Canley Foods menu with pickup and delivery prices from the live workbook.",
       },
     ],
   }),
@@ -33,20 +33,11 @@ function VietnameseFoodPage() {
       heroImage={bambuCategoryHero.foods}
       heroAlt="Vietnamese foods"
     >
-      <div className="space-y-10">
-        <MenuLeaderBoard
-          heading="Cabramatta"
-          items={FOOD_CABRAMATTA}
-          placeholderImg={bambuCategoryThumbs.food}
-          section="food"
-        />
-        <MenuLeaderBoard
-          heading="Canley Heights"
-          items={FOOD_CANLEY_HEIGHTS}
-          placeholderImg={bambuCategoryThumbs.food}
-          section="food"
-        />
-      </div>
+      <MenuLeaderBoard
+        items={FOOD_CANLEY_HEIGHTS}
+        placeholderImg={bambuCategoryThumbs.food}
+        section="food"
+      />
       <MenuOrderNow />
     </FigmaCategoryPageLayout>
   );

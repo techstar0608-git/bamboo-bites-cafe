@@ -2,34 +2,34 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FigmaCategoryPageLayout } from "@/components/figma/FigmaCategoryPageLayout";
 import { MenuLeaderBoard, MenuOrderNow } from "@/components/bambu/MenuLeaderBoard";
 import { bambuCategoryHero, bambuCategoryThumbs } from "@/lib/bambu-assets";
-import { ICED_COFFEE } from "@/data/uber-menu.generated";
+import { OVER_ICE } from "@/data/uber-menu.generated";
 
 export const Route = createFileRoute("/iced-coffee")({
   head: () => ({
     meta: [
-      { title: "Iced Coffee — Cà Phê Đá | Bambu Cafe & Desserts" },
+      { title: "Over Ice — Cà Phê Đá | Bambu Cafe & Desserts" },
       {
         name: "description",
         content:
-          "Full iced coffee menu from Bambu Uber — Vietnamese salted, coconut, condensed milk coffee and more. Pickup and Uber Eats prices.",
+          "Full over-ice menu — Vietnamese salted, coconut, condensed milk coffee, iced lattes and more. Pickup and delivery prices.",
       },
     ],
   }),
-  component: IcedCoffeePage,
+  component: OverIcePage,
 });
 
-function IcedCoffeePage() {
+function OverIcePage() {
   return (
     <FigmaCategoryPageLayout
-      title="Iced Coffee"
+      title="Over Ice"
       breadcrumbCurrent="Menu"
       heroImage={bambuCategoryHero.icedCoffee}
-      heroAlt="Iced coffee"
+      heroAlt="Over ice drinks"
     >
       <MenuLeaderBoard
-        items={ICED_COFFEE}
+        items={OVER_ICE}
         placeholderImg={bambuCategoryThumbs.coffee}
-        section="iced-coffee"
+        section="over-ice"
       />
       <MenuOrderNow />
     </FigmaCategoryPageLayout>

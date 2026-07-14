@@ -12,8 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VietnameseFoodRouteImport } from './routes/vietnamese-food'
 import { Route as SweetDessertsRouteImport } from './routes/sweet-desserts'
 import { Route as SmoothiesRouteImport } from './routes/smoothies'
-import { Route as PennywortRouteImport } from './routes/pennywort'
-import { Route as NewDrinkRouteImport } from './routes/new-drink'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as MatchaRouteImport } from './routes/matcha'
 import { Route as IcedCoffeeRouteImport } from './routes/iced-coffee'
@@ -26,6 +24,7 @@ import { Route as EspressoHotRouteImport } from './routes/espresso-hot'
 import { Route as DessertsRouteImport } from './routes/desserts'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CoffeeRouteImport } from './routes/coffee'
+import { Route as BambuSpecialRouteImport } from './routes/bambu-special'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -42,16 +41,6 @@ const SweetDessertsRoute = SweetDessertsRouteImport.update({
 const SmoothiesRoute = SmoothiesRouteImport.update({
   id: '/smoothies',
   path: '/smoothies',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PennywortRoute = PennywortRouteImport.update({
-  id: '/pennywort',
-  path: '/pennywort',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NewDrinkRoute = NewDrinkRouteImport.update({
-  id: '/new-drink',
-  path: '/new-drink',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenuRoute = MenuRouteImport.update({
@@ -114,6 +103,11 @@ const CoffeeRoute = CoffeeRouteImport.update({
   path: '/coffee',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BambuSpecialRoute = BambuSpecialRouteImport.update({
+  id: '/bambu-special',
+  path: '/bambu-special',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -128,6 +122,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/bambu-special': typeof BambuSpecialRoute
   '/coffee': typeof CoffeeRoute
   '/contact': typeof ContactRoute
   '/desserts': typeof DessertsRoute
@@ -140,8 +135,6 @@ export interface FileRoutesByFullPath {
   '/iced-coffee': typeof IcedCoffeeRoute
   '/matcha': typeof MatchaRoute
   '/menu': typeof MenuRoute
-  '/new-drink': typeof NewDrinkRoute
-  '/pennywort': typeof PennywortRoute
   '/smoothies': typeof SmoothiesRoute
   '/sweet-desserts': typeof SweetDessertsRoute
   '/vietnamese-food': typeof VietnameseFoodRoute
@@ -149,6 +142,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/bambu-special': typeof BambuSpecialRoute
   '/coffee': typeof CoffeeRoute
   '/contact': typeof ContactRoute
   '/desserts': typeof DessertsRoute
@@ -161,8 +155,6 @@ export interface FileRoutesByTo {
   '/iced-coffee': typeof IcedCoffeeRoute
   '/matcha': typeof MatchaRoute
   '/menu': typeof MenuRoute
-  '/new-drink': typeof NewDrinkRoute
-  '/pennywort': typeof PennywortRoute
   '/smoothies': typeof SmoothiesRoute
   '/sweet-desserts': typeof SweetDessertsRoute
   '/vietnamese-food': typeof VietnameseFoodRoute
@@ -171,6 +163,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/bambu-special': typeof BambuSpecialRoute
   '/coffee': typeof CoffeeRoute
   '/contact': typeof ContactRoute
   '/desserts': typeof DessertsRoute
@@ -183,8 +176,6 @@ export interface FileRoutesById {
   '/iced-coffee': typeof IcedCoffeeRoute
   '/matcha': typeof MatchaRoute
   '/menu': typeof MenuRoute
-  '/new-drink': typeof NewDrinkRoute
-  '/pennywort': typeof PennywortRoute
   '/smoothies': typeof SmoothiesRoute
   '/sweet-desserts': typeof SweetDessertsRoute
   '/vietnamese-food': typeof VietnameseFoodRoute
@@ -194,6 +185,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/bambu-special'
     | '/coffee'
     | '/contact'
     | '/desserts'
@@ -206,8 +198,6 @@ export interface FileRouteTypes {
     | '/iced-coffee'
     | '/matcha'
     | '/menu'
-    | '/new-drink'
-    | '/pennywort'
     | '/smoothies'
     | '/sweet-desserts'
     | '/vietnamese-food'
@@ -215,6 +205,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/bambu-special'
     | '/coffee'
     | '/contact'
     | '/desserts'
@@ -227,8 +218,6 @@ export interface FileRouteTypes {
     | '/iced-coffee'
     | '/matcha'
     | '/menu'
-    | '/new-drink'
-    | '/pennywort'
     | '/smoothies'
     | '/sweet-desserts'
     | '/vietnamese-food'
@@ -236,6 +225,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/bambu-special'
     | '/coffee'
     | '/contact'
     | '/desserts'
@@ -248,8 +238,6 @@ export interface FileRouteTypes {
     | '/iced-coffee'
     | '/matcha'
     | '/menu'
-    | '/new-drink'
-    | '/pennywort'
     | '/smoothies'
     | '/sweet-desserts'
     | '/vietnamese-food'
@@ -258,6 +246,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  BambuSpecialRoute: typeof BambuSpecialRoute
   CoffeeRoute: typeof CoffeeRoute
   ContactRoute: typeof ContactRoute
   DessertsRoute: typeof DessertsRoute
@@ -270,8 +259,6 @@ export interface RootRouteChildren {
   IcedCoffeeRoute: typeof IcedCoffeeRoute
   MatchaRoute: typeof MatchaRoute
   MenuRoute: typeof MenuRoute
-  NewDrinkRoute: typeof NewDrinkRoute
-  PennywortRoute: typeof PennywortRoute
   SmoothiesRoute: typeof SmoothiesRoute
   SweetDessertsRoute: typeof SweetDessertsRoute
   VietnameseFoodRoute: typeof VietnameseFoodRoute
@@ -298,20 +285,6 @@ declare module '@tanstack/react-router' {
       path: '/smoothies'
       fullPath: '/smoothies'
       preLoaderRoute: typeof SmoothiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pennywort': {
-      id: '/pennywort'
-      path: '/pennywort'
-      fullPath: '/pennywort'
-      preLoaderRoute: typeof PennywortRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/new-drink': {
-      id: '/new-drink'
-      path: '/new-drink'
-      fullPath: '/new-drink'
-      preLoaderRoute: typeof NewDrinkRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/menu': {
@@ -398,6 +371,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoffeeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bambu-special': {
+      id: '/bambu-special'
+      path: '/bambu-special'
+      fullPath: '/bambu-special'
+      preLoaderRoute: typeof BambuSpecialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -418,6 +398,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  BambuSpecialRoute: BambuSpecialRoute,
   CoffeeRoute: CoffeeRoute,
   ContactRoute: ContactRoute,
   DessertsRoute: DessertsRoute,
@@ -430,8 +411,6 @@ const rootRouteChildren: RootRouteChildren = {
   IcedCoffeeRoute: IcedCoffeeRoute,
   MatchaRoute: MatchaRoute,
   MenuRoute: MenuRoute,
-  NewDrinkRoute: NewDrinkRoute,
-  PennywortRoute: PennywortRoute,
   SmoothiesRoute: SmoothiesRoute,
   SweetDessertsRoute: SweetDessertsRoute,
   VietnameseFoodRoute: VietnameseFoodRoute,

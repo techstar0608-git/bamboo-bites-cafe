@@ -140,11 +140,11 @@ function RootComponent() {
     "/fruit-drinks-tea",
     "/fresh-juice",
     "/smoothies",
-    "/pennywort",
+    "/fruit-bowls",
     "/espresso-hot",
     "/ice-blended",
     "/matcha",
-    "/new-drink",
+    "/bambu-special",
   ] as const;
   const hideSiteFooter = figmaFooterRoutes.includes(
     pathname as (typeof figmaFooterRoutes)[number],
