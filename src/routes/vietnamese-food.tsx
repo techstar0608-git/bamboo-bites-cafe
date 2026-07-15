@@ -11,7 +11,7 @@ export const Route = createFileRoute("/vietnamese-food")({
       {
         name: "description",
         content:
-          "Street snacks and combos — Canley Foods menu with pickup and delivery prices from the live workbook.",
+          "Street snacks and combos — Foods menu with pickup and delivery prices from the live workbook.",
       },
     ],
   }),

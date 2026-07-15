@@ -38,8 +38,14 @@ export const Route = createFileRoute("/menu")({
 
 const { coffee, dessert, food } = bambuCategoryThumbs;
 
-// Order mirrors the Figma "Our Menu" grid. Each entry becomes a chip + a section.
+// Bambu Special leads; the rest follow the Figma "Our Menu" grid order.
+// Each entry becomes a chip + a section.
 const MENU_CATEGORIES: MenuCategory[] = [
+  {
+    id: "bambu-special",
+    label: "Bambu Special Menu",
+    boards: [{ items: BAMBU_SPECIAL, placeholderImg: coffee, section: "bambu-special" }],
+  },
   {
     id: "sweet-desserts",
     label: "Sweet Desserts",
@@ -86,13 +92,8 @@ const MENU_CATEGORIES: MenuCategory[] = [
     boards: [{ items: SMOOTHIES, placeholderImg: coffee, section: "smoothies" }],
   },
   {
-    id: "bambu-special",
-    label: "Bambu Special Menu",
-    boards: [{ items: BAMBU_SPECIAL, placeholderImg: coffee, section: "bambu-special" }],
-  },
-  {
     id: "foods",
-    label: "Canley Foods",
+    label: "Foods",
     boards: [{ items: FOOD_CANLEY_HEIGHTS, placeholderImg: food, section: "food" }],
   },
 ];
