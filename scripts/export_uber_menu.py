@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bambu Menu → src/data/uber-menu.generated.ts
 
-Source of truth: `bambu _menu.xlsx` in repo root (confirmed menu data).
+Source of truth: `Bambu_Menu.xlsx` in repo root (confirmed menu data).
 - One sheet per category (`1.Sweet Dessert`, `2.Smashed fruit & Sweets`, …).
 - Each row carries a `Product ID` like `P0101` → PXXYY where XX = category,
   YY = item. Rows are grouped into TS consts by that XX prefix.
@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 try:
@@ -28,7 +29,7 @@ except ImportError:
     sys.exit(1)
 
 ROOT = Path(__file__).resolve().parents[1]
-XLSX = ROOT / "bambu _menu.xlsx"
+XLSX = ROOT / "Bambu_Menu.xlsx"
 OUT = ROOT / "src" / "data" / "uber-menu.generated.ts"
 
 # Product-ID prefix (PXX) → the TS const it is emitted as.
@@ -119,6 +120,41 @@ def cell_stt(v) -> int | None:
         return None
 
 
+def _is_vietnamese(s: str) -> bool:
+    """True if the text carries a Vietnamese-only mark: đ/Đ or a toned vowel."""
+    for ch in s:
+        if ch in "đĐ":
+            return True
+        nfd = unicodedata.normalize("NFD", ch)
+        if nfd[0].isascii() and any(unicodedata.category(m) == "Mn" for m in nfd[1:]):
+            return True
+    return False
+
+
+def _strip_diacritics(s: str) -> str:
+    """Vietnamese text folded to plain ASCII letters: 'Bò bía ngọt' → 'Bo bia ngot'."""
+    s = s.replace("đ", "d").replace("Đ", "D")
+    return "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
+
+
+def orient_names(name_vi: str, name_en: str) -> tuple[str, str]:
+    """Some workbook rows have the Vietnamese and English cells filled in swapped.
+
+    Diacritics arbitrate: reorder only when exactly one side is unambiguously
+    Vietnamese and it is sitting in the English column. Rows where both or
+    neither side carries diacritics are left as authored — they cannot be told
+    apart without a human reading them.
+
+    A row whose two cells hold the same Vietnamese text has no English name at
+    all; the site is English-first, so it shows that name unaccented.
+    """
+    if _is_vietnamese(name_en) and not _is_vietnamese(name_vi):
+        name_vi, name_en = name_en, name_vi
+    if name_en == name_vi and _is_vietnamese(name_en):
+        name_en = _strip_diacritics(name_en)
+    return name_vi, name_en
+
+
 def find_header_row(ws) -> tuple[int, dict[str, int]] | None:
     """Locate the row that holds the column headers and map field → col index."""
     for i, row in enumerate(ws.iter_rows(values_only=True)):
@@ -169,6 +205,7 @@ def parse_workbook(path: Path) -> dict[str, list[dict]]:
                 name_vi = cell_str(get(cells, "nameVi")) or ""
                 if not pid or (not name_en and not name_vi):
                     continue
+                name_vi, name_en = orient_names(name_vi, name_en)
                 # Skip rows flagged inactive (any non-empty value).
                 if cell_str(get(cells, "inactive")):
                     continue
