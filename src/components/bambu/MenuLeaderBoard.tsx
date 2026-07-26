@@ -46,12 +46,20 @@ function cardPrice(product: MenuProduct): string | null {
   return prices.length > 1 ? `from ${formatPrice(min)}` : formatPrice(min);
 }
 
-/** Highlight badges from the workbook `Tag` (N = New, P = Popular) — a product may be both. */
+/** Badge label per workbook `Tag` letter — a product may carry several (e.g. "N,P"). */
+const TAG_LABELS: Record<string, string> = {
+  N: "New",
+  P: "Popular",
+  H: "Hot",
+  S: "Seasonal",
+};
+
+/** Highlight badges from the workbook `Tag` column. */
 function badgeLabels(product: MenuProduct): string[] {
-  const tag = product.tag?.toUpperCase() ?? "";
-  const out: string[] = [];
-  if (tag.includes("N")) out.push("New");
-  if (tag.includes("P")) out.push("Popular");
+  const letters = (product.tag?.toUpperCase() ?? "").split(/[^A-Z]+/).filter(Boolean);
+  const out = Object.entries(TAG_LABELS)
+    .filter(([letter]) => letters.includes(letter))
+    .map(([, label]) => label);
   if (out.length === 0 && (product.note?.toLowerCase() ?? "").includes("best seller")) {
     out.push("Best Seller");
   }
