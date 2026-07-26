@@ -10,8 +10,9 @@ import {
 import { bambuCategoryThumbs, bambuMenuHero } from "@/lib/bambu-assets";
 import {
   BAMBU_SPECIAL,
+  BREAKFAST_CABRA,
   ESPRESSO_HOT,
-  FOOD_CANLEY_HEIGHTS,
+  FOODS,
   FRESH_JUICE,
   FRUIT_DRINKS_TEA,
   ICE_BLENDED,
@@ -94,7 +95,12 @@ const MENU_CATEGORIES: MenuCategory[] = [
   {
     id: "foods",
     label: "Foods",
-    boards: [{ items: FOOD_CANLEY_HEIGHTS, placeholderImg: food, section: "food" }],
+    boards: [{ items: FOODS, placeholderImg: food, section: "food" }],
+  },
+  {
+    id: "breakfast",
+    label: "Breakfast (Cabramatta only)",
+    boards: [{ items: BREAKFAST_CABRA, placeholderImg: food, section: "breakfast" }],
   },
 ];
 

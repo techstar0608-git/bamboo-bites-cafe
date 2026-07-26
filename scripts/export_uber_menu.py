@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 """Bambu Menu → src/data/uber-menu.generated.ts
 
-Source of truth: `Bambu_Menu.xlsx` in repo root (confirmed menu data).
-- One sheet per category (`1.Sweet Dessert`, `2.Smashed fruit & Sweets`, …).
+Source of truth: `BambuUberMenu.xlsx` in repo root (confirmed menu data).
+- One sheet per category (`1.Bambu Special Menu`, `2.Sweet Dessert`, …).
+  Only the sheets listed in SECTION_SPECS are read — the workbook also holds
+  a consolidated `uber-menu-prod` sheet and legacy per-store food sheets
+  (CABRA/CANLEY) whose Product-ID prefixes clash with the current ones.
 - Each row carries a `Product ID` like `P0101` → PXXYY where XX = category,
-  YY = item. Rows are grouped into TS consts by that XX prefix.
+  YY = item; rows are grouped into one TS const per sheet.
 - Rows flagged in the `Inactive` column are skipped (hidden from the site).
-- Images come from the `Image link` column (Google Drive share URLs); the app's
-  product-image resolver rewrites them to embeddable thumbnail URLs.
+- Images come from the `STT Ảnh` / image-link column (Google Drive share
+  URLs); the app's product-image resolver rewrites them to embeddable
+  thumbnail URLs.
 
 Commands:
   python3 scripts/export_uber_menu.py
-      Reads bambu _menu.xlsx → writes TS. (No-op if the workbook is missing.)
+      Reads BambuUberMenu.xlsx → writes TS. (No-op if the workbook is missing.)
 
 Install: pip install openpyxl
 """
@@ -29,49 +33,63 @@ except ImportError:
     sys.exit(1)
 
 ROOT = Path(__file__).resolve().parents[1]
-XLSX = ROOT / "Bambu_Menu.xlsx"
+XLSX = ROOT / "BambuUberMenu.xlsx"
 OUT = ROOT / "src" / "data" / "uber-menu.generated.ts"
 
-# Product-ID prefix (PXX) → the TS const it is emitted as.
+# Worksheet name → the TS const it is emitted as.
 # Order here is the order consts appear in the TS file.
 SECTION_SPECS = [
-    {"prefix": "P01", "const": "SWEET_DESSERT"},
-    {"prefix": "P02", "const": "SMASHED_FRUIT"},
-    {"prefix": "P03", "const": "MATCHA"},
-    {"prefix": "P04", "const": "FRUIT_DRINKS_TEA"},
-    {"prefix": "P05", "const": "FRESH_JUICE"},
-    {"prefix": "P06", "const": "OVER_ICE"},
-    {"prefix": "P07", "const": "ESPRESSO_HOT"},
-    {"prefix": "P08", "const": "ICE_BLENDED"},
-    {"prefix": "P09", "const": "SMOOTHIES"},
-    {"prefix": "P10", "const": "BAMBU_SPECIAL"},
-    {"prefix": "P12", "const": "FOOD_CANLEY_HEIGHTS"},
+    {"sheet": "1.Bambu Special Menu", "const": "BAMBU_SPECIAL"},
+    {"sheet": "2.Sweet Dessert", "const": "SWEET_DESSERT"},
+    {"sheet": "3.Smashed fruit & Sweets", "const": "SMASHED_FRUIT"},
+    {"sheet": "4.Matcha Drinks", "const": "MATCHA"},
+    {"sheet": "5.Fruit Drinks - Tea", "const": "FRUIT_DRINKS_TEA"},
+    {"sheet": "6.Fresh Juice", "const": "FRESH_JUICE"},
+    {"sheet": "7.Over Ice", "const": "OVER_ICE"},
+    {"sheet": "8.Espresso (Hot)", "const": "ESPRESSO_HOT"},
+    {"sheet": "9.Ice Blended", "const": "ICE_BLENDED"},
+    {"sheet": "10.Smoothies", "const": "SMOOTHIES"},
+    {"sheet": "11. Foods", "const": "FOODS"},
+    {"sheet": "12. Breakfast - Cabra store onl", "const": "BREAKFAST_CABRA"},
 ]
 
 ALL_CONSTS = [s["const"] for s in SECTION_SPECS]
-PREFIX_TO_CONST = {s["prefix"]: s["const"] for s in SECTION_SPECS}
+SHEET_TO_CONST = {s["sheet"]: s["const"] for s in SECTION_SPECS}
 
-# Header label (normalised) → record field.
+# Header label (normalised) → record field. The category sheets label their
+# columns in Vietnamese; older English labels are kept as fallbacks.
 COLUMN_MAP = {
+    "stt": "stt",
     "no.": "stt",
     "product id": "productId",
+    "tên tiếng việt": "nameVi",
     "vietnamese name": "nameVi",
+    "tên tiếng anh": "nameEn",
     "english name": "nameEn",
+    "tên uber": "nameUber",
     "name": "nameUber",
     "inactive": "inactive",
     "type": "type",
     "size": "size",
     "tag": "tag",
+    "quantity": "quantity",
+    "giá tiền offline store = pickup (aud)": "pricePickup",
     "pickup price (aud)": "pricePickup",
+    "giá tiền uber (aud)": "priceUber",
     "delivery price (aud)": "priceUber",
+    "mô tả": "description",
     "description": "description",
+    "stt ảnh": "photoStt",
+    "stt anh": "photoStt",
     "image link": "photoStt",
+    "ghi chú": "notes",
     "notes": "notes",
 }
 
 
 def _norm_key(s) -> str:
-    return re.sub(r"\s+", " ", str(s).strip()).lower()
+    s = unicodedata.normalize("NFC", str(s))
+    return re.sub(r"\s+", " ", s.strip()).lower()
 
 
 def ts_str(s: str | None) -> str:
@@ -161,7 +179,7 @@ def find_header_row(ws) -> tuple[int, dict[str, int]] | None:
         if not row:
             continue
         norm = {_norm_key(c): j for j, c in enumerate(row) if isinstance(c, str)}
-        if "english name" in norm and "product id" in norm:
+        if "product id" in norm and ("tên tiếng anh" in norm or "english name" in norm or "tên tiếng việt" in norm):
             col: dict[str, int] = {}
             for label, field in COLUMN_MAP.items():
                 if label in norm:
@@ -185,9 +203,15 @@ def parse_workbook(path: Path) -> dict[str, list[dict]]:
     wb = openpyxl.load_workbook(path, data_only=True)
     buckets: dict[str, list[dict]] = {c: [] for c in ALL_CONSTS}
     try:
-        for ws in wb.worksheets:
+        for spec in SECTION_SPECS:
+            sheet, const = spec["sheet"], spec["const"]
+            if sheet not in wb.sheetnames:
+                print(f"Warning: sheet {sheet!r} missing from workbook, skipped", file=sys.stderr)
+                continue
+            ws = wb[sheet]
             found = find_header_row(ws)
             if found is None:
+                print(f"Warning: no header row found in sheet {sheet!r}, skipped", file=sys.stderr)
                 continue
             header_idx, col = found
 
@@ -208,10 +232,6 @@ def parse_workbook(path: Path) -> dict[str, list[dict]]:
                 name_vi, name_en = orient_names(name_vi, name_en)
                 # Skip rows flagged inactive (any non-empty value).
                 if cell_str(get(cells, "inactive")):
-                    continue
-                const = PREFIX_TO_CONST.get(pid[:3].upper())
-                if const is None:
-                    print(f"Warning: {ws.title} row {r_i}: unknown product id {pid!r}, skipped", file=sys.stderr)
                     continue
                 rec = {
                     "productId": pid,

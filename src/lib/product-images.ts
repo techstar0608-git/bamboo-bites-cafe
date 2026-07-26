@@ -16,7 +16,8 @@ export type BambuProductSection =
   | "ice-blended"
   | "matcha"
   | "bambu-special"
-  | "food";
+  | "food"
+  | "breakfast";
 
 type ProductImageOptions = {
   section?: BambuProductSection;

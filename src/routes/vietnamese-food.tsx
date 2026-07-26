@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { FigmaCategoryPageLayout } from "@/components/figma/FigmaCategoryPageLayout";
 import { MenuLeaderBoard, MenuOrderNow } from "@/components/bambu/MenuLeaderBoard";
 import { bambuCategoryHero, bambuCategoryThumbs } from "@/lib/bambu-assets";
-import { FOOD_CANLEY_HEIGHTS } from "@/data/uber-menu.generated";
+import { FOODS } from "@/data/uber-menu.generated";
 
 export const Route = createFileRoute("/vietnamese-food")({
   head: () => ({
@@ -34,7 +34,7 @@ function VietnameseFoodPage() {
       heroAlt="Vietnamese foods"
     >
       <MenuLeaderBoard
-        items={FOOD_CANLEY_HEIGHTS}
+        items={FOODS}
         placeholderImg={bambuCategoryThumbs.food}
         section="food"
       />
