@@ -66,6 +66,16 @@ function badgeLabels(product: MenuProduct): string[] {
   return out;
 }
 
+/** Nền badge theo nhãn — New vàng đồng, Popular xanh lá nhạt. */
+const BADGE_STYLES: Record<string, string> = {
+  New: "bg-[#BD9C30] text-white",
+  Popular: "bg-[#A0C795] text-white",
+};
+
+function badgeClass(label: string): string {
+  return BADGE_STYLES[label] ?? "bg-[#2b3440] text-white";
+}
+
 type SelectedProduct = { img: string; product: MenuProduct; badges: string[] };
 
 /** Bottom-sheet detail view for a tapped product, with sizes, type, note and CTA. */
@@ -124,7 +134,7 @@ function ItemDetailModal({ item, onClose }: { item: SelectedProduct; onClose: ()
               {item.badges.map((b) => (
                 <span
                   key={b}
-                  className="inline-flex items-center rounded-md bg-[#2b3440] px-2 py-0.5 text-[0.6875rem] font-semibold uppercase tracking-wide text-white"
+                  className={`inline-flex items-center rounded-md px-2 py-0.5 text-[0.6875rem] font-semibold uppercase tracking-wide ${badgeClass(b)}`}
                 >
                   {b}
                 </span>
@@ -257,7 +267,7 @@ export function MenuLeaderBoard({ heading, items, placeholderImg, section }: Men
                       {badges.map((b) => (
                         <span
                           key={b}
-                          className="inline-flex items-center rounded-md bg-[#2b3440] px-2 py-0.5 text-[0.6875rem] font-semibold uppercase tracking-wide text-white"
+                          className={`inline-flex items-center rounded-md px-2 py-0.5 text-[0.6875rem] font-semibold uppercase tracking-wide ${badgeClass(b)}`}
                         >
                           {b}
                         </span>
