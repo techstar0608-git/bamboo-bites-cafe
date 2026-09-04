@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import newDrinkAutumnVibe from "@/assets/Bambu/homepage/new-drink/figma-autumn-vibe.png";
+import phalau from "@/assets/Bambu/homepage/new-drink/phalau.png";
 import newDrinkStrawberryYogurt from "@/assets/Bambu/homepage/new-drink/figma-strawberry-yogurt.png";
 import newDrinkMatchaSeries from "@/assets/Bambu/homepage/new-drink/figma-matcha-series.png";
 import { LeafDivider } from "@/components/figma/LeafDivider";
@@ -7,8 +8,8 @@ import { FigmaPillButton } from "@/components/home/FigmaPillButton";
 
 const posters = [
   {
-    src: newDrinkAutumnVibe,
-    alt: "Autumn Vibe — Ice Tamarine Green Tea with Pearls, $12.90",
+    src: phalau,
+    alt: "Pha lau",
   },
   {
     src: newDrinkStrawberryYogurt,
@@ -27,7 +28,7 @@ export function HomeNewDrinkSection() {
       <div className="mx-auto max-w-md px-5 md:max-w-2xl md:px-6">
         <LeafDivider className="mb-4 text-primary" />
         <h2 className="text-center font-display text-3xl text-heading md:text-4xl">
-          New Drink
+          What’s New
         </h2>
       </div>
 
