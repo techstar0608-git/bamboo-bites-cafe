@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bambu Menu → src/data/uber-menu.generated.ts
 
-Source of truth: `BambuUberMenu.xlsx` in repo root (confirmed menu data).
+Source of truth: `_Bambu _ Uber Menu  (3).xlsx` in repo root (confirmed menu data).
 - One sheet per category (`1.Bambu Special Menu`, `2.Sweet Dessert`, …).
   Only the sheets listed in SECTION_SPECS are read — the workbook also holds
   a consolidated `uber-menu-prod` sheet and legacy per-store food sheets
@@ -15,7 +15,7 @@ Source of truth: `BambuUberMenu.xlsx` in repo root (confirmed menu data).
 
 Commands:
   python3 scripts/export_uber_menu.py
-      Reads BambuUberMenu.xlsx → writes TS. (No-op if the workbook is missing.)
+      Reads the Uber Menu workbook → writes TS. (No-op if the workbook is missing.)
 
 Install: pip install openpyxl
 """
@@ -33,7 +33,7 @@ except ImportError:
     sys.exit(1)
 
 ROOT = Path(__file__).resolve().parents[1]
-XLSX = ROOT / "BambuUberMenu.xlsx"
+XLSX = ROOT / "_Bambu _ Uber Menu  (3).xlsx"
 OUT = ROOT / "src" / "data" / "uber-menu.generated.ts"
 
 # Worksheet name → the TS const it is emitted as.
@@ -51,6 +51,7 @@ SECTION_SPECS = [
     {"sheet": "10.Smoothies", "const": "SMOOTHIES"},
     {"sheet": "11. Foods", "const": "FOODS"},
     {"sheet": "12. Breakfast - Cabra store onl", "const": "BREAKFAST_CABRA"},
+    {"sheet": "13. Whats new", "const": "WHATS_NEW"},
 ]
 
 ALL_CONSTS = [s["const"] for s in SECTION_SPECS]
