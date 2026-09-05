@@ -21,6 +21,7 @@ import {
   SMASHED_FRUIT,
   SMOOTHIES,
   SWEET_DESSERT,
+  WHATS_NEW,
 } from "@/data/uber-menu.generated";
 
 export const Route = createFileRoute("/menu")({
@@ -39,9 +40,14 @@ export const Route = createFileRoute("/menu")({
 
 const { coffee, dessert, food } = bambuCategoryThumbs;
 
-// Bambu Special leads; the rest follow the Figma "Our Menu" grid order.
+// What’s New leads, then Bambu Special; the rest follow the Figma "Our Menu" grid order.
 // Each entry becomes a chip + a section.
 const MENU_CATEGORIES: MenuCategory[] = [
+  {
+    id: "whats-new",
+    label: "What’s New",
+    boards: [{ items: WHATS_NEW, placeholderImg: food, section: "food" }],
+  },
   {
     id: "bambu-special",
     label: "Bambu Special Menu",
